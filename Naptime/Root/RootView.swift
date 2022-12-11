@@ -8,6 +8,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import NapTimeData
 
 struct RootView: View {
     let store: Store<Root.State, Root.Action>
@@ -27,15 +28,15 @@ struct RootView: View {
     }
 }
 
-struct RootView_Previews: PreviewProvider {
-    static var previews: some View {
-        let rootView = RootView(
-            store: Store(
-                initialState: Root.State(activityState: .init(activities: [],
-                                                              groupedActivities: [Date: [ActivityModel]](),
-                                                              activityHeaderDates: [])),
-                reducer: Root()))
-        return rootView
-    }
-}
+//struct RootView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let rootView = RootView(
+//            store: Store(
+//                initialState: Root.State(activityState: .init(activities: [],
+//                                                              groupedActivities: [Date: [ActivityModel]](),
+//                                                              activityHeaderDates: [])),
+//                reducer: Root()))
+//        return rootView
+//    }
+//}
 

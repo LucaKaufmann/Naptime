@@ -7,11 +7,11 @@
 
 import Foundation
 
-enum ActivityType: String {
+public enum ActivityType: String {
     case sleep = "sleep"
     case tummyTime = "Tummy time"
     
-    var icon: String {
+    public var icon: String {
         switch self {
         case .sleep:
             return "bed.double.circle"
@@ -21,22 +21,22 @@ enum ActivityType: String {
     }
 }
 
-struct ActivityModel: Equatable, Identifiable {
-    let id: UUID
+public struct ActivityModel: Equatable, Identifiable {
+    public let id: UUID
     
-    var startDate: Date
-    var endDate: Date?
-    var type: ActivityType
+    public var startDate: Date
+    public var endDate: Date?
+    public var type: ActivityType
     
-    var isActive: Bool {
+    public var isActive: Bool {
         return endDate == nil
     }
     
-    var formattedStartDate: String {
+    public var formattedStartDate: String {
         return formattedDate(startDate)
     }
     
-    var formattedEndDate: String {
+    public var formattedEndDate: String {
         guard let endDate else {
             return ""
         }
@@ -50,14 +50,14 @@ struct ActivityModel: Equatable, Identifiable {
         return dateFormatter.string(from: date)
     }
     
-    init(id: UUID, startDate: Date, endDate: Date?, type: ActivityType) {
+    public init(id: UUID, startDate: Date, endDate: Date?, type: ActivityType) {
         self.id = id
         self.startDate = startDate
         self.endDate = endDate
         self.type = type
     }
     
-    init(persistenceModel: ActivityPersistenceModel) {
+    public init(persistenceModel: ActivityPersistenceModel) {
         self.init(id: persistenceModel.id,
                   startDate: persistenceModel.startDate,
                   endDate: persistenceModel.endDate,

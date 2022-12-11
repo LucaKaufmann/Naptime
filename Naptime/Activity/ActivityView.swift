@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import NapTimeData
 
 struct ActivityView: View {
     let store: Store<Activity.State, Activity.Action>

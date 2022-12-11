@@ -16,10 +16,10 @@ public enum CoreDataError: Error {
     case unknown
 }
 
-class PersistenceController {
-    static let shared = PersistenceController()
+public class PersistenceController {
+    public static let shared = PersistenceController()
 
-    static var preview: PersistenceController = {
+    public static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         let dateFormatter = DateFormatter()
@@ -58,30 +58,35 @@ class PersistenceController {
         return result
     }()
 
-    let container: PersistentContainer
+    public let container: PersistentContainer
 
-    init(inMemory: Bool = false) {
-        container = PersistentContainer(name: "Naptime")
-        if inMemory {
-            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+    public init(inMemory: Bool = false) {
+        guard let modelURL = Bundle.module.url(forResource: "Naptime",
+                                               withExtension: "momd") else {
+            fatalError("Failed to find data model")
         }
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+        guard let mom = NSManagedObjectModel(contentsOf: modelURL) else {
+            fatalError("Failed to create model from file: \(modelURL)")
+        }
+        
+        container = PersistentContainer(name: "Naptime", managedObjectModel: mom)
+        let storeUrl = URL.storeURL(for: "group.naptime", databaseName: "NapTime")
+        let description = NSPersistentStoreDescription(url: storeUrl)
+        container.persistentStoreDescriptions = [description]
+        
+        if inMemory {
+            description.url = URL(fileURLWithPath: "/dev/null")
+        }
+        
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Unable to load persistent stores: \(error)")
             }
-        })
-        container.viewContext.automaticallyMergesChangesFromParent = true
+        }
+        
+        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+        container.viewContext.automaticallyMergesChangesFromParent = false
+        container.viewContext.shouldDeleteInaccessibleFaults = true
     }
     
     public lazy var backgroundContext: NSManagedObjectContext = {
@@ -130,10 +135,21 @@ class PersistenceController {
     }
 }
 
+public extension URL {
+    /// Returns a URL for the given app group and database pointing to the sqlite database.
+    static func storeURL(for appGroup: String, databaseName: String) -> URL {
+        guard let fileContainer = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) else {
+            fatalError("Shared file container could not be created.")
+        }
+        
+        return fileContainer.appendingPathComponent("\(databaseName).sqlite")
+    }
+}
+
 extension PersistenceController {
     
     /// Fetch items on backgound queue
-    func fetch<T: NSManagedObject>(model: T.Type,
+    public func fetch<T: NSManagedObject>(model: T.Type,
                                    predicate: NSPredicate? = nil,
                                    sortDescriptors: [NSSortDescriptor] = [],
                                    limit: Int = 0,

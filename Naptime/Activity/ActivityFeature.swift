@@ -7,6 +7,19 @@
 
 import Foundation
 import ComposableArchitecture
+import NapTimeData
+
+private enum ActivityServiceKey: DependencyKey {
+    static let liveValue = ActivityService(persistence: PersistenceController.preview)
+    static let testValue = ActivityService(persistence: PersistenceController.preview)
+}
+
+extension DependencyValues {
+  var activityService: ActivityService {
+    get { self[ActivityServiceKey.self] }
+    set { self[ActivityServiceKey.self] = newValue }
+  }
+}
 
 struct Activity: ReducerProtocol {
     

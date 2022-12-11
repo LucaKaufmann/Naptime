@@ -8,24 +8,15 @@
 import Foundation
 import CoreData
 import OSLog
-import ComposableArchitecture
 
-private enum ActivityServiceKey: DependencyKey {
-    static let liveValue = ActivityService(persistence: PersistenceController.preview)
-    static let testValue = ActivityService(persistence: PersistenceController.preview)
-}
-
-extension DependencyValues {
-  var activityService: ActivityService {
-    get { self[ActivityServiceKey.self] }
-    set { self[ActivityServiceKey.self] = newValue }
-  }
-}
-
-struct ActivityService {
+public struct ActivityService {
     let persistence: PersistenceController
     
-    func fetchActivities() async -> [ActivityModel] {
+    public init(persistence: PersistenceController) {
+        self.persistence = persistence
+    }
+    
+    public func fetchActivities() async -> [ActivityModel] {
         do {
             let persistenceModels = try await persistence.fetch(model: ActivityPersistenceModel.self, sortDescriptors: [.init(key: "startDate", ascending: true)])
             let activityModels = persistenceModels.compactMap({ ActivityModel(persistenceModel: $0) })
@@ -39,7 +30,7 @@ struct ActivityService {
         }
     }
     
-    func addActivity(_ newActivity: ActivityModel) async {
+    public func addActivity(_ newActivity: ActivityModel) async {
         let newPersistenceActivity = ActivityPersistenceModel(context: persistence.backgroundContext)
         newPersistenceActivity.id = newActivity.id
         newPersistenceActivity.startDate = newActivity.startDate
@@ -49,7 +40,7 @@ struct ActivityService {
         await saveContext()
     }
     
-    func updateActivityFor(id: UUID, startDate: Date? = nil, endDate: Date? = nil, type: ActivityType? = nil) async {
+    public func updateActivityFor(id: UUID, startDate: Date? = nil, endDate: Date? = nil, type: ActivityType? = nil) async {
         guard let activityToUpdate = await fetchActivityFor(id: id) else {
             os_log("Unable to update activity for ID %@",
                    log: OSLog.persistence,
@@ -72,7 +63,7 @@ struct ActivityService {
         await saveContext()
     }
     
-    func endActivity(_ id: UUID) async {
+    public func endActivity(_ id: UUID) async {
         await updateActivityFor(id: id, endDate: Date())
     }
     

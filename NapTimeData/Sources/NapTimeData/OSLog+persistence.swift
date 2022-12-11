@@ -8,5 +8,5 @@
 import os.log
 
 extension OSLog {
-    static let persistence = OSLog(subsystem: "Persistence", category: "coreData")
+    public static let persistence = OSLog(subsystem: "Persistence", category: "coreData")
 }
