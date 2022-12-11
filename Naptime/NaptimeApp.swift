@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct NaptimeApp: App {
@@ -13,8 +14,11 @@ struct NaptimeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            RootView(store: Store(
+                initialState: Root.State(activityState: .init(activities: [],
+                                                              groupedActivities: [Date: [ActivityModel]](),
+                                                              activityHeaderDates: [])),
+                reducer: Root()))
         }
     }
 }

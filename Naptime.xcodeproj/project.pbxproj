@@ -7,15 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		814D3F8D293C8B2500553B46 /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D3F8C293C8B2500553B46 /* ActivityModel.swift */; };
+		814D3F91293CDD2E00553B46 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D3F90293CDD2E00553B46 /* ActivityView.swift */; };
+		815550A3293E6F96000A2952 /* OSLog+persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815550A2293E6F96000A2952 /* OSLog+persistence.swift */; };
+		815550A6293ED2DB000A2952 /* ActivityPersistenceModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815550A4293ED2DA000A2952 /* ActivityPersistenceModel+CoreDataClass.swift */; };
+		815550A7293ED2DB000A2952 /* ActivityPersistenceModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815550A5293ED2DA000A2952 /* ActivityPersistenceModel+CoreDataProperties.swift */; };
+		815550AA293F99CD000A2952 /* Async+Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815550A9293F99CD000A2952 /* Async+Future.swift */; };
+		815550AC293FDEAF000A2952 /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815550AB293FDEAF000A2952 /* ActivityService.swift */; };
+		815550AE29407ECA000A2952 /* ActivityPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815550AD29407ECA000A2952 /* ActivityPersistenceTests.swift */; };
+		8159C43E2940D55600716330 /* ActivitySectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C43D2940D55600716330 /* ActivitySectionHeaderView.swift */; };
+		8159C4402941CB4B00716330 /* ActivityRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C43F2941CB4B00716330 /* ActivityRowView.swift */; };
+		8159C4432941D05400716330 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C4422941D05400716330 /* TimerView.swift */; };
+		81CD4EF92937E060007CE048 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4EF82937E060007CE048 /* RootView.swift */; };
+		81CD4EFD2937E0AD007CE048 /* RootFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4EFC2937E0AD007CE048 /* RootFeature.swift */; };
+		81CD4F00293917AE007CE048 /* SystemEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4EFF293917AE007CE048 /* SystemEnvironment.swift */; };
+		81CD4F15293C8918007CE048 /* ActivityFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4F14293C8918007CE048 /* ActivityFeature.swift */; };
 		81F2519A29291CFC00B90C0E /* NaptimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F2519929291CFC00B90C0E /* NaptimeApp.swift */; };
 		81F2519C29291CFC00B90C0E /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F2519B29291CFC00B90C0E /* Persistence.swift */; };
 		81F2519F29291CFC00B90C0E /* Naptime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81F2519D29291CFC00B90C0E /* Naptime.xcdatamodeld */; };
-		81F251A129291CFC00B90C0E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F251A029291CFC00B90C0E /* ContentView.swift */; };
 		81F251A329291CFD00B90C0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81F251A229291CFD00B90C0E /* Assets.xcassets */; };
 		81F251A729291CFD00B90C0E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81F251A629291CFD00B90C0E /* Preview Assets.xcassets */; };
 		81F251B129291CFD00B90C0E /* NaptimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F251B029291CFD00B90C0E /* NaptimeTests.swift */; };
 		81F251BB29291CFD00B90C0E /* NaptimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F251BA29291CFD00B90C0E /* NaptimeUITests.swift */; };
 		81F251BD29291CFD00B90C0E /* NaptimeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F251BC29291CFD00B90C0E /* NaptimeUITestsLaunchTests.swift */; };
+		81F251CB29291E1800B90C0E /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 81F251CA29291E1800B90C0E /* ComposableArchitecture */; };
+		81F251CD29291E1800B90C0E /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 81F251CC29291E1800B90C0E /* Dependencies */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,11 +52,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		814D3F8C293C8B2500553B46 /* ActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
+		814D3F90293CDD2E00553B46 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		815550A2293E6F96000A2952 /* OSLog+persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSLog+persistence.swift"; sourceTree = "<group>"; };
+		815550A4293ED2DA000A2952 /* ActivityPersistenceModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityPersistenceModel+CoreDataClass.swift"; sourceTree = "<group>"; };
+		815550A5293ED2DA000A2952 /* ActivityPersistenceModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityPersistenceModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		815550A9293F99CD000A2952 /* Async+Future.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Async+Future.swift"; sourceTree = "<group>"; };
+		815550AB293FDEAF000A2952 /* ActivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityService.swift; sourceTree = "<group>"; };
+		815550AD29407ECA000A2952 /* ActivityPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityPersistenceTests.swift; sourceTree = "<group>"; };
+		8159C43D2940D55600716330 /* ActivitySectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySectionHeaderView.swift; sourceTree = "<group>"; };
+		8159C43F2941CB4B00716330 /* ActivityRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRowView.swift; sourceTree = "<group>"; };
+		8159C4422941D05400716330 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		81787EDF2945C7EE0031BE99 /* NapTimePersistenceServices */ = {isa = PBXFileReference; lastKnownFileType = text; path = NapTimePersistenceServices; sourceTree = SOURCE_ROOT; };
+		81CD4EF82937E060007CE048 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		81CD4EFC2937E0AD007CE048 /* RootFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootFeature.swift; sourceTree = "<group>"; };
+		81CD4EFF293917AE007CE048 /* SystemEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemEnvironment.swift; sourceTree = "<group>"; };
+		81CD4F14293C8918007CE048 /* ActivityFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFeature.swift; sourceTree = "<group>"; };
 		81F2519629291CFC00B90C0E /* Naptime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Naptime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F2519929291CFC00B90C0E /* NaptimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaptimeApp.swift; sourceTree = "<group>"; };
 		81F2519B29291CFC00B90C0E /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		81F2519E29291CFC00B90C0E /* Naptime.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Naptime.xcdatamodel; sourceTree = "<group>"; };
-		81F251A029291CFC00B90C0E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		81F251A229291CFD00B90C0E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		81F251A429291CFD00B90C0E /* Naptime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Naptime.entitlements; sourceTree = "<group>"; };
 		81F251A629291CFD00B90C0E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -56,6 +87,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81F251CB29291E1800B90C0E /* ComposableArchitecture in Frameworks */,
+				81F251CD29291E1800B90C0E /* Dependencies in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,9 +109,68 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8155509F293E6F19000A2952 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				815550A4293ED2DA000A2952 /* ActivityPersistenceModel+CoreDataClass.swift */,
+				815550A5293ED2DA000A2952 /* ActivityPersistenceModel+CoreDataProperties.swift */,
+				81F2519B29291CFC00B90C0E /* Persistence.swift */,
+				815550A2293E6F96000A2952 /* OSLog+persistence.swift */,
+				815550AB293FDEAF000A2952 /* ActivityService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		815550A8293F99BF000A2952 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				815550A9293F99CD000A2952 /* Async+Future.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8159C4412941D04100716330 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				8159C4422941D05400716330 /* TimerView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		81CD4EF72937E058007CE048 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				81CD4EF82937E060007CE048 /* RootView.swift */,
+				81CD4EFC2937E0AD007CE048 /* RootFeature.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		81CD4EFE293917A1007CE048 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				81CD4EFF293917AE007CE048 /* SystemEnvironment.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		81CD4F13293C88F8007CE048 /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				8159C4412941D04100716330 /* Components */,
+				81CD4F14293C8918007CE048 /* ActivityFeature.swift */,
+				814D3F8C293C8B2500553B46 /* ActivityModel.swift */,
+				814D3F90293CDD2E00553B46 /* ActivityView.swift */,
+				8159C43D2940D55600716330 /* ActivitySectionHeaderView.swift */,
+				8159C43F2941CB4B00716330 /* ActivityRowView.swift */,
+			);
+			path = Activity;
+			sourceTree = "<group>";
+		};
 		81F2518D29291CFC00B90C0E = {
 			isa = PBXGroup;
 			children = (
+				81787EDF2945C7EE0031BE99 /* NapTimePersistenceServices */,
 				81F2519829291CFC00B90C0E /* Naptime */,
 				81F251AF29291CFD00B90C0E /* NaptimeTests */,
 				81F251B929291CFD00B90C0E /* NaptimeUITests */,
@@ -99,9 +191,12 @@
 		81F2519829291CFC00B90C0E /* Naptime */ = {
 			isa = PBXGroup;
 			children = (
+				815550A8293F99BF000A2952 /* Extensions */,
+				8155509F293E6F19000A2952 /* Services */,
+				81CD4F13293C88F8007CE048 /* Activity */,
+				81CD4EFE293917A1007CE048 /* Shared */,
+				81CD4EF72937E058007CE048 /* Root */,
 				81F2519929291CFC00B90C0E /* NaptimeApp.swift */,
-				81F2519B29291CFC00B90C0E /* Persistence.swift */,
-				81F251A029291CFC00B90C0E /* ContentView.swift */,
 				81F251A229291CFD00B90C0E /* Assets.xcassets */,
 				81F251A429291CFD00B90C0E /* Naptime.entitlements */,
 				81F2519D29291CFC00B90C0E /* Naptime.xcdatamodeld */,
@@ -122,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				81F251B029291CFD00B90C0E /* NaptimeTests.swift */,
+				815550AD29407ECA000A2952 /* ActivityPersistenceTests.swift */,
 			);
 			path = NaptimeTests;
 			sourceTree = "<group>";
@@ -151,6 +247,10 @@
 			dependencies = (
 			);
 			name = Naptime;
+			packageProductDependencies = (
+				81F251CA29291E1800B90C0E /* ComposableArchitecture */,
+				81F251CC29291E1800B90C0E /* Dependencies */,
+			);
 			productName = Naptime;
 			productReference = 81F2519629291CFC00B90C0E /* Naptime.app */;
 			productType = "com.apple.product-type.application";
@@ -223,6 +323,9 @@
 				Base,
 			);
 			mainGroup = 81F2518D29291CFC00B90C0E;
+			packageReferences = (
+				81F251C929291E1800B90C0E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = 81F2519729291CFC00B90C0E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -265,10 +368,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8159C4402941CB4B00716330 /* ActivityRowView.swift in Sources */,
+				815550AC293FDEAF000A2952 /* ActivityService.swift in Sources */,
 				81F2519A29291CFC00B90C0E /* NaptimeApp.swift in Sources */,
 				81F2519F29291CFC00B90C0E /* Naptime.xcdatamodeld in Sources */,
-				81F251A129291CFC00B90C0E /* ContentView.swift in Sources */,
+				8159C43E2940D55600716330 /* ActivitySectionHeaderView.swift in Sources */,
+				815550A6293ED2DB000A2952 /* ActivityPersistenceModel+CoreDataClass.swift in Sources */,
+				815550A7293ED2DB000A2952 /* ActivityPersistenceModel+CoreDataProperties.swift in Sources */,
+				8159C4432941D05400716330 /* TimerView.swift in Sources */,
+				814D3F91293CDD2E00553B46 /* ActivityView.swift in Sources */,
+				815550AA293F99CD000A2952 /* Async+Future.swift in Sources */,
+				81CD4F15293C8918007CE048 /* ActivityFeature.swift in Sources */,
+				814D3F8D293C8B2500553B46 /* ActivityModel.swift in Sources */,
+				815550A3293E6F96000A2952 /* OSLog+persistence.swift in Sources */,
 				81F2519C29291CFC00B90C0E /* Persistence.swift in Sources */,
+				81CD4EFD2937E0AD007CE048 /* RootFeature.swift in Sources */,
+				81CD4EF92937E060007CE048 /* RootView.swift in Sources */,
+				81CD4F00293917AE007CE048 /* SystemEnvironment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				815550AE29407ECA000A2952 /* ActivityPersistenceTests.swift in Sources */,
 				81F251B129291CFD00B90C0E /* NaptimeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -620,6 +737,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		81F251C929291E1800B90C0E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		81F251CA29291E1800B90C0E /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81F251C929291E1800B90C0E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		81F251CC29291E1800B90C0E /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81F251C929291E1800B90C0E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = Dependencies;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		81F2519D29291CFC00B90C0E /* Naptime.xcdatamodeld */ = {
