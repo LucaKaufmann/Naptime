@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Naptime
+@testable import NapTimeData
 
 final class ActivityPersistenceTests: XCTestCase {
     
