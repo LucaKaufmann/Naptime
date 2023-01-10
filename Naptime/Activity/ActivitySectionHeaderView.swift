@@ -17,7 +17,7 @@ struct ActivitySectionHeaderView: View {
             HStack {
                 Spacer()
             }
-        }
+        }.padding(.horizontal)
     }
 }
 

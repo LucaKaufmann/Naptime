@@ -16,11 +16,14 @@ struct ActivityView: View {
         GeometryReader { geometry in
             WithViewStore(self.store) { viewStore in
                 ZStack {
+                    Color("ocean")
+                        .edgesIgnoringSafeArea(.all)
                     BackgroundShape()
-                        .foregroundColor(.blue)
+                        .foregroundColor(Color("slate"))
                         .frame(width: geometry.size.width, height: geometry.size.height)
 //                        .frame(width: 100, height: 100)
                     VStack {
+                        Spacer().frame(height: geometry.size.height / 3 - 40)
                         Text("Activities")
                         Button(action: {
                             viewStore.send(.startActivity(.sleep))

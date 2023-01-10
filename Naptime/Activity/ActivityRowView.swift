@@ -42,7 +42,7 @@ struct ActivityRowView: View {
                 }
             }.padding(.horizontal)
             Spacer()
-        } 
+        }.padding(.horizontal)
     }
 }
 

@@ -12,7 +12,6 @@
 		8159C43E2940D55600716330 /* ActivitySectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C43D2940D55600716330 /* ActivitySectionHeaderView.swift */; };
 		8159C4402941CB4B00716330 /* ActivityRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C43F2941CB4B00716330 /* ActivityRowView.swift */; };
 		8159C4432941D05400716330 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C4422941D05400716330 /* TimerView.swift */; };
-		81787EE9294659B90031BE99 /* NapTimeData in Frameworks */ = {isa = PBXBuildFile; productRef = 81787EE8294659B90031BE99 /* NapTimeData */; };
 		81CD4EF92937E060007CE048 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4EF82937E060007CE048 /* RootView.swift */; };
 		81CD4EFD2937E0AD007CE048 /* RootFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4EFC2937E0AD007CE048 /* RootFeature.swift */; };
 		81CD4F00293917AE007CE048 /* SystemEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4EFF293917AE007CE048 /* SystemEnvironment.swift */; };
@@ -25,6 +24,7 @@
 		81F251BD29291CFD00B90C0E /* NaptimeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F251BC29291CFD00B90C0E /* NaptimeUITestsLaunchTests.swift */; };
 		81F251CB29291E1800B90C0E /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 81F251CA29291E1800B90C0E /* ComposableArchitecture */; };
 		81F251CD29291E1800B90C0E /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 81F251CC29291E1800B90C0E /* Dependencies */; };
+		81FDB60C296D3A6E00B0231A /* NapTimeData in Frameworks */ = {isa = PBXBuildFile; productRef = 81FDB60B296D3A6E00B0231A /* NapTimeData */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,7 +73,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81F251CB29291E1800B90C0E /* ComposableArchitecture in Frameworks */,
-				81787EE9294659B90031BE99 /* NapTimeData in Frameworks */,
+				81FDB60C296D3A6E00B0231A /* NapTimeData in Frameworks */,
 				81F251CD29291E1800B90C0E /* Dependencies in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -228,7 +228,7 @@
 			packageProductDependencies = (
 				81F251CA29291E1800B90C0E /* ComposableArchitecture */,
 				81F251CC29291E1800B90C0E /* Dependencies */,
-				81787EE8294659B90031BE99 /* NapTimeData */,
+				81FDB60B296D3A6E00B0231A /* NapTimeData */,
 			);
 			productName = Naptime;
 			productReference = 81F2519629291CFC00B90C0E /* Naptime.app */;
@@ -721,10 +721,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		81787EE8294659B90031BE99 /* NapTimeData */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = NapTimeData;
-		};
 		81F251CA29291E1800B90C0E /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 81F251C929291E1800B90C0E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
@@ -734,6 +730,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 81F251C929291E1800B90C0E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = Dependencies;
+		};
+		81FDB60B296D3A6E00B0231A /* NapTimeData */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NapTimeData;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
