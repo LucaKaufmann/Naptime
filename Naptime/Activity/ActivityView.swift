@@ -23,7 +23,6 @@ struct ActivityView: View {
                             .foregroundColor(Color("slate"))
                             .edgesIgnoringSafeArea(.all)
                             .frame(width: geometry.size.width, height: geometry.size.height)
-                        //                        .frame(width: 100, height: 100)
                         VStack {
                             VStack {
                                 Button(action: {

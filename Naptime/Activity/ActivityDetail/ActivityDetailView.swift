@@ -44,7 +44,10 @@ struct ActivityDetailView: View {
                 }
                 Section {
                     Button("Delete") {
-                        viewStore.send(.deleteActivity)
+                        guard let activity = viewStore.activity else {
+                            return
+                        }
+                        viewStore.send(.deleteActivity(activity))
                     }.foregroundColor(.red)
                 }
                 Section {
@@ -59,6 +62,10 @@ struct ActivityDetailView: View {
                         viewStore.send(.updateActivity(updatedActivity))
                     }
                 }
+            }
+            .onAppear {
+                startDate = viewStore.activity?.startDate ?? Date()
+                endDate = viewStore.activity?.endDate
             }
         }
     }

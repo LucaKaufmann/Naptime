@@ -27,7 +27,7 @@ struct Activity: ReducerProtocol {
     
     struct State: Equatable {
         var activities: [ActivityModel]
-        var groupedActivities: [Date: [ActivityModel]]
+        var groupedActivities: [Date: [Ac]]
         var activityHeaderDates: [Date]
         var activityDetailState: ActivityDetail.State
     }
@@ -40,60 +40,161 @@ struct Activity: ReducerProtocol {
         case activityDetailAction(ActivityDetail.Action)
     }
     
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
-        switch action {
-        case .startActivity(let type):
-            let newActivity = ActivityModel(id: UUID(), startDate: Date(), endDate: nil, type: type)
-            
-            if let previousActivity = state.activities.last {
-                if let index = state.activities.lastIndex(of: previousActivity) {
-                    var updatedActivity = previousActivity
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .startActivity(let type):
+                let newActivity = ActivityModel(id: UUID(), startDate: Date(), endDate: nil, type: type)
+                
+                if let previousActivity = state.activities.last {
+                    if let index = state.activities.lastIndex(of: previousActivity) {
+                        var updatedActivity = previousActivity
+                        updatedActivity.endDate = Date()
+                        
+                        state.activities[index] = updatedActivity
+                        Task {
+                            await activityService.endActivity(previousActivity.id)
+                        }
+                    }
+                }
+                
+                state.activities.append(newActivity)
+                
+                return .task {
+                    await activityService.addActivity(newActivity)
+                    
+                    return .activitiesUpdated
+                }
+            case .deleteActivity(let index):
+                state.activities.remove(at: index)
+            case .activitiesUpdated:
+                state.groupedActivities = groupActivities(state.activities)
+                state.activityHeaderDates = activityHeaders(state.groupedActivities)
+            case .endActivity(let activity):
+                guard activity.endDate == nil else {
+                    return .none
+                }
+                
+                if let index = state.activities.lastIndex(of: activity) {
+                    var updatedActivity = activity
                     updatedActivity.endDate = Date()
                     
                     state.activities[index] = updatedActivity
-                    Task {
-                        await activityService.endActivity(previousActivity.id)
+                    
+                    return .task {
+                        await activityService.endActivity(activity.id)
+
+                        return .activitiesUpdated
+                    }
+                }
+                
+                return .none
+            case .activityDetailAction(let action):
+                
+                switch action {
+                case .updateActivity(let activity):
+                    guard let index = state.activities.firstIndex(of: activity) else {
+                        return .none
+                    }
+                    
+                    state.activities[index] = activity
+                    
+                    return .task {
+                        return .activitiesUpdated
+                    }
+                case .deleteActivity(let activity):
+                    guard let index = state.activities.firstIndex(of: activity) else {
+                        return .none
+                    }
+                    
+                    return .task {
+                        return .deleteActivity(index)
                     }
                 }
             }
             
-            state.activities.append(newActivity)
-            
-            return .task {
-                await activityService.addActivity(newActivity)
-                
-                return .activitiesUpdated
-            }
-        case .deleteActivity(let index):
-            state.activities.remove(at: index)
-        case .activitiesUpdated:
-            state.groupedActivities = groupActivities(state.activities)
-            state.activityHeaderDates = activityHeaders(state.groupedActivities)
-        case .endActivity(let activity):
-            guard activity.endDate == nil else {
-                return .none
-            }
-            
-            if let index = state.activities.lastIndex(of: activity) {
-                var updatedActivity = activity
-                updatedActivity.endDate = Date()
-                
-                state.activities[index] = updatedActivity
-                
-                return .task {
-                    await activityService.endActivity(activity.id)
-
-                    return .activitiesUpdated
-                }
-            }
-            
             return .none
-        case .activityDetailAction:
-            break
+            
         }
-        
-        return .none
+        Scope(state: \.activityDetailState, action: /Action.activityDetailAction) {
+            ActivityDetail()
+        }
     }
+    
+//    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+//        switch action {
+//        case .startActivity(let type):
+//            let newActivity = ActivityModel(id: UUID(), startDate: Date(), endDate: nil, type: type)
+//
+//            if let previousActivity = state.activities.last {
+//                if let index = state.activities.lastIndex(of: previousActivity) {
+//                    var updatedActivity = previousActivity
+//                    updatedActivity.endDate = Date()
+//
+//                    state.activities[index] = updatedActivity
+//                    Task {
+//                        await activityService.endActivity(previousActivity.id)
+//                    }
+//                }
+//            }
+//
+//            state.activities.append(newActivity)
+//
+//            return .task {
+//                await activityService.addActivity(newActivity)
+//
+//                return .activitiesUpdated
+//            }
+//        case .deleteActivity(let index):
+//            state.activities.remove(at: index)
+//        case .activitiesUpdated:
+//            state.groupedActivities = groupActivities(state.activities)
+//            state.activityHeaderDates = activityHeaders(state.groupedActivities)
+//        case .endActivity(let activity):
+//            guard activity.endDate == nil else {
+//                return .none
+//            }
+//
+//            if let index = state.activities.lastIndex(of: activity) {
+//                var updatedActivity = activity
+//                updatedActivity.endDate = Date()
+//
+//                state.activities[index] = updatedActivity
+//
+//                return .task {
+//                    await activityService.endActivity(activity.id)
+//
+//                    return .activitiesUpdated
+//                }
+//            }
+//
+//            return .none
+//        case .activityDetailAction(let action):
+//
+//            switch action {
+//            case .updateActivity(let activity):
+//                guard let index = state.activities.firstIndex(of: activity) else {
+//                    return .none
+//                }
+//
+//                state.activities[index] = activity
+//
+//                return .task {
+//                    return .activitiesUpdated
+//                }
+//            case .deleteActivity(let activity):
+//                guard let index = state.activities.firstIndex(of: activity) else {
+//                    return .none
+//                }
+//
+//                return .task {
+//                    return .deleteActivity(index)
+//                }
+//            }
+//        }
+//
+//        return .none
+//    }
     
     private func groupActivities(_ activities: [ActivityModel]) ->  [Date: [ActivityModel]]{
         let calendar = Calendar.current
@@ -105,7 +206,8 @@ struct Activity: ReducerProtocol {
                 var activitiesForDay = dateActivities
                 activitiesForDay.append(activity)
                 
-                grouped[normalizedDate] = activitiesForDay.sorted(by: { $0.startDate.compare($1.startDate) == .orderedDescending })
+                grouped[normalizedDate] = activitiesForDay
+                    .sorted(by: { $0.startDate.compare($1.startDate) == .orderedDescending })
             } else {
                 print("Create new section for \(activity)")
                 grouped[normalizedDate] = [activity]
