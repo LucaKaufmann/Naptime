@@ -10,7 +10,7 @@ import ComposableArchitecture
 import NapTimeData
 
 private enum ActivityServiceKey: DependencyKey {
-    static let liveValue = ActivityService(persistence: PersistenceController.preview)
+    static let liveValue = ActivityService(persistence: PersistenceController.shared)
     static let testValue = ActivityService(persistence: PersistenceController.preview)
 }
 
@@ -33,6 +33,7 @@ struct Activity: ReducerProtocol {
     
     enum Action {
         case startActivity(ActivityType)
+        case endActivity(ActivityModel)
         case deleteActivity(Int)
         case activitiesUpdated
     }
@@ -66,7 +67,27 @@ struct Activity: ReducerProtocol {
         case .activitiesUpdated:
             state.groupedActivities = groupActivities(state.activities)
             state.activityHeaderDates = activityHeaders(state.groupedActivities)
+        case .endActivity(let activity):
+            guard activity.endDate == nil else {
+                return .none
+            }
+            
+            if let index = state.activities.lastIndex(of: activity) {
+                var updatedActivity = activity
+                updatedActivity.endDate = Date()
+                
+                state.activities[index] = updatedActivity
+                
+                return .task {
+                    await activityService.endActivity(activity.id)
+
+                    return .activitiesUpdated
+                }
+            }
+            
+            return .none
         }
+        
         return .none
     }
     

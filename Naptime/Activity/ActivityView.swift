@@ -23,7 +23,7 @@ struct ActivityView: View {
                         .frame(width: geometry.size.width, height: geometry.size.height)
 //                        .frame(width: 100, height: 100)
                     VStack {
-                        Spacer().frame(height: geometry.size.height / 3 - 40)
+                        Spacer().frame(height: max(geometry.size.height / 3 - 40, 0))
                         Text("Activities")
                         Button(action: {
                             viewStore.send(.startActivity(.sleep))
@@ -35,6 +35,9 @@ struct ActivityView: View {
                                 Section(header: ActivitySectionHeaderView(date: header)) {
                                     ForEach(viewStore.groupedActivities[header]!) { activity in
                                         ActivityRowView(activity: activity)
+                                            .onTapGesture {
+                                                viewStore.send(.endActivity(activity))
+                                            }
                                     }
                                 }
                             }
@@ -50,7 +53,6 @@ struct BackgroundShape : Shape {
     func path(in rect: CGRect) -> Path {
         var p = Path()
         let topLeftCorner = rect.height / 3
-        let radius = rect.height*1.5/2
         let startingPoint = CGPoint(
             x: 0,
             y: topLeftCorner
@@ -63,7 +65,8 @@ struct BackgroundShape : Shape {
 //                x: rect.width,
 //                y: topLeftCorner)
 //        )
-        p.addArc(center: CGPoint(x: rect.width/2, y:rect.height), radius: radius, startAngle: .degrees(-125), endAngle: .degrees(-55), clockwise: false)
+//        p.addArc(center: CGPoint(x: rect.width/2, y:rect.height), radius: radius, startAngle: .degrees(-125), endAngle: .degrees(-55), clockwise: false)
+        p.addQuadCurve(to: CGPoint(x: rect.width, y: topLeftCorner), control: CGPoint(x: rect.width/2, y: topLeftCorner-60))
         p.addLine(
             to: CGPoint(
                 x: rect.width,
