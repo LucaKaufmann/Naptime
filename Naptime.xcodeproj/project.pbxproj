@@ -12,6 +12,10 @@
 		8159C43E2940D55600716330 /* ActivitySectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C43D2940D55600716330 /* ActivitySectionHeaderView.swift */; };
 		8159C4402941CB4B00716330 /* ActivityRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C43F2941CB4B00716330 /* ActivityRowView.swift */; };
 		8159C4432941D05400716330 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C4422941D05400716330 /* TimerView.swift */; };
+		81B2212029717CDE005C4A15 /* ActivityDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B2211F29717CDE005C4A15 /* ActivityDetailView.swift */; };
+		81B2212329717D1C005C4A15 /* LabelledFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B2212129717D1C005C4A15 /* LabelledFormView.swift */; };
+		81B2212429717D1C005C4A15 /* FormTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B2212229717D1C005C4A15 /* FormTextField.swift */; };
+		81B2212629718019005C4A15 /* ActivityDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B2212529718019005C4A15 /* ActivityDetail.swift */; };
 		81CD4EF92937E060007CE048 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4EF82937E060007CE048 /* RootView.swift */; };
 		81CD4EFD2937E0AD007CE048 /* RootFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4EFC2937E0AD007CE048 /* RootFeature.swift */; };
 		81CD4F00293917AE007CE048 /* SystemEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4EFF293917AE007CE048 /* SystemEnvironment.swift */; };
@@ -51,6 +55,10 @@
 		8159C43F2941CB4B00716330 /* ActivityRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRowView.swift; sourceTree = "<group>"; };
 		8159C4422941D05400716330 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		81787EE6294655A60031BE99 /* NapTimeData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NapTimeData; sourceTree = "<group>"; };
+		81B2211F29717CDE005C4A15 /* ActivityDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailView.swift; sourceTree = "<group>"; };
+		81B2212129717D1C005C4A15 /* LabelledFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelledFormView.swift; sourceTree = "<group>"; };
+		81B2212229717D1C005C4A15 /* FormTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTextField.swift; sourceTree = "<group>"; };
+		81B2212529718019005C4A15 /* ActivityDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetail.swift; sourceTree = "<group>"; };
 		81CD4EF82937E060007CE048 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		81CD4EFC2937E0AD007CE048 /* RootFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootFeature.swift; sourceTree = "<group>"; };
 		81CD4EFF293917AE007CE048 /* SystemEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemEnvironment.swift; sourceTree = "<group>"; };
@@ -106,6 +114,8 @@
 		8159C4412941D04100716330 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				81B2212229717D1C005C4A15 /* FormTextField.swift */,
+				81B2212129717D1C005C4A15 /* LabelledFormView.swift */,
 				8159C4422941D05400716330 /* TimerView.swift */,
 			);
 			path = Components;
@@ -116,6 +126,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		81B2211E29717CD0005C4A15 /* ActivityDetail */ = {
+			isa = PBXGroup;
+			children = (
+				81B2211F29717CDE005C4A15 /* ActivityDetailView.swift */,
+				81B2212529718019005C4A15 /* ActivityDetail.swift */,
+			);
+			path = ActivityDetail;
 			sourceTree = "<group>";
 		};
 		81CD4EF72937E058007CE048 /* Root */ = {
@@ -138,6 +157,7 @@
 		81CD4F13293C88F8007CE048 /* Activity */ = {
 			isa = PBXGroup;
 			children = (
+				81B2211E29717CD0005C4A15 /* ActivityDetail */,
 				8159C4412941D04100716330 /* Components */,
 				81CD4F14293C8918007CE048 /* ActivityFeature.swift */,
 				814D3F90293CDD2E00553B46 /* ActivityView.swift */,
@@ -347,6 +367,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81B2212029717CDE005C4A15 /* ActivityDetailView.swift in Sources */,
 				8159C4402941CB4B00716330 /* ActivityRowView.swift in Sources */,
 				81F2519A29291CFC00B90C0E /* NaptimeApp.swift in Sources */,
 				8159C43E2940D55600716330 /* ActivitySectionHeaderView.swift in Sources */,
@@ -355,6 +376,9 @@
 				815550AA293F99CD000A2952 /* Async+Future.swift in Sources */,
 				81CD4F15293C8918007CE048 /* ActivityFeature.swift in Sources */,
 				81CD4EFD2937E0AD007CE048 /* RootFeature.swift in Sources */,
+				81B2212629718019005C4A15 /* ActivityDetail.swift in Sources */,
+				81B2212329717D1C005C4A15 /* LabelledFormView.swift in Sources */,
+				81B2212429717D1C005C4A15 /* FormTextField.swift in Sources */,
 				81CD4EF92937E060007CE048 /* RootView.swift in Sources */,
 				81CD4F00293917AE007CE048 /* SystemEnvironment.swift in Sources */,
 			);

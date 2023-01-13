@@ -15,29 +15,37 @@ struct ActivityView: View {
     var body: some View {
         GeometryReader { geometry in
             WithViewStore(self.store) { viewStore in
-                ZStack {
-                    Color("ocean")
-                        .edgesIgnoringSafeArea(.all)
-                    BackgroundShape()
-                        .foregroundColor(Color("slate"))
-                        .frame(width: geometry.size.width, height: geometry.size.height)
-//                        .frame(width: 100, height: 100)
-                    VStack {
-                        Spacer().frame(height: max(geometry.size.height / 3 - 40, 0))
-                        Text("Activities")
-                        Button(action: {
-                            viewStore.send(.startActivity(.sleep))
-                        }, label: {
-                            Text("Add activity")
-                        })
-                        ScrollView {
-                            ForEach(viewStore.activityHeaderDates, id: \.self) { header in
-                                Section(header: ActivitySectionHeaderView(date: header)) {
-                                    ForEach(viewStore.groupedActivities[header]!) { activity in
-                                        ActivityRowView(activity: activity)
-                                            .onTapGesture {
-                                                viewStore.send(.endActivity(activity))
-                                            }
+                NavigationView {
+                    ZStack {
+                        Color("ocean")
+                            .edgesIgnoringSafeArea(.all)
+                        BackgroundShape()
+                            .foregroundColor(Color("slate"))
+                            .edgesIgnoringSafeArea(.all)
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                        //                        .frame(width: 100, height: 100)
+                        VStack {
+                            VStack {
+                                Button(action: {
+                                    viewStore.send(.startActivity(.sleep))
+                                }, label: {
+                                    Image(systemName: "plus.app")
+                                        .resizable()
+                                        .frame(width: 50, height: 50)
+                                        .foregroundColor(Color("tomato"))
+                                })
+                            }
+                            .frame(height: max(geometry.size.height / 3 - 40, 0))
+                            .padding(.bottom, 40)
+                            ScrollView {
+                                ForEach(viewStore.activityHeaderDates, id: \.self) { header in
+                                    Section(header: ActivitySectionHeaderView(date: header)) {
+                                        ForEach(viewStore.groupedActivities[header]!) { activity in
+                                            NavigationLink(destination: ActivityDetailView(store: store.scope(state: \.activityDetailState,
+                                                                                                              action: Activity.Action.activityDetailAction))) {
+                                                ActivityRowView(activity: activity)
+                                            }.buttonStyle(PlainButtonStyle())
+                                        }
                                     }
                                 }
                             }
@@ -45,7 +53,7 @@ struct ActivityView: View {
                     }
                 }
             }
-        }.ignoresSafeArea()
+        }.edgesIgnoringSafeArea(.vertical)
     }
 }
 
@@ -92,7 +100,7 @@ struct ActivityView_Previews: PreviewProvider {
         let grouped: [Date: [ActivityModel]] = [date: activities]
         ActivityView(
             store: Store(
-                initialState: Activity.State(activities: activities, groupedActivities: grouped, activityHeaderDates: [Date()]),
+                initialState: Activity.State(activities: activities, groupedActivities: grouped, activityHeaderDates: [Date()], activityDetailState: ActivityDetail.State(activity: activities.first!)),
                 reducer: Activity()))
     }
 }

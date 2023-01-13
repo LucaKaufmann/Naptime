@@ -29,6 +29,7 @@ struct Activity: ReducerProtocol {
         var activities: [ActivityModel]
         var groupedActivities: [Date: [ActivityModel]]
         var activityHeaderDates: [Date]
+        var activityDetailState: ActivityDetail.State
     }
     
     enum Action {
@@ -36,6 +37,7 @@ struct Activity: ReducerProtocol {
         case endActivity(ActivityModel)
         case deleteActivity(Int)
         case activitiesUpdated
+        case activityDetailAction(ActivityDetail.Action)
     }
     
     func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
@@ -86,6 +88,8 @@ struct Activity: ReducerProtocol {
             }
             
             return .none
+        case .activityDetailAction:
+            break
         }
         
         return .none
