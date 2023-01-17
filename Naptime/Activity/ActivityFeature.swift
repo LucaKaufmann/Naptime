@@ -52,17 +52,19 @@ struct Activity: ReducerProtocol {
             case .startActivity(let type):
                 let newActivity = ActivityModel(id: UUID(), startDate: Date(), endDate: nil, type: type)
                 
-                if let previousActivity = state.activities.last {
-                    if let index = state.activities.lastIndex(of: previousActivity) {
-                        var updatedActivity = previousActivity
-                        updatedActivity.endDate = Date()
-                        
-                        state.activities[index] = updatedActivity
-                        Task {
-                            await activityService.endActivity(previousActivity.id)
-                        }
-                    }
-                }
+//                if let previousActivity = state.activities.last {
+//                    if previousActivity.endDate == nil {
+//                        if let index = state.activities.firstIndex(of: previousActivity) {
+//                            var updatedActivity = previousActivity
+//                            updatedActivity.endDate = Date()
+//
+//                            state.activities[index] = updatedActivity
+//                            Task {
+//                                await activityService.endActivity(previousActivity.id)
+//                            }
+//                        }
+//                    }
+//                }
                 
                 state.activities.append(newActivity)
                 
@@ -72,7 +74,13 @@ struct Activity: ReducerProtocol {
                     return .activitiesUpdated
                 }
             case .deleteActivity(let index):
+                let activity = state.activities[index]
                 state.activities.remove(at: index)
+                return .task {
+                    await activityService.deleteActivity(activity)
+                    
+                    return .activitiesUpdated
+                }
             case .activitiesUpdated:
                 state.groupedActivities = groupActivities(state.activities)
                 state.activityHeaderDates = activityHeaders(state.groupedActivities)
@@ -118,7 +126,7 @@ struct Activity: ReducerProtocol {
                         return .activitiesUpdated
                     }
                 case .deleteActivity(let activity):
-                    guard let index = state.activities.firstIndex(of: activity) else {
+                    guard let index = state.activities.firstIndex(where: { $0.id == activity.id }) else {
                         return .none
                     }
                     
@@ -222,10 +230,10 @@ struct Activity: ReducerProtocol {
             if let dateActivities = grouped[normalizedDate] {
                 print("Append to existing section \(activity)")
                 var activitiesForDay = dateActivities
-//                activitiesForDay.appe
-//                
-//                grouped[normalizedDate] = activitiesForDay
-//                    .sorted(by: { $0.activity!.startDate.compare($1.activity!.startDate) == .orderedDescending })
+                activitiesForDay.append(ActivityDetail.State(id: activity.id, activity: activity))
+                
+                grouped[normalizedDate] = IdentifiedArrayOf(uniqueElements: activitiesForDay
+                    .sorted(by: { $0.activity!.startDate.compare($1.activity!.startDate) == .orderedDescending }))
             } else {
                 print("Create new section for \(activity)")
                 grouped[normalizedDate] = [ActivityDetail.State(id: activity.id, activity: activity)]

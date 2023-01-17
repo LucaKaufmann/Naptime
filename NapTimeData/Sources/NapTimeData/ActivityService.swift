@@ -20,7 +20,9 @@ public struct ActivityService {
         do {
             let persistenceModels = try await persistence.fetch(model: ActivityPersistenceModel.self, sortDescriptors: [.init(key: "startDate", ascending: true)])
             let activityModels = persistenceModels.compactMap({ ActivityModel(persistenceModel: $0) })
-            
+            os_log("Fetched activities: %@ ",
+                   log: OSLog.persistence,
+                   type: .info, activityModels)
             return activityModels
         } catch {
             os_log("Failed to fetch activities: %@ ",
@@ -38,6 +40,22 @@ public struct ActivityService {
         newPersistenceActivity.activityTypeValue = newActivity.type.rawValue
         
         await saveContext()
+    }
+    
+    public func deleteActivity(_ activity: ActivityModel) async {
+        do {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: ActivityPersistenceModel.entity().name ?? "")
+            fetchRequest.predicate = NSPredicate(format: "id == %@", activity.id as CVarArg)
+            try await persistence.delete(fetchRequest: fetchRequest)
+            os_log("Deleted activity: %@ ",
+                   log: OSLog.persistence,
+                   type: .info, activity.id as CVarArg)
+            await saveContext()
+        } catch {
+            os_log("Failed to fetch activities: %@ ",
+                   log: OSLog.persistence,
+                   type: .error, error as CVarArg)
+        }
     }
     
     public func updateActivityFor(id: UUID, startDate: Date? = nil, endDate: Date? = nil, type: ActivityType? = nil) async {
@@ -81,6 +99,9 @@ public struct ActivityService {
     private func saveContext() async {
         do {
             try await persistence.saveBackgroundContext()
+            os_log("Saved background context",
+                   log: OSLog.persistence,
+                   type: .info)
         } catch {
             os_log("Failed to save background context %@ ",
                    log: OSLog.persistence,

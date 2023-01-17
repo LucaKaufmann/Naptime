@@ -11,7 +11,9 @@ import NapTimeData
 
 struct ActivityDetailView: View {
     
-    @State var startDate = Date()
+    @Environment(\.presentationMode) var presentationMode
+    
+    @State var startDate: Date?
     @State var endDate: Date?
     
     let store: Store<ActivityDetail.State, ActivityDetail.Action>
@@ -23,11 +25,21 @@ struct ActivityDetailView: View {
     var body: some View {
         WithViewStore(self.store) { viewStore in
             Form {
-
                 Section {
-                    DatePicker(selection: $startDate, in: ...Date(), displayedComponents: .hourAndMinute) {
-                                    Text("Start time")
+                    HStack {
+                        if startDate != nil {
+                            DatePicker(selection: Binding<Date>(get: {self.startDate ?? Date()}, set: {self.startDate = $0}), in: ...Date(), displayedComponents: .hourAndMinute) {
+                                            Text("Start time")
+                                        }
+                        } else {
+                            Text("Start Time")
+                            Spacer()
+                            Text("-")
+                                .onTapGesture {
+                                    startDate = Date()
                                 }
+                        }
+                    }
                     HStack {
                         if endDate != nil {
                             DatePicker(selection: Binding<Date>(get: {self.endDate ?? Date()}, set: {self.endDate = $0}), in: ...Date(), displayedComponents: .hourAndMinute) {
@@ -52,6 +64,8 @@ struct ActivityDetailView: View {
                             return
                         }
                         viewStore.send(.deleteActivity(activity))
+                        
+                        presentationMode.wrappedValue.dismiss()
                     }.foregroundColor(.red)
                 }
                 Section {
@@ -61,15 +75,17 @@ struct ActivityDetailView: View {
                         }
                         
                         var updatedActivity = activity
-                        updatedActivity.startDate = startDate
+                        updatedActivity.startDate = startDate ?? Date()
                         updatedActivity.endDate = endDate
                         viewStore.send(.updateActivity(updatedActivity))
+                        
+                        presentationMode.wrappedValue.dismiss()
                     }
                 }
             }
             .onAppear {
-                startDate = viewStore.activity?.startDate ?? Date()
-                endDate = viewStore.activity?.endDate
+                self.startDate = viewStore.activity?.startDate ?? Date()
+                self.endDate = viewStore.activity?.endDate
             }
         }
     }

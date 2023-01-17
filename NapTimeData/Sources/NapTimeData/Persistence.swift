@@ -165,6 +165,21 @@ extension PersistenceController {
         
     }
     
+    func delete(fetchRequest: NSFetchRequest<NSFetchRequestResult>) async throws {
+        
+        let request = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        request.resultType = NSBatchDeleteRequestResultType.resultTypeObjectIDs
+        
+        do {
+            let result = try backgroundContext.execute(request) as? NSBatchDeleteResult
+            let objectIDArray = result?.result as? [NSManagedObjectID]
+            let changes = [NSDeletedObjectsKey: objectIDArray ?? []]
+            NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes as [AnyHashable: Any], into: [backgroundContext])
+        } catch {
+            throw CoreDataError.deleteBatchError
+        }
+    }
+    
     // MARK: Helper
     
     private func perform<T: NSManagedObject>(fetchRequest: NSFetchRequest<NSFetchRequestResult>, model: T.Type) async throws -> [T] {

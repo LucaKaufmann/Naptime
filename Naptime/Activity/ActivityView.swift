@@ -62,7 +62,8 @@ struct ActivityView: View {
                                                 )
                                             } label: {
                                                 ActivityRowView(activity: activity.activity!)
-                                            }
+                                                
+                                            }.buttonStyle(.plain)
                                         }
                                     }
                                 }
