@@ -15,6 +15,10 @@ struct ActivityDetailView: View {
     @State var endDate: Date?
     
     let store: Store<ActivityDetail.State, ActivityDetail.Action>
+    
+    init(store: Store<ActivityDetail.State, ActivityDetail.Action>) {
+        self.store = store
+    }
             
     var body: some View {
         WithViewStore(self.store) { viewStore in
@@ -96,7 +100,7 @@ struct ActivityDetailView_Previews: PreviewProvider {
         let activity = ActivityModel(id: UUID(), startDate: Date(), endDate: nil, type: .sleep)
         ActivityDetailView(
             store: Store(
-                initialState: ActivityDetail.State(activity: activity),
+                initialState: ActivityDetail.State(id: activity.id, activity: activity),
                 reducer: ActivityDetail()))
     }
 }

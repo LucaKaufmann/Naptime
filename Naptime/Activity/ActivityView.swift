@@ -39,11 +39,30 @@ struct ActivityView: View {
                             ScrollView {
                                 ForEach(viewStore.activityHeaderDates, id: \.self) { header in
                                     Section(header: ActivitySectionHeaderView(date: header)) {
-                                        ForEach(viewStore.groupedActivities[header]!) { activity in
-                                            NavigationLink(destination: ActivityDetailView(store: store.scope(state: \.activityDetailState,
-                                                                                                              action: Activity.Action.activityDetailAction))) {
-                                                ActivityRowView(activity: activity)
-                                            }.buttonStyle(PlainButtonStyle())
+                                        //                                        ForEach(viewStore.groupedActivities[header]!, id: \.id) { activity in
+                                        ////                                            NavigationLink(destination: ActivityDetailView(store: store.scope(state: activity,
+                                        ////                                                                                                              action: Activity.Action.activityDetailAction))) {
+                                        ////                                                ActivityRowView(activity: activity.activity!)
+                                        ////                                            }.buttonStyle(PlainButtonStyle())
+                                        //                                        }
+                                        
+                                        ForEach(viewStore.groupedActivities[header]!, id: \.id) { activity in
+                                            NavigationLink(
+                                                tag: activity.id,
+                                                selection: viewStore.binding(
+                                                    get: \.selectedActivityId,
+                                                    send: Activity.Action.setSelectedActivityId
+                                                )
+                                            ){
+                                                IfLetStore(
+                                                    store.scope(state: \.selectedActivity,
+                                                                action: Activity.Action.activityDetailAction),
+                                                    then: ActivityDetailView.init(store:),
+                                                    else: { Text("Nothing here") }
+                                                )
+                                            } label: {
+                                                ActivityRowView(activity: activity.activity!)
+                                            }
                                         }
                                     }
                                 }
@@ -96,10 +115,12 @@ struct ActivityView_Previews: PreviewProvider {
     static var previews: some View {
         let date = Date()
         let activities = [ActivityModel(id: UUID(), startDate: date, endDate: nil, type: .sleep)]
-        let grouped: [Date: [ActivityModel]] = [date: activities]
+        let grouped: [Date: IdentifiedArrayOf<ActivityDetail.State>] = [date: [ActivityDetail.State(id: UUID(), activity: activities.first)]]
         ActivityView(
             store: Store(
-                initialState: Activity.State(activities: activities, groupedActivities: grouped, activityHeaderDates: [Date()], activityDetailState: ActivityDetail.State(activity: activities.first!)),
+                initialState: Activity.State(activities: activities,
+                                             groupedActivities: grouped,
+                                             activityHeaderDates: [Date()]),
                 reducer: Activity()))
     }
 }

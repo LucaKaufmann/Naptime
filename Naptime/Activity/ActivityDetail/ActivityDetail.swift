@@ -13,7 +13,8 @@ struct ActivityDetail: ReducerProtocol {
     
     @Dependency(\.activityService) private var activityService
     
-    struct State: Equatable {
+    struct State: Equatable, Identifiable {
+        let id: UUID
         var activity: ActivityModel?
     }
     

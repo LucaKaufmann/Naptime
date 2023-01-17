@@ -27,9 +27,14 @@ struct Activity: ReducerProtocol {
     
     struct State: Equatable {
         var activities: [ActivityModel]
-        var groupedActivities: [Date: [Ac]]
+        var groupedActivities: [Date: IdentifiedArrayOf<ActivityDetail.State>]
         var activityHeaderDates: [Date]
-        var activityDetailState: ActivityDetail.State
+        var selectedActivityId: ActivityDetail.State.ID?
+        var selectedActivity: ActivityDetail.State?
+        
+        func activitiesFor(date: Date) -> IdentifiedArrayOf<ActivityDetail.State> {
+            return IdentifiedArrayOf(uniqueElements: groupedActivities[date] ?? [])
+        }
     }
     
     enum Action {
@@ -38,6 +43,7 @@ struct Activity: ReducerProtocol {
         case deleteActivity(Int)
         case activitiesUpdated
         case activityDetailAction(ActivityDetail.Action)
+        case setSelectedActivityId(ActivityModel.ID?)
     }
     
     var body: some ReducerProtocol<State, Action> {
@@ -89,11 +95,20 @@ struct Activity: ReducerProtocol {
                 }
                 
                 return .none
-            case .activityDetailAction(let action):
+            case let .setSelectedActivityId(.some(id)):
+                state.selectedActivityId = id
+                if let activity = state.activities.first(where: { $0.id == id }) {
+                    state.selectedActivity = ActivityDetail.State(id: activity.id, activity: activity)
+                }
+                return .none
                 
+            case .setSelectedActivityId(nil):
+                state.selectedActivityId = nil
+                return .none
+            case .activityDetailAction(let action):
                 switch action {
                 case .updateActivity(let activity):
-                    guard let index = state.activities.firstIndex(of: activity) else {
+                    guard let index = state.activities.firstIndex(where: { $0.id == activity.id }) else {
                         return .none
                     }
                     
@@ -116,9 +131,12 @@ struct Activity: ReducerProtocol {
             return .none
             
         }
-        Scope(state: \.activityDetailState, action: /Action.activityDetailAction) {
-            ActivityDetail()
+        .ifLet(\.selectedActivity, action: /Action.activityDetailAction) {
+          ActivityDetail()
         }
+//        Scope(state: \selectedActivity, action: /Action.activityDetailAction) {
+//            ActivityDetail()
+//        }
     }
     
 //    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
@@ -196,28 +214,28 @@ struct Activity: ReducerProtocol {
 //        return .none
 //    }
     
-    private func groupActivities(_ activities: [ActivityModel]) ->  [Date: [ActivityModel]]{
+    private func groupActivities(_ activities: [ActivityModel]) ->  [Date: IdentifiedArrayOf<ActivityDetail.State>]{
         let calendar = Calendar.current
-        var grouped = [Date: [ActivityModel]]()
+        var grouped = [Date: IdentifiedArrayOf<ActivityDetail.State>]()
         for activity in activities {
             let normalizedDate = calendar.startOfDay(for: activity.startDate)
             if let dateActivities = grouped[normalizedDate] {
                 print("Append to existing section \(activity)")
                 var activitiesForDay = dateActivities
-                activitiesForDay.append(activity)
-                
-                grouped[normalizedDate] = activitiesForDay
-                    .sorted(by: { $0.startDate.compare($1.startDate) == .orderedDescending })
+//                activitiesForDay.appe
+//                
+//                grouped[normalizedDate] = activitiesForDay
+//                    .sorted(by: { $0.activity!.startDate.compare($1.activity!.startDate) == .orderedDescending })
             } else {
                 print("Create new section for \(activity)")
-                grouped[normalizedDate] = [activity]
+                grouped[normalizedDate] = [ActivityDetail.State(id: activity.id, activity: activity)]
             }
         }
         
         return grouped
     }
     
-    private func activityHeaders(_ activities: [Date: [ActivityModel]]) -> [Date] {
+    private func activityHeaders(_ activities: [Date: IdentifiedArrayOf<ActivityDetail.State>]) -> [Date] {
         activities.map({ $0.key }).sorted(by: { $0.compare($1) == .orderedDescending })
     }
 }
