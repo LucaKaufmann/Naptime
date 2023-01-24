@@ -52,20 +52,6 @@ struct Activity: ReducerProtocol {
             case .startActivity(let type):
                 let newActivity = ActivityModel(id: UUID(), startDate: Date(), endDate: nil, type: type)
                 
-//                if let previousActivity = state.activities.last {
-//                    if previousActivity.endDate == nil {
-//                        if let index = state.activities.firstIndex(of: previousActivity) {
-//                            var updatedActivity = previousActivity
-//                            updatedActivity.endDate = Date()
-//
-//                            state.activities[index] = updatedActivity
-//                            Task {
-//                                await activityService.endActivity(previousActivity.id)
-//                            }
-//                        }
-//                    }
-//                }
-                
                 state.activities.append(newActivity)
                 
                 return .task {
