@@ -119,6 +119,8 @@ struct Activity: ReducerProtocol {
                     return .task {
                         return .deleteActivity(index)
                     }
+                default:
+                    break
                 }
             }
             

@@ -21,6 +21,7 @@ struct ActivityDetail: ReducerProtocol {
     enum Action {
         case updateActivity(ActivityModel)
         case deleteActivity(ActivityModel)
+        case activityUpdated
     }
     
     var body: some ReducerProtocol<State, Action> {
@@ -28,8 +29,16 @@ struct ActivityDetail: ReducerProtocol {
             switch action {
             case .updateActivity(let model):
                 state.activity = model
+                
+                return .task {
+                    await activityService.updateActivityFor(id: model.id, startDate: model.startDate, endDate: model.endDate, type: model.type)
+                    
+                    return .activityUpdated
+                }
             case .deleteActivity(_):
                 state.activity = nil
+            default:
+                break
             }
             return .none
         }
