@@ -32,6 +32,10 @@ struct Activity: ReducerProtocol {
         var selectedActivityId: ActivityDetail.State.ID?
         var selectedActivity: ActivityDetail.State?
         
+        var activitiesActive: Bool {
+            return activities.filter({ $0.isActive }).count > 0
+        }
+        
         func activitiesFor(date: Date) -> IdentifiedArrayOf<ActivityDetail.State> {
             return IdentifiedArrayOf(uniqueElements: groupedActivities[date] ?? [])
         }
@@ -40,6 +44,7 @@ struct Activity: ReducerProtocol {
     enum Action {
         case startActivity(ActivityType)
         case endActivity(ActivityModel)
+        case endAllActiveActivities
         case deleteActivity(Int)
         case activitiesUpdated
         case activityDetailAction(ActivityDetail.Action)
@@ -89,6 +94,23 @@ struct Activity: ReducerProtocol {
                 }
                 
                 return .none
+            case .endAllActiveActivities:
+                let activities = state.activities.filter({ $0.isActive })
+                for activity in activities {
+                    guard let index = state.activities.firstIndex(of: activity) else {
+                        continue
+                    }
+                    var updatedActivity = activity
+                    updatedActivity.endDate = Date()
+                    
+                    state.activities[index] = updatedActivity
+                }
+                
+                return .task {
+                    await activityService.endActivities(activities)
+
+                    return .activitiesUpdated
+                }
             case let .setSelectedActivityId(.some(id)):
                 state.selectedActivityId = id
                 if let activity = state.activities.first(where: { $0.id == id }) {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		811089E229857C36001D4E58 /* ActivityButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811089E129857C36001D4E58 /* ActivityButtonsView.swift */; };
 		814D3F91293CDD2E00553B46 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D3F90293CDD2E00553B46 /* ActivityView.swift */; };
 		815550AA293F99CD000A2952 /* Async+Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815550A9293F99CD000A2952 /* Async+Future.swift */; };
 		8159C43E2940D55600716330 /* ActivitySectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C43D2940D55600716330 /* ActivitySectionHeaderView.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		811089E129857C36001D4E58 /* ActivityButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityButtonsView.swift; sourceTree = "<group>"; };
 		814D3F90293CDD2E00553B46 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		815550A9293F99CD000A2952 /* Async+Future.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Async+Future.swift"; sourceTree = "<group>"; };
 		8159C43D2940D55600716330 /* ActivitySectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySectionHeaderView.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				814D3F90293CDD2E00553B46 /* ActivityView.swift */,
 				8159C43D2940D55600716330 /* ActivitySectionHeaderView.swift */,
 				8159C43F2941CB4B00716330 /* ActivityRowView.swift */,
+				811089E129857C36001D4E58 /* ActivityButtonsView.swift */,
 			);
 			path = Activity;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 			files = (
 				81B2212029717CDE005C4A15 /* ActivityDetailView.swift in Sources */,
 				8159C4402941CB4B00716330 /* ActivityRowView.swift in Sources */,
+				811089E229857C36001D4E58 /* ActivityButtonsView.swift in Sources */,
 				81F2519A29291CFC00B90C0E /* NaptimeApp.swift in Sources */,
 				8159C43E2940D55600716330 /* ActivitySectionHeaderView.swift in Sources */,
 				8159C4432941D05400716330 /* TimerView.swift in Sources */,

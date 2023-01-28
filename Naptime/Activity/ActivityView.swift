@@ -36,34 +36,30 @@ struct ActivityView: View {
                             }
                             .frame(height: max(geometry.size.height / 3 - 40, 0))
                             .padding(.bottom, 40)
-                            ScrollView {
-                                ForEach(viewStore.activityHeaderDates, id: \.self) { header in
-                                    Section(header: ActivitySectionHeaderView(date: header)) {
-                                        //                                        ForEach(viewStore.groupedActivities[header]!, id: \.id) { activity in
-                                        ////                                            NavigationLink(destination: ActivityDetailView(store: store.scope(state: activity,
-                                        ////                                                                                                              action: Activity.Action.activityDetailAction))) {
-                                        ////                                                ActivityRowView(activity: activity.activity!)
-                                        ////                                            }.buttonStyle(PlainButtonStyle())
-                                        //                                        }
-                                        
-                                        ForEach(viewStore.groupedActivities[header]!, id: \.id) { activity in
-                                            NavigationLink(
-                                                tag: activity.id,
-                                                selection: viewStore.binding(
-                                                    get: \.selectedActivityId,
-                                                    send: Activity.Action.setSelectedActivityId
-                                                )
-                                            ){
-                                                IfLetStore(
-                                                    store.scope(state: \.selectedActivity,
-                                                                action: Activity.Action.activityDetailAction),
-                                                    then: ActivityDetailView.init(store:),
-                                                    else: { Text("Nothing here") }
-                                                )
-                                            } label: {
-                                                ActivityRowView(activity: activity.activity!)
-                                                
-                                            }.buttonStyle(.plain)
+                            VStack {
+                                ActivityButtonsView(store: store)
+                                ScrollView {
+                                    ForEach(viewStore.activityHeaderDates, id: \.self) { header in
+                                        Section(header: ActivitySectionHeaderView(date: header)) {
+                                            ForEach(viewStore.groupedActivities[header]!, id: \.id) { activity in
+                                                NavigationLink(
+                                                    tag: activity.id,
+                                                    selection: viewStore.binding(
+                                                        get: \.selectedActivityId,
+                                                        send: Activity.Action.setSelectedActivityId
+                                                    )
+                                                ){
+                                                    IfLetStore(
+                                                        store.scope(state: \.selectedActivity,
+                                                                    action: Activity.Action.activityDetailAction),
+                                                        then: ActivityDetailView.init(store:),
+                                                        else: { Text("Nothing here") }
+                                                    )
+                                                } label: {
+                                                    ActivityRowView(activity: activity.activity!)
+                                                    
+                                                }.buttonStyle(.plain)
+                                            }
                                         }
                                     }
                                 }

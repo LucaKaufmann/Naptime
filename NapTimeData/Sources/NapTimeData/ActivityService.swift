@@ -81,6 +81,12 @@ public struct ActivityService {
         await saveContext()
     }
     
+    public func endActivities(_ activities: [ActivityModel]) async {
+        for activity in activities {
+            await endActivity(activity.id)
+        }
+    }
+    
     public func endActivity(_ id: UUID) async {
         await updateActivityFor(id: id, endDate: Date())
     }

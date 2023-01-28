@@ -30,19 +30,19 @@ public class PersistenceController {
         let thirdActivityDate = dateFormatter.date(from: "2022-12-06 08:00")
         
         let firstActivity = ActivityPersistenceModel(context: viewContext)
-        firstActivity.id = UUID()
+        firstActivity.id = UUID(uuidString: "7AE07850-6AE1-4DDA-8351-6D157F90496A")!
         firstActivity.startDate = firstActivityDate!
         firstActivity.endDate = Calendar.current.date(byAdding: .init(hour: 8), to: firstActivityDate!)
         firstActivity.activityTypeValue = "sleep"
         
         let secondActivity = ActivityPersistenceModel(context: viewContext)
-        secondActivity.id = UUID()
+        secondActivity.id = UUID(uuidString: "271EE86B-188C-4130-AF38-D30D4B7F285E")!
         secondActivity.startDate = secondActivityDate!
         secondActivity.endDate = Calendar.current.date(byAdding: .init(hour: 8), to: secondActivityDate!)
         secondActivity.activityTypeValue = "sleep"
         
         let thirdActivity = ActivityPersistenceModel(context: viewContext)
-        thirdActivity.id = UUID()
+        thirdActivity.id = UUID(uuidString: "BED4A302-65BD-4D27-99EF-E8E4A4D7934A")!
         thirdActivity.startDate = thirdActivityDate!
         thirdActivity.endDate = Calendar.current.date(byAdding: .init(hour: 8), to: thirdActivityDate!)
         thirdActivity.activityTypeValue = "sleep"
