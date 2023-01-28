@@ -16,7 +16,7 @@ struct ActivityButtonsView: View {
         WithViewStore(store) { viewStore in
             if viewStore.activitiesActive {
                 Button(action: {
-                    viewStore.send(.startActivity(.sleep))
+                    viewStore.send(.endAllActiveActivities)
                 }, label: {
                     HStack {
                         Image(systemName: "sleep")
