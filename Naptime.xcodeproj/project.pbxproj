@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		811089E229857C36001D4E58 /* ActivityButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811089E129857C36001D4E58 /* ActivityButtonsView.swift */; };
+		811089E629857E7B001D4E58 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811089E529857E7B001D4E58 /* RoundedButton.swift */; };
 		814D3F91293CDD2E00553B46 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D3F90293CDD2E00553B46 /* ActivityView.swift */; };
 		815550AA293F99CD000A2952 /* Async+Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815550A9293F99CD000A2952 /* Async+Future.swift */; };
 		8159C43E2940D55600716330 /* ActivitySectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C43D2940D55600716330 /* ActivitySectionHeaderView.swift */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		811089E129857C36001D4E58 /* ActivityButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityButtonsView.swift; sourceTree = "<group>"; };
+		811089E529857E7B001D4E58 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		814D3F90293CDD2E00553B46 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		815550A9293F99CD000A2952 /* Async+Future.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Async+Future.swift"; sourceTree = "<group>"; };
 		8159C43D2940D55600716330 /* ActivitySectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySectionHeaderView.swift; sourceTree = "<group>"; };
@@ -105,6 +107,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		811089E329857E69001D4E58 /* ViewComponents */ = {
+			isa = PBXGroup;
+			children = (
+				811089E429857E70001D4E58 /* ButtonStyles */,
+			);
+			path = ViewComponents;
+			sourceTree = "<group>";
+		};
+		811089E429857E70001D4E58 /* ButtonStyles */ = {
+			isa = PBXGroup;
+			children = (
+				811089E529857E7B001D4E58 /* RoundedButton.swift */,
+			);
+			path = ButtonStyles;
+			sourceTree = "<group>";
+		};
 		815550A8293F99BF000A2952 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +213,7 @@
 		81F2519829291CFC00B90C0E /* Naptime */ = {
 			isa = PBXGroup;
 			children = (
+				811089E329857E69001D4E58 /* ViewComponents */,
 				815550A8293F99BF000A2952 /* Extensions */,
 				81CD4F13293C88F8007CE048 /* Activity */,
 				81CD4EFE293917A1007CE048 /* Shared */,
@@ -381,6 +400,7 @@
 				81CD4F15293C8918007CE048 /* ActivityFeature.swift in Sources */,
 				81CD4EFD2937E0AD007CE048 /* RootFeature.swift in Sources */,
 				81B2212629718019005C4A15 /* ActivityDetail.swift in Sources */,
+				811089E629857E7B001D4E58 /* RoundedButton.swift in Sources */,
 				81B2212329717D1C005C4A15 /* LabelledFormView.swift in Sources */,
 				81B2212429717D1C005C4A15 /* FormTextField.swift in Sources */,
 				81CD4EF92937E060007CE048 /* RootView.swift in Sources */,

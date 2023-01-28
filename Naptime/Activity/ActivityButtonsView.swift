@@ -21,10 +21,10 @@ struct ActivityButtonsView: View {
                     HStack {
                         Image(systemName: "sleep")
                             .resizable()
-                            .frame(width: 50, height: 50)
+                            .frame(width: 40, height: 40)
                         Text("Wake up")
-                    }.foregroundColor(Color("tomato"))
-                })
+                    }
+                }).buttonStyle(RoundedButton(backgroundColor: Color("tomato"), cornerRadius: 12))
             } else {
                 Button(action: {
                     viewStore.send(.startActivity(.sleep))
@@ -32,10 +32,10 @@ struct ActivityButtonsView: View {
                     HStack {
                         Image(systemName: "powersleep")
                             .resizable()
-                            .frame(width: 50, height: 50)
+                            .frame(width: 40, height: 40)
                         Text("Sleep")
-                    }.foregroundColor(Color("ocean"))
-                })
+                    }
+                }).buttonStyle(RoundedButton(backgroundColor: Color("ocean"), cornerRadius: 12))
             }
         }
     }
