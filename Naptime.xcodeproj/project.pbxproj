@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		811089E229857C36001D4E58 /* ActivityButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811089E129857C36001D4E58 /* ActivityButtonsView.swift */; };
 		811089E629857E7B001D4E58 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811089E529857E7B001D4E58 /* RoundedButton.swift */; };
+		811089E829858267001D4E58 /* ActivityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811089E729858267001D4E58 /* ActivityListView.swift */; };
+		811089EA298583D8001D4E58 /* Array+safeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811089E9298583D8001D4E58 /* Array+safeIndex.swift */; };
 		814D3F91293CDD2E00553B46 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D3F90293CDD2E00553B46 /* ActivityView.swift */; };
 		815550AA293F99CD000A2952 /* Async+Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815550A9293F99CD000A2952 /* Async+Future.swift */; };
 		8159C43E2940D55600716330 /* ActivitySectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C43D2940D55600716330 /* ActivitySectionHeaderView.swift */; };
@@ -53,6 +55,8 @@
 /* Begin PBXFileReference section */
 		811089E129857C36001D4E58 /* ActivityButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityButtonsView.swift; sourceTree = "<group>"; };
 		811089E529857E7B001D4E58 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		811089E729858267001D4E58 /* ActivityListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListView.swift; sourceTree = "<group>"; };
+		811089E9298583D8001D4E58 /* Array+safeIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+safeIndex.swift"; sourceTree = "<group>"; };
 		814D3F90293CDD2E00553B46 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		815550A9293F99CD000A2952 /* Async+Future.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Async+Future.swift"; sourceTree = "<group>"; };
 		8159C43D2940D55600716330 /* ActivitySectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySectionHeaderView.swift; sourceTree = "<group>"; };
@@ -127,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				815550A9293F99CD000A2952 /* Async+Future.swift */,
+				811089E9298583D8001D4E58 /* Array+safeIndex.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -184,6 +189,7 @@
 				8159C43D2940D55600716330 /* ActivitySectionHeaderView.swift */,
 				8159C43F2941CB4B00716330 /* ActivityRowView.swift */,
 				811089E129857C36001D4E58 /* ActivityButtonsView.swift */,
+				811089E729858267001D4E58 /* ActivityListView.swift */,
 			);
 			path = Activity;
 			sourceTree = "<group>";
@@ -389,6 +395,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				811089E829858267001D4E58 /* ActivityListView.swift in Sources */,
 				81B2212029717CDE005C4A15 /* ActivityDetailView.swift in Sources */,
 				8159C4402941CB4B00716330 /* ActivityRowView.swift in Sources */,
 				811089E229857C36001D4E58 /* ActivityButtonsView.swift in Sources */,
@@ -401,6 +408,7 @@
 				81CD4EFD2937E0AD007CE048 /* RootFeature.swift in Sources */,
 				81B2212629718019005C4A15 /* ActivityDetail.swift in Sources */,
 				811089E629857E7B001D4E58 /* RoundedButton.swift in Sources */,
+				811089EA298583D8001D4E58 /* Array+safeIndex.swift in Sources */,
 				81B2212329717D1C005C4A15 /* LabelledFormView.swift in Sources */,
 				81B2212429717D1C005C4A15 /* FormTextField.swift in Sources */,
 				81CD4EF92937E060007CE048 /* RootView.swift in Sources */,

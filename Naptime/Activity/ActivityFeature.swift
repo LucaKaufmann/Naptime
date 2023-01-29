@@ -235,15 +235,20 @@ struct Activity: ReducerProtocol {
     private func groupActivities(_ activities: [ActivityModel]) ->  [Date: IdentifiedArrayOf<ActivityDetail.State>]{
         let calendar = Calendar.current
         var grouped = [Date: IdentifiedArrayOf<ActivityDetail.State>]()
-        for activity in activities {
+        for (index, activity) in activities.enumerated() {
             let normalizedDate = calendar.startOfDay(for: activity.startDate)
-            if let dateActivities = grouped[normalizedDate] {
+            if grouped[normalizedDate] != nil {
                 print("Append to existing section \(activity)")
-                var activitiesForDay = dateActivities
-                activitiesForDay.append(ActivityDetail.State(id: activity.id, activity: activity))
                 
-                grouped[normalizedDate] = IdentifiedArrayOf(uniqueElements: activitiesForDay
-                    .sorted(by: { $0.activity!.startDate.compare($1.activity!.startDate) == .orderedDescending }))
+                var activityDetailState = ActivityDetail.State(id: activity.id, activity: activity)
+                if let previousActivityDate = activities[safe: index+1]?.endDate {
+                    let difference = activity.startDate.timeIntervalSince(previousActivityDate)
+                    activityDetailState.intervalSincePreviousActivity = difference
+                }
+                
+                grouped[normalizedDate]!.append(activityDetailState)
+//                = IdentifiedArrayOf(uniqueElements: activitiesForDay
+//                    .sorted(by: { $0.activity!.startDate.compare($1.activity!.startDate) == .orderedDescending }))
             } else {
                 print("Create new section for \(activity)")
                 grouped[normalizedDate] = [ActivityDetail.State(id: activity.id, activity: activity)]

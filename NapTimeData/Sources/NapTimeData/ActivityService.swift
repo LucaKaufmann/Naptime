@@ -18,7 +18,7 @@ public struct ActivityService {
     
     public func fetchActivities() async -> [ActivityModel] {
         do {
-            let persistenceModels = try await persistence.fetch(model: ActivityPersistenceModel.self, sortDescriptors: [.init(key: "startDate", ascending: true)])
+            let persistenceModels = try await persistence.fetch(model: ActivityPersistenceModel.self, sortDescriptors: [.init(key: "startDate", ascending: false)])
             let activityModels = persistenceModels.compactMap({ ActivityModel(persistenceModel: $0) })
             os_log("Fetched activities: %@ ",
                    log: OSLog.persistence,

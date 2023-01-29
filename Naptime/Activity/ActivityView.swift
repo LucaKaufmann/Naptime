@@ -39,29 +39,7 @@ struct ActivityView: View {
                             VStack {
                                 ActivityButtonsView(store: store)
                                 ScrollView {
-                                    ForEach(viewStore.activityHeaderDates, id: \.self) { header in
-                                        Section(header: ActivitySectionHeaderView(date: header)) {
-                                            ForEach(viewStore.groupedActivities[header]!, id: \.id) { activity in
-                                                NavigationLink(
-                                                    tag: activity.id,
-                                                    selection: viewStore.binding(
-                                                        get: \.selectedActivityId,
-                                                        send: Activity.Action.setSelectedActivityId
-                                                    )
-                                                ){
-                                                    IfLetStore(
-                                                        store.scope(state: \.selectedActivity,
-                                                                    action: Activity.Action.activityDetailAction),
-                                                        then: ActivityDetailView.init(store:),
-                                                        else: { Text("Nothing here") }
-                                                    )
-                                                } label: {
-                                                    ActivityRowView(activity: activity.activity!)
-                                                    
-                                                }.buttonStyle(.plain)
-                                            }
-                                        }
-                                    }
+                                    ActivityListView(store: store)
                                 }
                             }
                         }

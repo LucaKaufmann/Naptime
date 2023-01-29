@@ -16,6 +16,7 @@ struct ActivityDetail: ReducerProtocol {
     struct State: Equatable, Identifiable {
         let id: UUID
         var activity: ActivityModel?
+        var intervalSincePreviousActivity: TimeInterval?
     }
     
     enum Action {
