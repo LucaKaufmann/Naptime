@@ -46,10 +46,12 @@ struct ActivityListView: View {
                             if let interval = activity.intervalSincePreviousActivity {
                                 HStack {
                                     Spacer()
+                                        .frame(width: 50)
+                                        .padding(.trailing)
                                     Text("Awake for \(formatter.string(from: abs(interval)) ?? "")")
                                         .foregroundColor(Color("sand"))
                                     Spacer()
-                                }.padding()
+                                }
                             }
                         }
                     }

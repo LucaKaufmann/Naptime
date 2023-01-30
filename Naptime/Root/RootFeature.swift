@@ -37,6 +37,7 @@ struct Root: ReducerProtocol {
             case .loadedActivities(let result):
                 switch result {
                 case .success(let activities):
+                    state.activityState.lastActivityDate = activities[safe: 0]?.endDate ?? activities[safe: 0]?.startDate
                     state.activityState.activities = activities
                 case .failure(let error):
                     os_log("Failed to load activities %@ ",

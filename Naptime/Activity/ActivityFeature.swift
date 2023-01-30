@@ -31,10 +31,15 @@ struct Activity: ReducerProtocol {
         var activityHeaderDates: [Date]
         var selectedActivityId: ActivityDetail.State.ID?
         var selectedActivity: ActivityDetail.State?
+        var lastActivityDate: Date?
         
         var activitiesActive: Bool {
             return activities.filter({ $0.isActive }).count > 0
         }
+        
+//        var lastActivityDate: Date? {
+//            return activities[safe: 0]?.endDate ?? activities[safe: 0]?.startDate
+//        }
         
         func activitiesFor(date: Date) -> IdentifiedArrayOf<ActivityDetail.State> {
             return IdentifiedArrayOf(uniqueElements: groupedActivities[date] ?? [])
@@ -57,7 +62,8 @@ struct Activity: ReducerProtocol {
             case .startActivity(let type):
                 let newActivity = ActivityModel(id: UUID(), startDate: Date(), endDate: nil, type: type)
                 
-                state.activities.append(newActivity)
+                state.activities.insert(newActivity, at: 0)
+                state.lastActivityDate = nil
                 
                 return .task {
                     await activityService.addActivity(newActivity)
@@ -75,6 +81,7 @@ struct Activity: ReducerProtocol {
             case .activitiesUpdated:
                 state.groupedActivities = groupActivities(state.activities)
                 state.activityHeaderDates = activityHeaders(state.groupedActivities)
+                state.lastActivityDate = state.activities[safe: 0]?.endDate ?? state.activities[safe: 0]?.startDate
             case .endActivity(let activity):
                 guard activity.endDate == nil else {
                     return .none
@@ -95,6 +102,7 @@ struct Activity: ReducerProtocol {
                 
                 return .none
             case .endAllActiveActivities:
+                state.lastActivityDate = nil
                 let activities = state.activities.filter({ $0.isActive })
                 for activity in activities {
                     guard let index = state.activities.firstIndex(of: activity) else {
@@ -247,11 +255,14 @@ struct Activity: ReducerProtocol {
                 }
                 
                 grouped[normalizedDate]!.append(activityDetailState)
-//                = IdentifiedArrayOf(uniqueElements: activitiesForDay
-//                    .sorted(by: { $0.activity!.startDate.compare($1.activity!.startDate) == .orderedDescending }))
             } else {
                 print("Create new section for \(activity)")
-                grouped[normalizedDate] = [ActivityDetail.State(id: activity.id, activity: activity)]
+                var activityDetailState = ActivityDetail.State(id: activity.id, activity: activity)
+                if let previousActivityDate = activities[safe: index+1]?.endDate {
+                    let difference = activity.startDate.timeIntervalSince(previousActivityDate)
+                    activityDetailState.intervalSincePreviousActivity = difference
+                }
+                grouped[normalizedDate] = [activityDetailState]
             }
         }
         

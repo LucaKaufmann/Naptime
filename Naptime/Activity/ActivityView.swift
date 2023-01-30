@@ -38,6 +38,10 @@ struct ActivityView: View {
                             .padding(.bottom, 40)
                             VStack {
                                 ActivityButtonsView(store: store)
+                                if let recentActivityDate = viewStore.lastActivityDate {
+                                    TimerView(isTimerRunning: true, startTime: recentActivityDate)
+                                        .foregroundColor(Color("sand"))
+                                }
                                 ScrollView {
                                     ActivityListView(store: store)
                                 }
