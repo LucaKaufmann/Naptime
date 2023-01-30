@@ -26,6 +26,7 @@
 		81CD4F15293C8918007CE048 /* ActivityFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4F14293C8918007CE048 /* ActivityFeature.swift */; };
 		81EB50D62987BD6E007ABC32 /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D52987BD6E007ABC32 /* ToggleView.swift */; };
 		81EB50D92987C38E007ABC32 /* ToggleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D82987C38E007ABC32 /* ToggleContentView.swift */; };
+		81EB50DB29883698007ABC32 /* ScaleNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50DA29883698007ABC32 /* ScaleNumbers.swift */; };
 		81F2519A29291CFC00B90C0E /* NaptimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F2519929291CFC00B90C0E /* NaptimeApp.swift */; };
 		81F251A329291CFD00B90C0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81F251A229291CFD00B90C0E /* Assets.xcassets */; };
 		81F251A729291CFD00B90C0E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81F251A629291CFD00B90C0E /* Preview Assets.xcassets */; };
@@ -75,6 +76,7 @@
 		81CD4F14293C8918007CE048 /* ActivityFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFeature.swift; sourceTree = "<group>"; };
 		81EB50D52987BD6E007ABC32 /* ToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleView.swift; sourceTree = "<group>"; };
 		81EB50D82987C38E007ABC32 /* ToggleContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleContentView.swift; sourceTree = "<group>"; };
+		81EB50DA29883698007ABC32 /* ScaleNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleNumbers.swift; sourceTree = "<group>"; };
 		81F2519629291CFC00B90C0E /* Naptime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Naptime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F2519929291CFC00B90C0E /* NaptimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaptimeApp.swift; sourceTree = "<group>"; };
 		81F251A229291CFD00B90C0E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			children = (
 				815550A9293F99CD000A2952 /* Async+Future.swift */,
 				811089E9298583D8001D4E58 /* Array+safeIndex.swift */,
+				81EB50DA29883698007ABC32 /* ScaleNumbers.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				81CD4EFD2937E0AD007CE048 /* RootFeature.swift in Sources */,
 				81B2212629718019005C4A15 /* ActivityDetail.swift in Sources */,
 				811089E629857E7B001D4E58 /* RoundedButton.swift in Sources */,
+				81EB50DB29883698007ABC32 /* ScaleNumbers.swift in Sources */,
 				811089EA298583D8001D4E58 /* Array+safeIndex.swift in Sources */,
 				81EB50D92987C38E007ABC32 /* ToggleContentView.swift in Sources */,
 				81B2212329717D1C005C4A15 /* LabelledFormView.swift in Sources */,
