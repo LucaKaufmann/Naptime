@@ -7,49 +7,44 @@
 
 import SwiftUI
 import ComposableArchitecture
+import NapTimeData
 
 struct ActivityButtonsView: View {
     
-    let store: Store<Activity.State, Activity.Action>
-    
+    let store: Store<Activity.State, Activity.Action>    
     var body: some View {
         WithViewStore(store) { viewStore in
-            if viewStore.activitiesActive {
-                Button(action: {
-                    viewStore.send(.endAllActiveActivities)
-                }, label: {
-                    HStack {
-                        Image(systemName: "sleep")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                        Text("Wake up")
-                    }
-                }).buttonStyle(RoundedButton(backgroundColor: Color("tomato"), cornerRadius: 12))
-            } else {
-                Button(action: {
-                    viewStore.send(.startActivity(.sleep))
-                }, label: {
-                    HStack {
-                        Image(systemName: "powersleep")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                        Text("Sleep")
-                    }
-                }).buttonStyle(RoundedButton(backgroundColor: Color("ocean"), cornerRadius: 12))
-            }
+            ToggleView(isOn: viewStore.binding(\.$isSleeping)) {
+                Color("slateInverted")
+            }button: {
+                Color(viewStore.isSleeping ? "tomatoLight" : "slate")
+                    .overlay(ToggleContentView(isOn: viewStore.binding(\.$isSleeping)))
+            }.frame(width: 250, height: 75)
         }
     }
 }
 
-//struct ActivityButtonsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let date = Date()
-//        let activities = [ActivityModel(id: UUID(), startDate: date, endDate: nil, type: .sleep)]
-//        let grouped: [Date: IdentifiedArrayOf<ActivityDetail.State>] = [date: [ActivityDetail.State(id: UUID(), activity: activities.first)]]
-//        ActivityButtonsView(store: Store(
-//            initialState: Activity.State(activities: activities,
-//                                         groupedActivities: grouped,
-//                                         activityHeaderDates: [Date()]),
-//            reducer: Activity()))
-//    }
-//}
+struct ActivityButtonsView_Previews: PreviewProvider {
+    static var previews: some View {
+        let date = Date()
+        let activities = [ActivityModel(id: UUID(), startDate: date, endDate: nil, type: .sleep)]
+        let grouped: [Date: IdentifiedArrayOf<ActivityDetail.State>] = [date: [ActivityDetail.State(id: UUID(), activity: activities.first)]]
+        Group {
+            ActivityButtonsView(store: Store(
+                initialState: Activity.State(activities: activities,
+                                             groupedActivities: grouped,
+                                             activityHeaderDates: [Date()]),
+                reducer: Activity()))
+            .previewDisplayName("Light")
+            .preferredColorScheme(.light)
+            ActivityButtonsView(store: Store(
+                initialState: Activity.State(activities: activities,
+                                             groupedActivities: grouped,
+                                             activityHeaderDates: [Date()]),
+                reducer: Activity()))
+            .previewDisplayName("Dark")
+            .preferredColorScheme(.dark)
+        }
+
+    }
+}

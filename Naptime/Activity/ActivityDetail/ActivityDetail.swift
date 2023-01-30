@@ -19,7 +19,7 @@ struct ActivityDetail: ReducerProtocol {
         var intervalSincePreviousActivity: TimeInterval?
     }
     
-    enum Action {
+    enum Action: Equatable {
         case updateActivity(ActivityModel)
         case deleteActivity(ActivityModel)
         case activityUpdated

@@ -70,9 +70,7 @@ public struct ActivityService {
             activityToUpdate.startDate = startDate
         }
         
-        if let endDate {
-            activityToUpdate.endDate = endDate
-        }
+        activityToUpdate.endDate = endDate
         
         if let type {
             activityToUpdate.activityTypeValue = type.rawValue

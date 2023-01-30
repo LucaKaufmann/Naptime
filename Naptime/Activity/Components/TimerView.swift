@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TimerView: View {
     
+    var label: String = ""
     @State var isTimerRunning = false
     @State var startTime =  Date()
     @State private var interval = TimeInterval()
@@ -24,7 +25,7 @@ struct TimerView: View {
       }()
     
     var body: some View {
-        Text(formatter.string(from: interval) ?? "")
+        Text("\(label) \(formatter.string(from: interval) ?? "")")
             .font(Font.system(size: 12, design: .monospaced))
                     .onReceive(timer) { _ in
                         if self.isTimerRunning {

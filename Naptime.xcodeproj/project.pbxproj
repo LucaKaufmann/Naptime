@@ -24,6 +24,8 @@
 		81CD4EFD2937E0AD007CE048 /* RootFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4EFC2937E0AD007CE048 /* RootFeature.swift */; };
 		81CD4F00293917AE007CE048 /* SystemEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4EFF293917AE007CE048 /* SystemEnvironment.swift */; };
 		81CD4F15293C8918007CE048 /* ActivityFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4F14293C8918007CE048 /* ActivityFeature.swift */; };
+		81EB50D62987BD6E007ABC32 /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D52987BD6E007ABC32 /* ToggleView.swift */; };
+		81EB50D92987C38E007ABC32 /* ToggleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D82987C38E007ABC32 /* ToggleContentView.swift */; };
 		81F2519A29291CFC00B90C0E /* NaptimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F2519929291CFC00B90C0E /* NaptimeApp.swift */; };
 		81F251A329291CFD00B90C0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81F251A229291CFD00B90C0E /* Assets.xcassets */; };
 		81F251A729291CFD00B90C0E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81F251A629291CFD00B90C0E /* Preview Assets.xcassets */; };
@@ -71,6 +73,8 @@
 		81CD4EFC2937E0AD007CE048 /* RootFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootFeature.swift; sourceTree = "<group>"; };
 		81CD4EFF293917AE007CE048 /* SystemEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemEnvironment.swift; sourceTree = "<group>"; };
 		81CD4F14293C8918007CE048 /* ActivityFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFeature.swift; sourceTree = "<group>"; };
+		81EB50D52987BD6E007ABC32 /* ToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleView.swift; sourceTree = "<group>"; };
+		81EB50D82987C38E007ABC32 /* ToggleContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleContentView.swift; sourceTree = "<group>"; };
 		81F2519629291CFC00B90C0E /* Naptime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Naptime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F2519929291CFC00B90C0E /* NaptimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaptimeApp.swift; sourceTree = "<group>"; };
 		81F251A229291CFD00B90C0E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -142,6 +146,7 @@
 				81B2212229717D1C005C4A15 /* FormTextField.swift */,
 				81B2212129717D1C005C4A15 /* LabelledFormView.swift */,
 				8159C4422941D05400716330 /* TimerView.swift */,
+				81EB50D52987BD6E007ABC32 /* ToggleView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -182,6 +187,7 @@
 		81CD4F13293C88F8007CE048 /* Activity */ = {
 			isa = PBXGroup;
 			children = (
+				81EB50D72987C376007ABC32 /* Toggle */,
 				81B2211E29717CD0005C4A15 /* ActivityDetail */,
 				8159C4412941D04100716330 /* Components */,
 				81CD4F14293C8918007CE048 /* ActivityFeature.swift */,
@@ -192,6 +198,14 @@
 				811089E729858267001D4E58 /* ActivityListView.swift */,
 			);
 			path = Activity;
+			sourceTree = "<group>";
+		};
+		81EB50D72987C376007ABC32 /* Toggle */ = {
+			isa = PBXGroup;
+			children = (
+				81EB50D82987C38E007ABC32 /* ToggleContentView.swift */,
+			);
+			path = Toggle;
 			sourceTree = "<group>";
 		};
 		81F2518D29291CFC00B90C0E = {
@@ -409,10 +423,12 @@
 				81B2212629718019005C4A15 /* ActivityDetail.swift in Sources */,
 				811089E629857E7B001D4E58 /* RoundedButton.swift in Sources */,
 				811089EA298583D8001D4E58 /* Array+safeIndex.swift in Sources */,
+				81EB50D92987C38E007ABC32 /* ToggleContentView.swift in Sources */,
 				81B2212329717D1C005C4A15 /* LabelledFormView.swift in Sources */,
 				81B2212429717D1C005C4A15 /* FormTextField.swift in Sources */,
 				81CD4EF92937E060007CE048 /* RootView.swift in Sources */,
 				81CD4F00293917AE007CE048 /* SystemEnvironment.swift in Sources */,
+				81EB50D62987BD6E007ABC32 /* ToggleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

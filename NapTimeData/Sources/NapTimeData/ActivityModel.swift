@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ActivityType: String {
+public enum ActivityType: String, Equatable {
     case sleep = "sleep"
     case tummyTime = "Tummy time"
     

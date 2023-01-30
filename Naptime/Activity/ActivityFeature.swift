@@ -32,24 +32,22 @@ struct Activity: ReducerProtocol {
         var selectedActivityId: ActivityDetail.State.ID?
         var selectedActivity: ActivityDetail.State?
         var lastActivityDate: Date?
+        @BindableState var isSleeping: Bool = false
         
         var activitiesActive: Bool {
             return activities.filter({ $0.isActive }).count > 0
         }
-        
-//        var lastActivityDate: Date? {
-//            return activities[safe: 0]?.endDate ?? activities[safe: 0]?.startDate
-//        }
         
         func activitiesFor(date: Date) -> IdentifiedArrayOf<ActivityDetail.State> {
             return IdentifiedArrayOf(uniqueElements: groupedActivities[date] ?? [])
         }
     }
     
-    enum Action {
+    enum Action: Equatable, BindableAction {
         case startActivity(ActivityType)
         case endActivity(ActivityModel)
         case endAllActiveActivities
+        case binding(BindingAction<Activity.State>)
         case deleteActivity(Int)
         case activitiesUpdated
         case activityDetailAction(ActivityDetail.Action)
@@ -82,6 +80,7 @@ struct Activity: ReducerProtocol {
                 state.groupedActivities = groupActivities(state.activities)
                 state.activityHeaderDates = activityHeaders(state.groupedActivities)
                 state.lastActivityDate = state.activities[safe: 0]?.endDate ?? state.activities[safe: 0]?.startDate
+                state.isSleeping = state.activitiesActive
             case .endActivity(let activity):
                 guard activity.endDate == nil else {
                     return .none
@@ -119,6 +118,17 @@ struct Activity: ReducerProtocol {
 
                     return .activitiesUpdated
                 }
+            case .binding:
+                if !state.isSleeping {
+                    return .task {
+                        return .startActivity(.sleep)
+                    }
+                } else {
+                    return .task {
+                        return .endAllActiveActivities
+                    }
+                }
+                
             case let .setSelectedActivityId(.some(id)):
                 state.selectedActivityId = id
                 if let activity = state.activities.first(where: { $0.id == id }) {
@@ -136,6 +146,7 @@ struct Activity: ReducerProtocol {
                         return .none
                     }
                     
+                    state.lastActivityDate = nil
                     state.activities[index] = activity
                     
                     return .task {
@@ -160,6 +171,7 @@ struct Activity: ReducerProtocol {
         .ifLet(\.selectedActivity, action: /Action.activityDetailAction) {
           ActivityDetail()
         }
+        BindingReducer()
 //        Scope(state: \selectedActivity, action: /Action.activityDetailAction) {
 //            ActivityDetail()
 //        }
@@ -246,8 +258,6 @@ struct Activity: ReducerProtocol {
         for (index, activity) in activities.enumerated() {
             let normalizedDate = calendar.startOfDay(for: activity.startDate)
             if grouped[normalizedDate] != nil {
-                print("Append to existing section \(activity)")
-                
                 var activityDetailState = ActivityDetail.State(id: activity.id, activity: activity)
                 if let previousActivityDate = activities[safe: index+1]?.endDate {
                     let difference = activity.startDate.timeIntervalSince(previousActivityDate)
@@ -256,7 +266,6 @@ struct Activity: ReducerProtocol {
                 
                 grouped[normalizedDate]!.append(activityDetailState)
             } else {
-                print("Create new section for \(activity)")
                 var activityDetailState = ActivityDetail.State(id: activity.id, activity: activity)
                 if let previousActivityDate = activities[safe: index+1]?.endDate {
                     let difference = activity.startDate.timeIntervalSince(previousActivityDate)

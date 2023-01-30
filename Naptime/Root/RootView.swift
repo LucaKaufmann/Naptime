@@ -14,14 +14,9 @@ struct RootView: View {
     let store: Store<Root.State, Root.Action>
     var body: some View {
         WithViewStore(self.store.stateless) { viewStore in
-            TabView {
-                ActivityView(store: store.scope(state: \.activityState,
-                                                action: Root.Action.activityAction))
-                .tabItem {
-                  Image(systemName: "list.bullet")
-                  Text("Activities")
-                }
-            }.onAppear {
+            ActivityView(store: store.scope(state: \.activityState,
+                                            action: Root.Action.activityAction))
+            .onAppear {
                 viewStore.send(.onAppear)
             }
         }

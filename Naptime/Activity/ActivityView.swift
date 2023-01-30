@@ -39,7 +39,7 @@ struct ActivityView: View {
                             VStack {
                                 ActivityButtonsView(store: store)
                                 if let recentActivityDate = viewStore.lastActivityDate {
-                                    TimerView(isTimerRunning: true, startTime: recentActivityDate)
+                                    TimerView(label: viewStore.isSleeping ? "Asleep for" : "Awake for", isTimerRunning: true, startTime: recentActivityDate)
                                         .foregroundColor(Color("sand"))
                                 }
                                 ScrollView {
