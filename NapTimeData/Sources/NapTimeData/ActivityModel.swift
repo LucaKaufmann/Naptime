@@ -28,6 +28,14 @@ public struct ActivityModel: Equatable, Identifiable {
     public var endDate: Date?
     public var type: ActivityType
     
+    public var duration: TimeInterval {
+        if endDate == nil {
+            return Date().timeIntervalSince(startDate)
+        } else {
+            return endDate!.timeIntervalSince(startDate)
+        }
+    }
+    
     public var isActive: Bool {
         return endDate == nil
     }

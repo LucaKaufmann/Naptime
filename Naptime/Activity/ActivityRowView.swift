@@ -22,9 +22,24 @@ struct ActivityRowView: View {
     
     var body: some View {
         HStack {
-            Image(systemName: activity.type.icon)
-                .resizable()
-                .frame(width: 40, height: 40)
+            VStack(spacing: 0) {
+                Rectangle()
+                    .fill(Color("ocean"))
+                    .frame(width: 4, alignment: .center)
+//                    .offset(x: 33)
+                Image(systemName: activity.type.icon)
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .background(
+                        Circle()
+                           .fill(Color("slate"))
+                    )
+//                    .foregroundColor(Color("ocean"))
+                Rectangle()
+                    .fill(Color("ocean"))
+                    .frame(width: 4, alignment: .center)
+//                    .offset(x: 33)
+            }
             VStack(alignment: .leading) {
                 HStack {
                     Text("\(activity.formattedStartDate) - \(activity.formattedEndDate)")
@@ -42,7 +57,16 @@ struct ActivityRowView: View {
                 }
             }.padding(.horizontal)
             Spacer()
-        }.padding(.horizontal)
+            Image(systemName: "chevron.right")
+        }
+        .padding(.horizontal)
+        .background(
+            Color("ocean")
+                .offset(x: 34)
+                .mask(
+                    LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.3), Color.black.opacity(0)]), startPoint: .leading, endPoint: .trailing)
+                )
+        )
     }
 }
 

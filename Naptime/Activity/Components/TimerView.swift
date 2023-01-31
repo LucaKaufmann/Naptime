@@ -10,6 +10,9 @@ import SwiftUI
 struct TimerView: View {
     
     var label: String = ""
+    var fontSize: CGFloat = 12
+    var fontDesign: Font.Design = .monospaced
+    
     @State var isTimerRunning = false
     @State var startTime =  Date()
     @State private var interval = TimeInterval()
@@ -26,12 +29,12 @@ struct TimerView: View {
     
     var body: some View {
         Text("\(label) \(formatter.string(from: interval) ?? "")")
-            .font(Font.system(size: 12, design: .monospaced))
-                    .onReceive(timer) { _ in
-                        if self.isTimerRunning {
-                            interval = Date().timeIntervalSince(startTime)
-                        }
-                    }
+            .font(Font.system(size: fontSize, design: fontDesign))
+            .onReceive(timer) { _ in
+                if self.isTimerRunning {
+                    interval = Date().timeIntervalSince(startTime)
+                }
+            }
     }
 }
 

@@ -16,6 +16,8 @@
 		8159C43E2940D55600716330 /* ActivitySectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C43D2940D55600716330 /* ActivitySectionHeaderView.swift */; };
 		8159C4402941CB4B00716330 /* ActivityRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C43F2941CB4B00716330 /* ActivityRowView.swift */; };
 		8159C4432941D05400716330 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C4422941D05400716330 /* TimerView.swift */; };
+		816962392988DAB2006359F1 /* ScalingHeaderScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = 816962382988DAB2006359F1 /* ScalingHeaderScrollView */; };
+		8169623C29890D99006359F1 /* VisualEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8169623B29890D99006359F1 /* VisualEffect.swift */; };
 		81B2212029717CDE005C4A15 /* ActivityDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B2211F29717CDE005C4A15 /* ActivityDetailView.swift */; };
 		81B2212329717D1C005C4A15 /* LabelledFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B2212129717D1C005C4A15 /* LabelledFormView.swift */; };
 		81B2212429717D1C005C4A15 /* FormTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B2212229717D1C005C4A15 /* FormTextField.swift */; };
@@ -65,6 +67,7 @@
 		8159C43D2940D55600716330 /* ActivitySectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySectionHeaderView.swift; sourceTree = "<group>"; };
 		8159C43F2941CB4B00716330 /* ActivityRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRowView.swift; sourceTree = "<group>"; };
 		8159C4422941D05400716330 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		8169623B29890D99006359F1 /* VisualEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffect.swift; sourceTree = "<group>"; };
 		81787EE6294655A60031BE99 /* NapTimeData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NapTimeData; sourceTree = "<group>"; };
 		81B2211F29717CDE005C4A15 /* ActivityDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailView.swift; sourceTree = "<group>"; };
 		81B2212129717D1C005C4A15 /* LabelledFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelledFormView.swift; sourceTree = "<group>"; };
@@ -97,6 +100,7 @@
 				81F251CB29291E1800B90C0E /* ComposableArchitecture in Frameworks */,
 				81FDB60C296D3A6E00B0231A /* NapTimeData in Frameworks */,
 				81F251CD29291E1800B90C0E /* Dependencies in Frameworks */,
+				816962392988DAB2006359F1 /* ScalingHeaderScrollView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +124,7 @@
 		811089E329857E69001D4E58 /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
+				8169623A29890D8B006359F1 /* Visuals */,
 				811089E429857E70001D4E58 /* ButtonStyles */,
 			);
 			path = ViewComponents;
@@ -152,6 +157,14 @@
 				81EB50D52987BD6E007ABC32 /* ToggleView.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		8169623A29890D8B006359F1 /* Visuals */ = {
+			isa = PBXGroup;
+			children = (
+				8169623B29890D99006359F1 /* VisualEffect.swift */,
+			);
+			path = Visuals;
 			sourceTree = "<group>";
 		};
 		81787EE7294659B90031BE99 /* Frameworks */ = {
@@ -294,6 +307,7 @@
 				81F251CA29291E1800B90C0E /* ComposableArchitecture */,
 				81F251CC29291E1800B90C0E /* Dependencies */,
 				81FDB60B296D3A6E00B0231A /* NapTimeData */,
+				816962382988DAB2006359F1 /* ScalingHeaderScrollView */,
 			);
 			productName = Naptime;
 			productReference = 81F2519629291CFC00B90C0E /* Naptime.app */;
@@ -369,6 +383,7 @@
 			mainGroup = 81F2518D29291CFC00B90C0E;
 			packageReferences = (
 				81F251C929291E1800B90C0E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				816962372988DAB2006359F1 /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */,
 			);
 			productRefGroup = 81F2519729291CFC00B90C0E /* Products */;
 			projectDirPath = "";
@@ -432,6 +447,7 @@
 				81B2212429717D1C005C4A15 /* FormTextField.swift in Sources */,
 				81CD4EF92937E060007CE048 /* RootView.swift in Sources */,
 				81CD4F00293917AE007CE048 /* SystemEnvironment.swift in Sources */,
+				8169623C29890D99006359F1 /* VisualEffect.swift in Sources */,
 				81EB50D62987BD6E007ABC32 /* ToggleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -786,6 +802,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		816962372988DAB2006359F1 /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/ScalingHeaderScrollView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.6;
+			};
+		};
 		81F251C929291E1800B90C0E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -797,6 +821,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		816962382988DAB2006359F1 /* ScalingHeaderScrollView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 816962372988DAB2006359F1 /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */;
+			productName = ScalingHeaderScrollView;
+		};
 		81F251CA29291E1800B90C0E /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 81F251C929291E1800B90C0E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;

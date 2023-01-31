@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "scalingheaderscrollview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/exyte/ScalingHeaderScrollView.git",
+      "state" : {
+        "revision" : "7cf560e8a55fd932149484e18347f0c1b3ceb411",
+        "version" : "0.0.6"
+      }
+    },
+    {
       "identity" : "swift-case-paths",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-case-paths",
@@ -61,6 +70,15 @@
       "state" : {
         "revision" : "a08887de589e3829d488e0b4b707b2ca804b1060",
         "version" : "0.5.0"
+      }
+    },
+    {
+      "identity" : "swiftui-introspect",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/siteline/SwiftUI-Introspect.git",
+      "state" : {
+        "revision" : "f2616860a41f9d9932da412a8978fec79c06fe24",
+        "version" : "0.1.4"
       }
     },
     {

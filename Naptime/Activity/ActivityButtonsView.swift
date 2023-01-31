@@ -15,11 +15,18 @@ struct ActivityButtonsView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             ToggleView(isOn: viewStore.binding(\.$isSleeping)) {
-                Color("slateInverted")
+                Color.clear
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12).strokeBorder(Color("slate"), lineWidth: 5)
+                        
+                    )
             }button: {
-                Color(viewStore.isSleeping ? "tomatoLight" : "slate")
+                Color(viewStore.isSleeping ? "tomatoLight" : "ocean")
                     .overlay(ToggleContentView(isOn: viewStore.binding(\.$isSleeping)))
-            }.frame(width: 250, height: 75)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+            }
+            .frame(width: 250, height: 60)
+            .shadow(color: Color("slateDark").opacity(0.2), radius: 2)
         }
     }
 }

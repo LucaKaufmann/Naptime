@@ -12,12 +12,12 @@ struct ToggleContentView: View {
     @Binding var isOn: Bool
     
     var body: some View {
-        VStack {
+        HStack {
             Image(systemName: isOn ? "sleep" : "powersleep")
                 .resizable()
                 .frame(width: 20, height: 20)
             Text(isOn ? "Wake up" : "Sleep")
-        }
+        }.foregroundColor(.white)
     }
 }
 
@@ -26,6 +26,6 @@ struct ToggleContentView_Previews: PreviewProvider {
         Group {
             ToggleContentView(isOn: Binding.constant(true))
             ToggleContentView(isOn: Binding.constant(false))
-        }
+        }.background(Color("ocean"))
     }
 }
