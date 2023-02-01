@@ -11,14 +11,23 @@ import ComposableArchitecture
 import NapTimeData
 
 struct RootView: View {
+    
+    @Environment(\.scenePhase) var scenePhase
+
     let store: Store<Root.State, Root.Action>
+    
     var body: some View {
         WithViewStore(self.store.stateless) { viewStore in
             ActivityView(store: store.scope(state: \.activityState,
                                             action: Root.Action.activityAction))
-            .onAppear {
-                viewStore.send(.onAppear)
-            }
+            .onChange(of: scenePhase) { newPhase in
+                           if newPhase == .active {
+                               viewStore.send(.onAppear)
+                           }
+                       }
+//            .onAppear {
+//                viewStore.send(.onAppear)
+//            }
         }
     }
 }

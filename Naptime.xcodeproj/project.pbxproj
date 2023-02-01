@@ -18,6 +18,8 @@
 		8159C4432941D05400716330 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8159C4422941D05400716330 /* TimerView.swift */; };
 		816962392988DAB2006359F1 /* ScalingHeaderScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = 816962382988DAB2006359F1 /* ScalingHeaderScrollView */; };
 		8169623C29890D99006359F1 /* VisualEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8169623B29890D99006359F1 /* VisualEffect.swift */; };
+		8169623E298A4C72006359F1 /* AwakeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8169623D298A4C72006359F1 /* AwakeRow.swift */; };
+		81696240298A68E9006359F1 /* ActivityListAwakeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8169623F298A68E9006359F1 /* ActivityListAwakeRow.swift */; };
 		81B2212029717CDE005C4A15 /* ActivityDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B2211F29717CDE005C4A15 /* ActivityDetailView.swift */; };
 		81B2212329717D1C005C4A15 /* LabelledFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B2212129717D1C005C4A15 /* LabelledFormView.swift */; };
 		81B2212429717D1C005C4A15 /* FormTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B2212229717D1C005C4A15 /* FormTextField.swift */; };
@@ -68,6 +70,8 @@
 		8159C43F2941CB4B00716330 /* ActivityRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRowView.swift; sourceTree = "<group>"; };
 		8159C4422941D05400716330 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		8169623B29890D99006359F1 /* VisualEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffect.swift; sourceTree = "<group>"; };
+		8169623D298A4C72006359F1 /* AwakeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwakeRow.swift; sourceTree = "<group>"; };
+		8169623F298A68E9006359F1 /* ActivityListAwakeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListAwakeRow.swift; sourceTree = "<group>"; };
 		81787EE6294655A60031BE99 /* NapTimeData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NapTimeData; sourceTree = "<group>"; };
 		81B2211F29717CDE005C4A15 /* ActivityDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailView.swift; sourceTree = "<group>"; };
 		81B2212129717D1C005C4A15 /* LabelledFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelledFormView.swift; sourceTree = "<group>"; };
@@ -155,6 +159,7 @@
 				81B2212129717D1C005C4A15 /* LabelledFormView.swift */,
 				8159C4422941D05400716330 /* TimerView.swift */,
 				81EB50D52987BD6E007ABC32 /* ToggleView.swift */,
+				8169623D298A4C72006359F1 /* AwakeRow.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -212,6 +217,7 @@
 				8159C43F2941CB4B00716330 /* ActivityRowView.swift */,
 				811089E129857C36001D4E58 /* ActivityButtonsView.swift */,
 				811089E729858267001D4E58 /* ActivityListView.swift */,
+				8169623F298A68E9006359F1 /* ActivityListAwakeRow.swift */,
 			);
 			path = Activity;
 			sourceTree = "<group>";
@@ -432,7 +438,9 @@
 				8159C4402941CB4B00716330 /* ActivityRowView.swift in Sources */,
 				811089E229857C36001D4E58 /* ActivityButtonsView.swift in Sources */,
 				81F2519A29291CFC00B90C0E /* NaptimeApp.swift in Sources */,
+				8169623E298A4C72006359F1 /* AwakeRow.swift in Sources */,
 				8159C43E2940D55600716330 /* ActivitySectionHeaderView.swift in Sources */,
+				81696240298A68E9006359F1 /* ActivityListAwakeRow.swift in Sources */,
 				8159C4432941D05400716330 /* TimerView.swift in Sources */,
 				814D3F91293CDD2E00553B46 /* ActivityView.swift in Sources */,
 				815550AA293F99CD000A2952 /* Async+Future.swift in Sources */,
