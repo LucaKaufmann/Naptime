@@ -16,7 +16,7 @@ struct ActivityView: View {
     
     let store: Store<Activity.State, Activity.Action>
     
-    private let minHeight = 110.0
+    private let minHeight = 90.0
     private let maxHeight = 372.0
     
     var body: some View {
@@ -30,12 +30,20 @@ struct ActivityView: View {
                         ScalingHeaderScrollView {
                             ZStack {
                                 Color("ocean")
+                                    .opacity(Double(progress * -1 + 1))
+                                VStack {
+                                    Spacer()
+                                    VisualEffectView(effect: UIBlurEffect(style: .regular))
+                                        .frame(height: 100)
+                                }
+
                                 VStack {
                                     Spacer()
                                     BackgroundShape()
                                         .foregroundColor(Color("slate"))
                                         .edgesIgnoringSafeArea(.all)
                                         .frame(width: geometry.size.width, height: 150)
+                                        .opacity(Double(progress * -1 + 1))
                                 }
                                 VStack {
                                     Spacer()
