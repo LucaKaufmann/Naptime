@@ -40,14 +40,14 @@ struct ActivityButtonsView_Previews: PreviewProvider {
             ActivityButtonsView(store: Store(
                 initialState: Activity.State(activities: activities,
                                              groupedActivities: grouped,
-                                             activityHeaderDates: [Date()]),
+                                             activityHeaderDates: [Date()], activityTilesState: ActivityTiles.State()),
                 reducer: Activity()))
             .previewDisplayName("Light")
             .preferredColorScheme(.light)
             ActivityButtonsView(store: Store(
                 initialState: Activity.State(activities: activities,
                                              groupedActivities: grouped,
-                                             activityHeaderDates: [Date()]),
+                                             activityHeaderDates: [Date()], activityTilesState: ActivityTiles.State()),
                 reducer: Activity()))
             .previewDisplayName("Dark")
             .preferredColorScheme(.dark)

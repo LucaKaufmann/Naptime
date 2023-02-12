@@ -24,26 +24,27 @@ struct ActivityView: View {
             WithViewStore(self.store) { viewStore in
                 NavigationView {
                     ZStack {
-                        VStack {
+                        VStack(spacing: 0) {
+                            Color("ocean")
+                                .frame(height: max(geometry.size.height / 3, 0))
                             Color("slate")
+                        }
+                        VStack {
+//                            ActivityTilesView(store: store.scope(state: \.activityTilesState, action: Activity.Action.activityTiles))
+//                                .frame(height: max(geometry.size.height / 3, 0))
+//                                .onTapGesture {
+//                                    print("tapped")
+//                                }
+                            Spacer()
                         }
                         ScalingHeaderScrollView {
                             ZStack {
-                                Color("ocean")
-                                    .opacity(Double(progress * -1 + 1))
-                                VStack {
-                                    Spacer()
-                                    VisualEffectView(effect: UIBlurEffect(style: .regular))
-                                        .frame(height: 100)
-                                }
-
                                 VStack {
                                     Spacer()
                                     BackgroundShape()
                                         .foregroundColor(Color("slate"))
                                         .edgesIgnoringSafeArea(.all)
                                         .frame(width: geometry.size.width, height: 150)
-                                        .opacity(Double(progress * -1 + 1))
                                 }
                                 VStack {
                                     Spacer()
@@ -60,11 +61,31 @@ struct ActivityView: View {
                             }
                         } content: {
                             ActivityListView(store: store)
+                                .background(Color("slate").ignoresSafeArea())
                         }
                         .height(min: minHeight, max: maxHeight)
                         .collapseProgress($progress)
+                        VStack {
+                            ActivityTilesView(store: store.scope(state: \.activityTilesState, action: Activity.Action.activityTiles))
+                                .frame(height: max(geometry.size.height / 3, 0))
+                                .allowsHitTesting(progress < 0.4 ? true : false)
+
+//                            Rectangle()
+//                                .foregroundColor(.white)
+//                                .reverseMask {
+//                                    BackgroundShape()
+//
+//                                }
+//                                .frame(width: geometry.size.width, height: 150)
+                            Spacer()
+                        }.reverseMask {
+                            BackgroundShape()
+                                .shadow(color: .black, radius: 8, x: 1, y: 1)
+                                .offset(y: -(geometry.size.height / 3) * progress - 10)
+                        }
                         sleepToggle
-                    }.ignoresSafeArea()
+                    }
+                    .ignoresSafeArea()
 //                    .allowsHeaderGrowth()
 //                    ZStack {
 //                        Color("ocean")
@@ -131,6 +152,7 @@ struct ActivityView: View {
     }
 }
 
+
 struct BackgroundShape : Shape {
     func path(in rect: CGRect) -> Path {
         var p = Path()
@@ -176,7 +198,7 @@ struct ActivityView_Previews: PreviewProvider {
             store: Store(
                 initialState: Activity.State(activities: activities,
                                              groupedActivities: grouped,
-                                             activityHeaderDates: [Date()]),
+                                             activityHeaderDates: [Date()], activityTilesState: ActivityTiles.State()),
                 reducer: Activity()))
     }
 }

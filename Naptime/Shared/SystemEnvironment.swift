@@ -9,7 +9,6 @@
 import ComposableArchitecture
 import Foundation
 
-@dynamicMemberLookup
 struct SystemEnvironment<Environment> {
   var environment: Environment
 

@@ -18,7 +18,7 @@ struct NaptimeApp: App {
             RootView(store: Store(
                 initialState: Root.State(activityState: .init(activities: [],
                                                               groupedActivities: [Date: IdentifiedArrayOf<ActivityDetail.State>](),
-                                                              activityHeaderDates: [])),
+                                                              activityHeaderDates: [], activityTilesState: ActivityTiles.State())),
                 reducer: Root()))
         }
     }

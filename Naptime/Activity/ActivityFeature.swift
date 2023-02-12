@@ -31,6 +31,7 @@ struct Activity: ReducerProtocol {
         var activityHeaderDates: [Date]
         var selectedActivityId: ActivityDetail.State.ID?
         var selectedActivity: ActivityDetail.State?
+        var activityTilesState: ActivityTiles.State
         var lastActivityDate: Date?
         @BindableState var isSleeping: Bool = false
         
@@ -52,6 +53,7 @@ struct Activity: ReducerProtocol {
         case activitiesUpdated
         case activityDetailAction(ActivityDetail.Action)
         case setSelectedActivityId(ActivityModel.ID?)
+        case activityTiles(ActivityTiles.Action)
     }
     
     var body: some ReducerProtocol<State, Action> {
@@ -81,6 +83,11 @@ struct Activity: ReducerProtocol {
                 state.activityHeaderDates = activityHeaders(state.groupedActivities)
                 state.lastActivityDate = state.activities[safe: 0]?.endDate ?? state.activities[safe: 0]?.startDate
                 state.isSleeping = state.activitiesActive
+                    let activities = state.activities
+                return .task {
+                    return .activityTiles(.updateTiles(activities))
+                }
+                    
             case .endActivity(let activity):
                 guard activity.endDate == nil else {
                     return .none
@@ -163,6 +170,8 @@ struct Activity: ReducerProtocol {
                 default:
                     break
                 }
+                case .activityTiles(_):
+                    break
             }
             
             return .none
@@ -172,6 +181,9 @@ struct Activity: ReducerProtocol {
           ActivityDetail()
         }
         BindingReducer()
+        Scope(state: \.activityTilesState, action: /Action.activityTiles) {
+            ActivityTiles()
+        }
 //        Scope(state: \selectedActivity, action: /Action.activityDetailAction) {
 //            ActivityDetail()
 //        }
