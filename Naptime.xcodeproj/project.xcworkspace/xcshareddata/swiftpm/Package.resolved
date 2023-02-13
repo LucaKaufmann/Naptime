@@ -12,10 +12,10 @@
     {
       "identity" : "scalingheaderscrollview",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/exyte/ScalingHeaderScrollView.git",
+      "location" : "https://github.com/LucaKaufmann/ScalingHeaderScrollView",
       "state" : {
-        "revision" : "7cf560e8a55fd932149484e18347f0c1b3ceb411",
-        "version" : "0.0.6"
+        "branch" : "master",
+        "revision" : "dd94562c3fad6b52be17a519156fdae83bcf748b"
       }
     },
     {

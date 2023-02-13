@@ -13,13 +13,7 @@ struct ActivityTiles: ReducerProtocol {
     
     @Dependency(\.activityService) private var activityService
     
-    var formatter: DateComponentsFormatter = {
-          let formatter = DateComponentsFormatter()
-          formatter.allowedUnits = [.hour, .minute, .second]
-          formatter.unitsStyle = .abbreviated
-          formatter.zeroFormattingBehavior = .pad
-          return formatter
-      }()
+    let activityTilesFactory = ActivityTilesFactory()
     
     struct State: Equatable {
         var tiles = IdentifiedArrayOf<ActivityTile>()
@@ -36,7 +30,7 @@ struct ActivityTiles: ReducerProtocol {
             switch action {
                 case .updateTiles(let activities):
                     return .task {
-                        let updatedTiles = await updateTilesFor(activities)
+                        let updatedTiles = await activityTilesFactory.buildTiles(activities)
                         return .tilesUpdated(updatedTiles)
                     }
                 case .tilesUpdated(let activityTiles):
@@ -46,20 +40,6 @@ struct ActivityTiles: ReducerProtocol {
             }
             return .none
         }
-    }
-    
-    func updateTilesFor(_ activities: [ActivityModel]) async -> IdentifiedArrayOf<ActivityTile> {
-        let todayActivities = activities.filter {
-            let date = $0.endDate ?? Date()
-            return date.isCurrentDay() || $0.startDate.isCurrentDay()
-        }
-        let todaySleepingInterval = todayActivities.reduce(0.0) {
-            $0 + $1.duration
-        }
-        
-        let todaySleepingTile = ActivityTile(id: UUID(), title: "Today asleep", subtitle: "\(formatter.string(from: todaySleepingInterval) ?? "")")
-        
-        return IdentifiedArrayOf(uniqueElements: [todaySleepingTile])
     }
 }
 

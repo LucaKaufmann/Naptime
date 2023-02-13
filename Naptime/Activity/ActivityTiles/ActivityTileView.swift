@@ -12,23 +12,41 @@ struct ActivityTileView: View {
     let tile: ActivityTile
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            Text(tile.title)
-                .font(.body)
+        VStack(alignment: .leading) {
+            HStack {
+                Text(tile.title)
+                    .font(.body)
+                    .fontWeight(.semibold)
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer()
+            }
+            .padding(.bottom, 5)
+            Spacer()
             Text(tile.subtitle)
                 .font(.subheadline)
-            Spacer()
         }
-        .foregroundColor(Color("ocean"))
+        .foregroundColor(Color("slateDark"))
         .padding()
         .background(
-            RoundedRectangle(cornerRadius: 12).foregroundColor(Color("slateLight"))
+            RoundedRectangle(cornerRadius: 12).foregroundColor(Color("sandLight"))
         )
     }
 }
 
 struct ActivityTileView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        ActivityTileView(tile: ActivityTile(id: UUID(), title: "Asleep today", subtitle: "12h 13min"))
+        LazyHStack(alignment: .center) {
+            Group {
+                ActivityTileView(tile: ActivityTile(id: UUID(), title: "Sleep today", subtitle: "12h 13min"))
+            }
+            .frame(width: 140, height: 100)
+            Group {
+                ActivityTileView(tile: ActivityTile(id: UUID(), title: "Naps today", subtitle: "12h 13min"))
+            }
+            .frame(width: 140, height: 100)
+        }
+        .padding(.horizontal)
+
     }
 }

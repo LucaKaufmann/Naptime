@@ -29,16 +29,14 @@ struct ActivityView: View {
                                 .frame(height: max(geometry.size.height / 3, 0))
                             Color("slate")
                         }
-                        VStack {
-//                            ActivityTilesView(store: store.scope(state: \.activityTilesState, action: Activity.Action.activityTiles))
-//                                .frame(height: max(geometry.size.height / 3, 0))
-//                                .onTapGesture {
-//                                    print("tapped")
-//                                }
-                            Spacer()
-                        }
                         ScalingHeaderScrollView {
                             ZStack {
+                                VStack {
+                                    ActivityTilesView(store: store.scope(state: \.activityTilesState, action: Activity.Action.activityTiles))
+                                        .frame(height: max(geometry.size.height / 3, 0))
+//                                        .offset(y: (maxHeight-minHeight)*progress)
+                                    Spacer()
+                                }
                                 VStack {
                                     Spacer()
                                     BackgroundShape()
@@ -65,24 +63,6 @@ struct ActivityView: View {
                         }
                         .height(min: minHeight, max: maxHeight)
                         .collapseProgress($progress)
-                        VStack {
-                            ActivityTilesView(store: store.scope(state: \.activityTilesState, action: Activity.Action.activityTiles))
-                                .frame(height: max(geometry.size.height / 3, 0))
-                                .allowsHitTesting(progress < 0.4 ? true : false)
-
-//                            Rectangle()
-//                                .foregroundColor(.white)
-//                                .reverseMask {
-//                                    BackgroundShape()
-//
-//                                }
-//                                .frame(width: geometry.size.width, height: 150)
-                            Spacer()
-                        }.reverseMask {
-                            BackgroundShape()
-                                .shadow(color: .black, radius: 8, x: 1, y: 1)
-                                .offset(y: -(geometry.size.height / 3) * progress - 10)
-                        }
                         sleepToggle
                     }
                     .ignoresSafeArea()
