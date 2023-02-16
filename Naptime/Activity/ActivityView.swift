@@ -66,48 +66,6 @@ struct ActivityView: View {
                         sleepToggle
                     }
                     .ignoresSafeArea()
-//                    .allowsHeaderGrowth()
-//                    ZStack {
-//                        Color("ocean")
-//                            .edgesIgnoringSafeArea(.all)
-//                        BackgroundShape()
-//                            .foregroundColor(Color("slate"))
-//                            .edgesIgnoringSafeArea(.all)
-//                            .frame(width: geometry.size.width, height: geometry.size.height)
-//                        VStack {
-//                            VStack {
-//                                Button(action: {
-//                                    viewStore.send(.startActivity(.sleep))
-//                                }, label: {
-//                                    Image(systemName: "plus.app")
-//                                        .resizable()
-//                                        .frame(width: 50, height: 50)
-//                                        .foregroundColor(Color("tomato"))
-//                                })
-//                            }
-//                            .frame(height: max(geometry.size.height / 3 - 40, 0))
-//                            .padding(.bottom, 40)
-//                            VStack {
-//                                ActivityButtonsView(store: store)
-//                                if let recentActivityDate = viewStore.lastActivityDate {
-//                                    TimerView(label: viewStore.isSleeping ? "Asleep for" : "Awake for", isTimerRunning: true, startTime: recentActivityDate)
-//                                        .foregroundColor(Color("sand"))
-//                                }
-//                                ScalingHeaderScrollView {
-//                                    ZStack {
-//                                        Color.white.edgesIgnoringSafeArea(.all)
-//                                        Text("Testeirnsotienrsiten")
-//
-//                                    }
-//                                } content: {
-//                                    ActivityListView(store: store)
-//                                }
-////                                ScrollView {
-////                                    ActivityListView(store: store)
-////                                }
-//                            }
-//                        }
-//                    }
                 }
             }
         }.edgesIgnoringSafeArea(.vertical)
