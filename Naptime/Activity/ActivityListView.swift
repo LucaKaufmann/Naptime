@@ -48,25 +48,6 @@ struct ActivityListView: View {
                                 }.buttonStyle(.plain)
                                 if let interval = activity.intervalSincePreviousActivity {
                                     AwakeRow(interval: interval)
-                                    //                                ZStack {
-                                    //                                    Color("sandLight")
-                                    //                                        .offset(x: 34)
-                                    //                                        .mask(
-                                    //                                            LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.3), Color.black.opacity(0)]), startPoint: .leading, endPoint: .trailing)
-                                    //                                        )
-                                    //                                    HStack {
-                                    //                                        Rectangle()
-                                    //                                            .fill(Color("sandLight"))
-                                    //                                            .frame(width: 4, alignment: .center)
-                                    //                                            .offset(x: 34)
-                                    //                                        Spacer()
-                                    //                                            .frame(width: 50)
-                                    //                                            .padding(.trailing)
-                                    //                                        Text("Awake for \(formatter.string(from: abs(interval)) ?? "")")
-                                    //                                            .foregroundColor(Color("sand"))
-                                    //                                        Spacer()
-                                    //                                    }
-                                    //                                }.frame(height: scaleNumber(abs(interval), fromMin: 0, fromMax: 86400, toMin: 20, toMax: 500))
                                 }
                             }
                         }
@@ -75,18 +56,4 @@ struct ActivityListView: View {
             }
         }
     }
-        
-//    func intervalSincePreviousActivity(_ activity: ActivityModel) -> TimeInterval? {
-//        guard let index = activities.firstIndex(of: activity) else {
-//            return nil
-//        }
-//        if let nextElement = activities[safe: index + 1] {
-//            guard nextElement.endDate != nil else {
-//                return nil
-//            }
-//            return activity.startDate.timeIntervalSince(nextElement.endDate!)
-//        }
-//
-//        return nil
-//    }
 }

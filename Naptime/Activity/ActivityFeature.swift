@@ -33,6 +33,8 @@ struct Activity: ReducerProtocol {
         var selectedActivity: ActivityDetail.State?
         var activityTilesState: ActivityTiles.State
         var lastActivityDate: Date?
+        var lastActivityTimerState: TimerFeature.State?
+        
         @BindableState var isSleeping: Bool = false
         
         var activitiesActive: Bool {
@@ -53,6 +55,7 @@ struct Activity: ReducerProtocol {
         case activitiesUpdated
         case activityDetailAction(ActivityDetail.Action)
         case setSelectedActivityId(ActivityModel.ID?)
+        case activityTimerAction(TimerFeature.Action)
         case activityTiles(ActivityTiles.Action)
     }
     
@@ -63,8 +66,6 @@ struct Activity: ReducerProtocol {
                 let newActivity = ActivityModel(id: UUID(), startDate: Date(), endDate: nil, type: type)
                 
                 state.activities.insert(newActivity, at: 0)
-//                state.lastActivityDate = nil
-                
                 return .task {
                     await activityService.addActivity(newActivity)
                     
@@ -82,6 +83,11 @@ struct Activity: ReducerProtocol {
                 state.groupedActivities = groupActivities(state.activities)
                 state.activityHeaderDates = activityHeaders(state.groupedActivities)
                 state.lastActivityDate = state.activities[safe: 0]?.endDate ?? state.activities[safe: 0]?.startDate
+                if let lastActivityDate = state.activities[safe: 0]?.endDate ?? state.activities[safe: 0]?.startDate {
+                    state.lastActivityTimerState = TimerFeature.State(startDate: lastActivityDate, isTimerRunning: true)
+                } else {
+                    state.lastActivityTimerState = nil
+                }
                 state.isSleeping = state.activitiesActive
                     let activities = state.activities
                 return .task {
@@ -171,6 +177,8 @@ struct Activity: ReducerProtocol {
                 }
                 case .activityTiles(_):
                     break
+                case .activityTimerAction(_):
+                    break
             }
             
             return .none
@@ -178,6 +186,9 @@ struct Activity: ReducerProtocol {
         }
         .ifLet(\.selectedActivity, action: /Action.activityDetailAction) {
           ActivityDetail()
+        }
+        .ifLet(\.lastActivityTimerState, action: /Action.activityTimerAction) {
+            TimerFeature()
         }
         BindingReducer()
         Scope(state: \.activityTilesState, action: /Action.activityTiles) {

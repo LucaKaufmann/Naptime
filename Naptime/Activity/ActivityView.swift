@@ -46,15 +46,20 @@ struct ActivityView: View {
                                 }
                                 VStack {
                                     Spacer()
-                                    if let recentActivityDate = viewStore.lastActivityDate {
-                                        TimerView(label: viewStore.isSleeping ? "Asleep for" : "Awake for",
-                                                  fontSize: 18,
-                                                  fontDesign: .rounded,
-                                                  isTimerRunning: true,
-                                                  startTime: recentActivityDate)
+                                    IfLetStore(
+                                        store.scope(state: \.lastActivityTimerState,
+                                                    action: Activity.Action.activityTimerAction),
+                                        then: { store in
+                                            TimerFeatureView(store: store,
+                                                             label: viewStore.isSleeping ? "Asleep for" : "Awake for",
+                                                             fontSize: 18,
+                                                             fontDesign: .rounded)
                                             .foregroundColor(Color("sand"))
                                             .padding()
-                                    }
+
+                                        },
+                                        else: { Text("...") }
+                                    )
                                 }
                             }
                         } content: {

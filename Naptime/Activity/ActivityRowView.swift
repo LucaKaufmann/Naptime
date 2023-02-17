@@ -26,7 +26,6 @@ struct ActivityRowView: View {
                 Rectangle()
                     .fill(Color("ocean"))
                     .frame(width: 4, alignment: .center)
-//                    .offset(x: 33)
                 Image(systemName: activity.type.icon)
                     .resizable()
                     .frame(width: 40, height: 40)
@@ -34,11 +33,9 @@ struct ActivityRowView: View {
                         Circle()
                            .fill(Color("slate"))
                     )
-//                    .foregroundColor(Color("ocean"))
                 Rectangle()
                     .fill(Color("ocean"))
                     .frame(width: 4, alignment: .center)
-//                    .offset(x: 33)
             }
             VStack(alignment: .leading) {
                 HStack {
