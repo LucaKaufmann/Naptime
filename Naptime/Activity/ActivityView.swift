@@ -61,6 +61,7 @@ struct ActivityView: View {
                                         else: { Text("Time for a nap!")
                                                 .font(.headline)
                                                 .foregroundColor(Color("sand"))
+                                                .padding()
                                             
                                         }
                                     )

@@ -79,7 +79,8 @@ struct ActivityTilesFactory {
         
         let startOfDay = Calendar.current.startOfDay(for: Date())
         let averageTime = startOfDay.addingTimeInterval(bedtimeIntervals.median() ?? 0)
-        let averageBedtimeTile = ActivityTile(id: UUID(), title: "Usual bedtime", subtitle: "\(formatter.string(from: averageTime))")
+        let averageTimeString = bedtimeIntervals.count > 0 ? formatter.string(from: averageTime) : "-"
+        let averageBedtimeTile = ActivityTile(id: UUID(), title: "Usual bedtime", subtitle: averageTimeString)
         
         return IdentifiedArrayOf(uniqueElements: [todaySleepingTile, napsTodayTile, averageBedtimeTile])
     }

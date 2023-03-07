@@ -11,6 +11,8 @@ import NapTimeData
 
 struct ActivityListView: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     let store: Store<Activity.State, Activity.Action>
     
     var formatter: DateComponentsFormatter = {
@@ -23,18 +25,27 @@ struct ActivityListView: View {
 
     var body: some View {
         WithViewStore(store) { viewStore in
-//            ActivityListAwakeRow(store: store)
             VStack {
                 if viewStore.activityHeaderDates.count == 0 {
                     Spacer()
                     HStack {
                         Spacer()
-                        Image("sleeping_teddy")
-                            .resizable()
-                            .frame(width: 250, height: 250)
-                            .blendMode(.darken)
+                        ZStack {
+                            Color(.black)
+                                .mask(
+                                    Image("sleeping_teddy")
+                                        .resizable()
+                                        .colorInvert()
+                                        .luminanceToAlpha()
+                                )
+                                .clipShape(Circle())
+                            Circle()
+                                .stroke(.black, lineWidth: 2)
+                        }
+                        .frame(width: 250, height: 250)
                         Spacer()
-                    }.opacity(0.5)
+                    }
+//                    .opacity(0.5)
                     Spacer()
                 } else {
                     ForEach(viewStore.activityHeaderDates, id: \.self) { header in
