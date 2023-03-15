@@ -16,6 +16,10 @@ final class NaptimeUITests: XCTestCase {
         continueAfterFailure = false
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        
+        let app = XCUIApplication()
+        setupSnapshot(app)
+        app.launch()
     }
 
     override func tearDownWithError() throws {
@@ -25,7 +29,13 @@ final class NaptimeUITests: XCTestCase {
     func testExample() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
-        app.launch()
+        app.staticTexts["Sleep"].tap()
+        snapshot("01HomeScreen")
+        app.scrollViews.otherElements.buttons.firstMatch.tap()
+        snapshot("EditScreen")
+//        app.scrollViews.otherElements.buttons["11:25 - , In progress,  0h 0m 9s"].tap()
+        app.navigationBars["_TtGC7SwiftUI19UIHosting"].buttons["Back"].tap()
+        app.staticTexts["Wake up"].tap()
 
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
