@@ -10,8 +10,11 @@ import ComposableArchitecture
 import NapTimeData
 
 private enum ActivityServiceKey: DependencyKey {
-    static let liveValue = ActivityService(persistence: PersistenceController.shared)
+//    static let liveValue = ActivityService(persistence: PersistenceController.shared)
+    static let liveValue = ActivityService(persistence: PersistenceController.preview)
     static let testValue = ActivityService(persistence: PersistenceController.preview)
+    static let previewValue = ActivityService(persistence: PersistenceController.preview)
+
 }
 
 extension DependencyValues {
