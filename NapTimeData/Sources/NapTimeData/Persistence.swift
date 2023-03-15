@@ -7,6 +7,7 @@
 
 import CoreData
 import OSLog
+import CloudKit
 
 public enum CoreDataError: Error {
     case fetchError
@@ -18,6 +19,16 @@ public enum CoreDataError: Error {
 
 public class PersistenceController {
     public static let shared = PersistenceController()
+    
+    private var _privatePersistentStore: NSPersistentStore?
+    var privatePersistentStore: NSPersistentStore {
+        return _privatePersistentStore!
+    }
+
+    private var _sharedPersistentStore: NSPersistentStore?
+    var sharedPersistentStore: NSPersistentStore {
+        return _sharedPersistentStore!
+    }
 
     public static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
@@ -71,23 +82,73 @@ public class PersistenceController {
         }
         
         container = PersistentContainer(name: "Naptime", managedObjectModel: mom)
-        let storeUrl = URL.storeURL(for: "group.naptime", databaseName: "NapTime")
-        let description = NSPersistentStoreDescription(url: storeUrl)
-        container.persistentStoreDescriptions = [description]
+        let privateStoreDescription = container.persistentStoreDescriptions.first!
+        let storesURL = URL.storeURL(for: "group.naptime")
+        privateStoreDescription.url = storesURL.appendingPathComponent("NapTime.sqlite")
+        privateStoreDescription.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+        privateStoreDescription.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+
+        //Add Shared Database
+        let sharedStoreURL = storesURL.appendingPathComponent("shared.sqlite")
+        guard let sharedStoreDescription = privateStoreDescription.copy() as? NSPersistentStoreDescription else {
+            fatalError("Copying the private store description returned an unexpected value.")
+        }
+        sharedStoreDescription.url = sharedStoreURL
         
-        if inMemory {
-            description.url = URL(fileURLWithPath: "/dev/null")
+        if !inMemory {
+            let containerIdentifier = privateStoreDescription.cloudKitContainerOptions!.containerIdentifier
+            let sharedStoreOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: containerIdentifier)
+            sharedStoreOptions.databaseScope = .shared
+            sharedStoreDescription.cloudKitContainerOptions = sharedStoreOptions
+        } else {
+            privateStoreDescription.cloudKitContainerOptions = nil
+            sharedStoreDescription.cloudKitContainerOptions = nil
+            privateStoreDescription.url = URL(fileURLWithPath: "/dev/null")
+            sharedStoreDescription.url = URL(fileURLWithPath: "/dev/null")
         }
         
-        container.loadPersistentStores { _, error in
-            if let error = error {
-                fatalError("Unable to load persistent stores: \(error)")
+//        let storeUrl = URL.storeURL(for: "group.naptime", databaseName: "NapTime")
+//        container.persistentStoreDescriptions = [description]
+        
+        container.persistentStoreDescriptions.append(sharedStoreDescription)
+        
+//        container.loadPersistentStores { _, error in
+//            if let error = error {
+//                fatalError("Unable to load persistent stores: \(error)")
+//            }
+//        }
+        container.loadPersistentStores(completionHandler: { (loadedStoreDescription, error) in
+            if let loadError = error as NSError? {
+                fatalError("###\(#function): Failed to load persistent stores:\(loadError)")
+            } else if let cloudKitContainerOptions = loadedStoreDescription.cloudKitContainerOptions {
+                if .private == cloudKitContainerOptions.databaseScope {
+                    self._privatePersistentStore = self.container.persistentStoreCoordinator.persistentStore(for: loadedStoreDescription.url!)
+                } else if .shared == cloudKitContainerOptions.databaseScope {
+                    self._sharedPersistentStore = self.container.persistentStoreCoordinator.persistentStore(for: loadedStoreDescription.url!)
+                }
             }
+        })
+        
+//        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+//        container.viewContext.automaticallyMergesChangesFromParent = false
+//        container.viewContext.shouldDeleteInaccessibleFaults = true
+        
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        container.viewContext.transactionAuthor = appTransactionAuthorName
+        
+        // Pin the viewContext to the current generation token, and set it to keep itself up to date with local changes.
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        do {
+            try container.viewContext.setQueryGenerationFrom(.current)
+        } catch {
+            fatalError("###\(#function): Failed to pin viewContext to the current generation:\(error)")
         }
         
-        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
-        container.viewContext.automaticallyMergesChangesFromParent = false
-        container.viewContext.shouldDeleteInaccessibleFaults = true
+//        // Observe Core Data remote change notifications.
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(storeRemoteChange(_:)),
+//                                               name: .NSPersistentStoreRemoteChange,
+//                                               object: container.persistentStoreCoordinator)
     }
     
     public lazy var backgroundContext: NSManagedObjectContext = {
@@ -138,12 +199,12 @@ public class PersistenceController {
 
 public extension URL {
     /// Returns a URL for the given app group and database pointing to the sqlite database.
-    static func storeURL(for appGroup: String, databaseName: String) -> URL {
+    static func storeURL(for appGroup: String) -> URL {
         guard let fileContainer = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) else {
             fatalError("Shared file container could not be created.")
         }
         
-        return fileContainer.appendingPathComponent("\(databaseName).sqlite")
+        return fileContainer
     }
 }
 
