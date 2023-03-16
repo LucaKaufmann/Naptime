@@ -9,10 +9,12 @@ import SwiftUI
 import ComposableArchitecture
 import NapTimeData
 import ScalingHeaderScrollView
+import CloudKit
 
 struct ActivityView: View {
     
     @State var progress: CGFloat = 0
+    @State private var showShareSheet = false
     
     let store: Store<Activity.State, Activity.Action>
     
@@ -77,6 +79,15 @@ struct ActivityView: View {
                     }
                     .ignoresSafeArea()
                 }
+            }
+            .toolbar {
+              ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                  showShareSheet = true
+                } label: {
+                  Image(systemName: "square.and.arrow.up")
+                }
+              }
             }
         }.edgesIgnoringSafeArea(.vertical)
     }

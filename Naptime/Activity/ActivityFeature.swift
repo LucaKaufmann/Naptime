@@ -8,6 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import NapTimeData
+import CloudKit
 
 private enum ActivityServiceKey: DependencyKey {
     static let liveValue = ActivityService(persistence: PersistenceController.shared)
@@ -29,6 +30,7 @@ struct Activity: ReducerProtocol {
     @Dependency(\.activityService) private var activityService
     
     struct State: Equatable {
+        var share: CKShare?
         var activities: [ActivityModel]
         var groupedActivities: [Date: IdentifiedArrayOf<ActivityDetail.State>]
         var activityHeaderDates: [Date]
@@ -228,4 +230,16 @@ struct Activity: ReducerProtocol {
     private func activityHeaders(_ activities: [Date: IdentifiedArrayOf<ActivityDetail.State>]) -> [Date] {
         activities.map({ $0.key }).sorted(by: { $0.compare($1) == .orderedDescending })
     }
+    
+    private func createShare() async {
+//      do {
+//        let (_, share, _) =
+//        try await stack.persistentContainer.share([destination], to: nil)
+//        share[CKShare.SystemFieldKey.title] = destination.caption
+//        self.share = share
+//      } catch {
+//        print("Failed to create share")
+//      }
+    }
+
 }

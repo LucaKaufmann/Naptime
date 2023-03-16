@@ -71,6 +71,16 @@ public class PersistenceController {
     }()
 
     public let container: PersistentContainer
+    
+    public var ckContainer: CKContainer {
+      let storeDescription = container.persistentStoreDescriptions.first
+      guard let identifier = storeDescription?
+        .cloudKitContainerOptions?.containerIdentifier else {
+        fatalError("Unable to get container identifier")
+      }
+      return CKContainer(identifier: identifier)
+    }
+
 
     public init(inMemory: Bool = false) {
         guard let modelURL = Bundle.module.url(forResource: "Naptime",
@@ -107,16 +117,8 @@ public class PersistenceController {
             sharedStoreDescription.url = URL(fileURLWithPath: "/dev/null")
         }
         
-//        let storeUrl = URL.storeURL(for: "group.naptime", databaseName: "NapTime")
-//        container.persistentStoreDescriptions = [description]
-        
         container.persistentStoreDescriptions.append(sharedStoreDescription)
-        
-//        container.loadPersistentStores { _, error in
-//            if let error = error {
-//                fatalError("Unable to load persistent stores: \(error)")
-//            }
-//        }
+    
         container.loadPersistentStores(completionHandler: { (loadedStoreDescription, error) in
             if let loadError = error as NSError? {
                 fatalError("###\(#function): Failed to load persistent stores:\(loadError)")
@@ -128,10 +130,6 @@ public class PersistenceController {
                 }
             }
         })
-        
-//        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
-//        container.viewContext.automaticallyMergesChangesFromParent = false
-//        container.viewContext.shouldDeleteInaccessibleFaults = true
         
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         container.viewContext.transactionAuthor = appTransactionAuthorName
