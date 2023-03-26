@@ -21,12 +21,12 @@ public class PersistenceController {
     public static let shared = PersistenceController()
     
     private var _privatePersistentStore: NSPersistentStore?
-    var privatePersistentStore: NSPersistentStore {
+    public var privatePersistentStore: NSPersistentStore {
         return _privatePersistentStore!
     }
 
     private var _sharedPersistentStore: NSPersistentStore?
-    var sharedPersistentStore: NSPersistentStore {
+    public var sharedPersistentStore: NSPersistentStore {
         return _sharedPersistentStore!
     }
 

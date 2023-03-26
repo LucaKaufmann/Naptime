@@ -11,6 +11,9 @@ import NapTimeData
 
 @main
 struct NaptimeApp: App {
+    
+    @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
+    
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
