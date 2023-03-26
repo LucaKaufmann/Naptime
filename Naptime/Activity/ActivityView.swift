@@ -52,14 +52,8 @@ struct ActivityView: View {
                                     Spacer()
                                     Button {
                                         Task {
-                                            if let shareRecord = await PersistenceController.shared.getShareRecord() {
-                                                activeShare = shareRecord
-                                            } else {
-                                                let shareRecord = await PersistenceController.shared.share()
-                                                activeShare = shareRecord
-                                            }
-                                            showShareSheet = true
-                                        }
+                                            viewStore.send(.shareTapped)
+                                         }
                                     } label: {
                                       Image(systemName: "square.and.arrow.up")
                                     }
@@ -93,9 +87,9 @@ struct ActivityView: View {
                         sleepToggle
                     }
                     .ignoresSafeArea()
+                    .sheet(isPresented: viewStore.$showShareSheet, content: { shareView(share: viewStore.share) })
                 }
             }
-            .sheet(isPresented: $showShareSheet, content: { shareView() })
             .toolbar {
               ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -135,8 +129,8 @@ struct ActivityView: View {
     }
     
     /// Builds a `CloudSharingView` with state after processing a share.
-    private func shareView() -> CloudKitShareView? {
-        guard let share = activeShare else {
+    private func shareView(share: CKShare?) -> CloudKitShareView? {
+        guard let share else {
             return nil
         }
 

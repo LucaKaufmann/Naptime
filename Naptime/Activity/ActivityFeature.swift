@@ -12,17 +12,17 @@ import CloudKit
 
 private enum ActivityServiceKey: DependencyKey {
     static let liveValue = ActivityService(persistence: PersistenceController.shared)
-//    static let liveValue = ActivityService(persistence: PersistenceController.preview)
+    //    static let liveValue = ActivityService(persistence: PersistenceController.preview)
     static let testValue = ActivityService(persistence: PersistenceController.preview)
     static let previewValue = ActivityService(persistence: PersistenceController.preview)
-
+    
 }
 
 extension DependencyValues {
-  var activityService: ActivityService {
-    get { self[ActivityServiceKey.self] }
-    set { self[ActivityServiceKey.self] = newValue }
-  }
+    var activityService: ActivityService {
+        get { self[ActivityServiceKey.self] }
+        set { self[ActivityServiceKey.self] = newValue }
+    }
 }
 
 struct Activity: ReducerProtocol {
@@ -41,6 +41,7 @@ struct Activity: ReducerProtocol {
         var lastActivityTimerState: TimerFeature.State?
         
         @BindingState var isSleeping: Bool = false
+        @BindingState var showShareSheet: Bool = false
         
         var activitiesActive: Bool {
             return activities.filter({ $0.isActive }).count > 0
@@ -62,126 +63,143 @@ struct Activity: ReducerProtocol {
         case setSelectedActivityId(ActivityModel.ID?)
         case activityTimerAction(TimerFeature.Action)
         case activityTiles(ActivityTiles.Action)
+        case shareTapped
+        case shareCreated(CKShare)
     }
     
     var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-            case .startActivity(let type):
-                let newActivity = ActivityModel(id: UUID(), startDate: Date(), endDate: nil, type: type)
-                
-                state.activities.insert(newActivity, at: 0)
-                return .task {
-                    await activityService.addActivity(newActivity)
+                case .startActivity(let type):
+                    let newActivity = ActivityModel(id: UUID(), startDate: Date(), endDate: nil, type: type)
                     
-                    return .activitiesUpdated
-                }
-            case .deleteActivity(let index):
-                let activity = state.activities[index]
-                state.activities.remove(at: index)
-                return .task {
-                    await activityService.deleteActivity(activity)
-                    
-                    return .activitiesUpdated
-                }
-            case .activitiesUpdated:
-                state.groupedActivities = groupActivities(state.activities)
-                state.activityHeaderDates = activityHeaders(state.groupedActivities)
-                state.lastActivityDate = state.activities[safe: 0]?.endDate ?? state.activities[safe: 0]?.startDate
-                if let lastActivityDate = state.activities[safe: 0]?.endDate ?? state.activities[safe: 0]?.startDate {
-                    state.lastActivityTimerState = TimerFeature.State(startDate: lastActivityDate, isTimerRunning: true)
-                } else {
-                    state.lastActivityTimerState = nil
-                }
-                state.isSleeping = state.activitiesActive
+                    state.activities.insert(newActivity, at: 0)
+                    return .task {
+                        await activityService.addActivity(newActivity)
+                        
+                        return .activitiesUpdated
+                    }
+                case .deleteActivity(let index):
+                    let activity = state.activities[index]
+                    state.activities.remove(at: index)
+                    return .task {
+                        await activityService.deleteActivity(activity)
+                        
+                        return .activitiesUpdated
+                    }
+                case .activitiesUpdated:
+                    state.groupedActivities = groupActivities(state.activities)
+                    state.activityHeaderDates = activityHeaders(state.groupedActivities)
+                    state.lastActivityDate = state.activities[safe: 0]?.endDate ?? state.activities[safe: 0]?.startDate
+                    if let lastActivityDate = state.activities[safe: 0]?.endDate ?? state.activities[safe: 0]?.startDate {
+                        state.lastActivityTimerState = TimerFeature.State(startDate: lastActivityDate, isTimerRunning: true)
+                    } else {
+                        state.lastActivityTimerState = nil
+                    }
+                    state.isSleeping = state.activitiesActive
                     let activities = state.activities
-                return .task {
-                    return .activityTiles(.updateTiles(activities))
-                }
+                    return .task {
+                        return .activityTiles(.updateTiles(activities))
+                    }
                     
-            case .endActivity(let activity):
-                guard activity.endDate == nil else {
+                case .endActivity(let activity):
+                    guard activity.endDate == nil else {
+                        return .none
+                    }
+                    
+                    if let index = state.activities.lastIndex(of: activity) {
+                        var updatedActivity = activity
+                        updatedActivity.endDate = Date()
+                        
+                        state.activities[index] = updatedActivity
+                        
+                        return .task {
+                            await activityService.endActivity(activity.id)
+                            
+                            return .activitiesUpdated
+                        }
+                    }
+                    
                     return .none
-                }
-                
-                if let index = state.activities.lastIndex(of: activity) {
-                    var updatedActivity = activity
-                    updatedActivity.endDate = Date()
-                    
-                    state.activities[index] = updatedActivity
+                case .endAllActiveActivities:
+                    let activities = state.activities.filter({ $0.isActive })
+                    for activity in activities {
+                        guard let index = state.activities.firstIndex(of: activity) else {
+                            continue
+                        }
+                        var updatedActivity = activity
+                        updatedActivity.endDate = Date()
+                        
+                        state.activities[index] = updatedActivity
+                    }
                     
                     return .task {
-                        await activityService.endActivity(activity.id)
-
+                        await activityService.endActivities(activities)
+                        
                         return .activitiesUpdated
                     }
-                }
-                
-                return .none
-            case .endAllActiveActivities:
-                let activities = state.activities.filter({ $0.isActive })
-                for activity in activities {
-                    guard let index = state.activities.firstIndex(of: activity) else {
-                        continue
+                case .binding(\.$isSleeping):
+                    if !state.isSleeping {
+                        return .task {
+                            return .startActivity(.sleep)
+                        }
+                    } else {
+                        return .task {
+                            return .endAllActiveActivities
+                        }
                     }
-                    var updatedActivity = activity
-                    updatedActivity.endDate = Date()
+                case .binding(_) :
+                    print("Binding")
+                    return .none
+                case let .setSelectedActivityId(.some(id)):
+                    state.selectedActivityId = id
+                    if let activity = state.activities.first(where: { $0.id == id }) {
+                        state.selectedActivity = ActivityDetail.State(id: activity.id, activity: activity)
+                    }
+                    return .none
                     
-                    state.activities[index] = updatedActivity
-                }
-                
-                return .task {
-                    await activityService.endActivities(activities)
+                case .setSelectedActivityId(nil):
+                    state.selectedActivityId = nil
+                    return .none
+                case .shareTapped:
+                    return .task {
+                        let shareRecord: CKShare
+                        if let storedShare = await PersistenceController.shared.getShareRecord() {
+                            shareRecord = storedShare
+                        } else {
+                            shareRecord = await PersistenceController.shared.share()
+                        }
 
-                    return .activitiesUpdated
-                }
-            case .binding(\.$isSleeping):
-                if !state.isSleeping {
-                    return .task {
-                        return .startActivity(.sleep)
+                        return .shareCreated(shareRecord)
                     }
-                } else {
-                    return .task {
-                        return .endAllActiveActivities
+                case .shareCreated(let share):
+                    state.share = share
+                    state.showShareSheet = true
+                    return .none
+                case .activityDetailAction(let action):
+                    switch action {
+                        case .updateActivity(let activity):
+                            guard let index = state.activities.firstIndex(where: { $0.id == activity.id }) else {
+                                return .none
+                            }
+                            
+                            state.lastActivityDate = nil
+                            state.activities[index] = activity
+                            
+                            return .task {
+                                return .activitiesUpdated
+                            }
+                        case .deleteActivity(let activity):
+                            guard let index = state.activities.firstIndex(where: { $0.id == activity.id }) else {
+                                return .none
+                            }
+                            
+                            return .task {
+                                return .deleteActivity(index)
+                            }
+                        default:
+                            break
                     }
-                }
-            case .binding(_) :
-                print("Binding")
-                return .none
-            case let .setSelectedActivityId(.some(id)):
-                state.selectedActivityId = id
-                if let activity = state.activities.first(where: { $0.id == id }) {
-                    state.selectedActivity = ActivityDetail.State(id: activity.id, activity: activity)
-                }
-                return .none
-                
-            case .setSelectedActivityId(nil):
-                state.selectedActivityId = nil
-                return .none
-            case .activityDetailAction(let action):
-                switch action {
-                case .updateActivity(let activity):
-                    guard let index = state.activities.firstIndex(where: { $0.id == activity.id }) else {
-                        return .none
-                    }
-                    
-                    state.lastActivityDate = nil
-                    state.activities[index] = activity
-                    
-                    return .task {
-                        return .activitiesUpdated
-                    }
-                case .deleteActivity(let activity):
-                    guard let index = state.activities.firstIndex(where: { $0.id == activity.id }) else {
-                        return .none
-                    }
-                    
-                    return .task {
-                        return .deleteActivity(index)
-                    }
-                default:
-                    break
-                }
                 case .activityTiles(_):
                     break
                 case .activityTimerAction(_):
@@ -192,7 +210,7 @@ struct Activity: ReducerProtocol {
             
         }
         .ifLet(\.selectedActivity, action: /Action.activityDetailAction) {
-          ActivityDetail()
+            ActivityDetail()
         }
         .ifLet(\.lastActivityTimerState, action: /Action.activityTimerAction) {
             TimerFeature()
@@ -201,7 +219,7 @@ struct Activity: ReducerProtocol {
         Scope(state: \.activityTilesState, action: /Action.activityTiles) {
             ActivityTiles()
         }
-    } 
+    }
     
     private func groupActivities(_ activities: [ActivityModel]) ->  [Date: IdentifiedArrayOf<ActivityDetail.State>]{
         let calendar = Calendar.current
@@ -234,14 +252,14 @@ struct Activity: ReducerProtocol {
     }
     
     private func createShare() async {
-//      do {
-//        let (_, share, _) =
-//        try await stack.persistentContainer.share([destination], to: nil)
-//        share[CKShare.SystemFieldKey.title] = destination.caption
-//        self.share = share
-//      } catch {
-//        print("Failed to create share")
-//      }
+        //      do {
+        //        let (_, share, _) =
+        //        try await stack.persistentContainer.share([destination], to: nil)
+        //        share[CKShare.SystemFieldKey.title] = destination.caption
+        //        self.share = share
+        //      } catch {
+        //        print("Failed to create share")
+        //      }
     }
-
+    
 }
