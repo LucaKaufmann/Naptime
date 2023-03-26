@@ -40,7 +40,7 @@ struct Activity: ReducerProtocol {
         var lastActivityDate: Date?
         var lastActivityTimerState: TimerFeature.State?
         
-        @BindableState var isSleeping: Bool = false
+        @BindingState var isSleeping: Bool = false
         
         var activitiesActive: Bool {
             return activities.filter({ $0.isActive }).count > 0
