@@ -14,13 +14,13 @@
             filePath = "Naptime/Activity/ActivityView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
                <Location
-                  uuid = "5035C32D-E173-4390-A5D8-4D66BD7966C0 - 7b7626a9aec1b494"
+                  uuid = "5035C32D-E173-4390-A5D8-4D66BD7966C0 - 7b7626a9aec1b456"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -30,12 +30,12 @@
                   urlString = "file:///Users/luca/git/Naptime/Naptime/Activity/ActivityView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "103"
-                  endingLineNumber = "103"
+                  startingLineNumber = "105"
+                  endingLineNumber = "105"
                   offsetFromSymbolStart = "188">
                </Location>
                <Location
-                  uuid = "5035C32D-E173-4390-A5D8-4D66BD7966C0 - dd5bbeb5352f7096"
+                  uuid = "5035C32D-E173-4390-A5D8-4D66BD7966C0 - dd5bbeb5352f7054"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -45,8 +45,8 @@
                   urlString = "file:///Users/luca/git/Naptime/Naptime/Activity/ActivityView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "103"
-                  endingLineNumber = "103"
+                  startingLineNumber = "105"
+                  endingLineNumber = "105"
                   offsetFromSymbolStart = "144">
                </Location>
             </Locations>

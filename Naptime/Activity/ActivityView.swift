@@ -38,7 +38,6 @@ struct ActivityView: View {
                                 VStack {
                                     ActivityTilesView(store: store.scope(state: \.activityTilesState, action: Activity.Action.activityTiles))
                                         .frame(height: max(geometry.size.height / 3, 0))
-//                                        .offset(y: (maxHeight-minHeight)*progress)
                                     Spacer()
                                 }
                                 VStack {
@@ -55,7 +54,10 @@ struct ActivityView: View {
                                             viewStore.send(.shareTapped)
                                          }
                                     } label: {
-                                      Image(systemName: "square.and.arrow.up")
+                                        HStack {
+                                            Text("Invite")
+                                            Image(systemName: "square.and.arrow.up")
+                                        }.foregroundColor(Color("sand"))
                                     }
                                     IfLetStore(
                                         store.scope(state: \.lastActivityTimerState,
@@ -87,7 +89,7 @@ struct ActivityView: View {
                         sleepToggle
                     }
                     .ignoresSafeArea()
-                    .sheet(isPresented: viewStore.$showShareSheet, content: { shareView(share: viewStore.share) })
+                    .sheet(isPresented: viewStore.binding(\.$showShareSheet), content: { shareView(share: viewStore.share) })
                 }
             }
             .toolbar {
