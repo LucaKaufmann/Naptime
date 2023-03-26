@@ -15,7 +15,7 @@ struct CloudKitShareView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UICloudSharingController {
         let sharingController = UICloudSharingController(
             share: share,
-            container: CloudKitService.container
+            container: CKContainer.default()
         )
         
         sharingController.availablePermissions = [.allowReadOnly, .allowPrivate]

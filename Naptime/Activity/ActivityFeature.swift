@@ -199,7 +199,7 @@ struct Activity: ReducerProtocol {
         Scope(state: \.activityTilesState, action: /Action.activityTiles) {
             ActivityTiles()
         }
-    }
+    } 
     
     private func groupActivities(_ activities: [ActivityModel]) ->  [Date: IdentifiedArrayOf<ActivityDetail.State>]{
         let calendar = Calendar.current

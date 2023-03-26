@@ -48,7 +48,7 @@ extension PersistenceController {
         privateDatabase.add(operation)
     }
 
-    public func share() async throws -> CKShare {
+    public func share() async -> CKShare {
         let recordZoneID = CKRecordZone.ID(zoneName: "com.apple.coredata.cloudkit.zone", ownerName: CKCurrentUserDefaultName)
         let shareRecord = CKShare(recordZoneID: recordZoneID)
 
@@ -74,10 +74,10 @@ extension PersistenceController {
         return shareRecord
     }
 
-    public func getShareRecord() async throws -> CKShare? {
+    public func getShareRecord() async -> CKShare? {
         let query = CKQuery(recordType: "cloudkit.share", predicate: NSPredicate(value: true))
         let container = CKContainer.default()
-        return try await withCheckedThrowingContinuation { continuation in
+        return try await withCheckedContinuation { continuation in
             container.privateCloudDatabase.fetch(withQuery: query) { result in
                 switch result {
                     case .success(let returned):
@@ -88,13 +88,18 @@ extension PersistenceController {
                                 case .success(let ckRecord):
                                     continuation.resume(returning: ckRecord as? CKShare)
                                 case .failure(let error):
-                                    continuation.resume(throwing: error)
+                                    continuation.resume(returning: nil)
+//                                    continuation.resume(throwing: error)
                             }
                         } else {
-                            continuation.resume(throwing: PersistenceError.noRecordsFound)
+                            continuation.resume(returning: nil)
+
+//                            continuation.resume(throwing: PersistenceError.noRecordsFound)
                         }
                     case .failure(let error):
-                        continuation.resume(throwing: error)
+//                        continuation.resume(throwing: error)
+                        continuation.resume(returning: nil)
+
                 }
             }
         }

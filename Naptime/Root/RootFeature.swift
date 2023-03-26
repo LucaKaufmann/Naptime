@@ -53,9 +53,9 @@ struct Root: ReducerProtocol {
             }
             
         }
-        Scope(state: \.activityState, action: /Action.activityAction) {
-            Activity()
-        }
+//        Scope(state: \.activityState, action: /Action.activityAction) {
+//            Activity()
+//        }
     }
     
     private func fetchActivities() async throws -> [ActivityModel] {

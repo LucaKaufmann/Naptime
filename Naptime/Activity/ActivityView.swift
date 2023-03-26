@@ -16,6 +16,8 @@ struct ActivityView: View {
     @State var progress: CGFloat = 0
     @State private var showShareSheet = false
     
+    @State var activeShare: CKShare?
+    
     let store: Store<Activity.State, Activity.Action>
     
     private let minHeight = 90.0
@@ -48,6 +50,19 @@ struct ActivityView: View {
                                 }
                                 VStack {
                                     Spacer()
+                                    Button {
+                                        Task {
+                                            if let shareRecord = await PersistenceController.shared.getShareRecord() {
+                                                activeShare = shareRecord
+                                            } else {
+                                                let shareRecord = await PersistenceController.shared.share()
+                                                activeShare = shareRecord
+                                            }
+                                            showShareSheet = true
+                                        }
+                                    } label: {
+                                      Image(systemName: "square.and.arrow.up")
+                                    }
                                     IfLetStore(
                                         store.scope(state: \.lastActivityTimerState,
                                                     action: Activity.Action.activityTimerAction),
@@ -80,10 +95,19 @@ struct ActivityView: View {
                     .ignoresSafeArea()
                 }
             }
+            .sheet(isPresented: $showShareSheet, content: { shareView() })
             .toolbar {
               ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                  showShareSheet = true
+                    Task {
+                        if let shareRecord = await PersistenceController.shared.getShareRecord() {
+                            activeShare = shareRecord
+                        } else {
+                            let shareRecord = await PersistenceController.shared.share()
+                            activeShare = shareRecord
+                        }
+                        showShareSheet = true
+                    }
                 } label: {
                   Image(systemName: "square.and.arrow.up")
                 }
@@ -108,6 +132,15 @@ struct ActivityView: View {
             .ignoresSafeArea()
             .padding(.bottom, 40)
         }
+    }
+    
+    /// Builds a `CloudSharingView` with state after processing a share.
+    private func shareView() -> CloudKitShareView? {
+        guard let share = activeShare else {
+            return nil
+        }
+
+        return CloudKitShareView(share: share)
     }
 }
 

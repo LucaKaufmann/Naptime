@@ -17,9 +17,7 @@ struct ActivityListAwakeRow: View {
             if !viewStore.activitiesActive {
                 if let latestActivity = viewStore.activities.first {
                     if let date = latestActivity.endDate {
-                        if let interval = Date().timeIntervalSince(date) {
-                            AwakeRow(interval: interval)
-                        }
+                        AwakeRow(interval: Date().timeIntervalSince(date))
                     }
                 }
             }
