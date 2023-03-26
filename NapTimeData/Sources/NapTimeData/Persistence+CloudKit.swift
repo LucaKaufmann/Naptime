@@ -7,6 +7,7 @@
 //  https://stackoverflow.com/questions/68021957/how-is-record-zone-sharing-done/68072464#68072464
 
 import CloudKit
+import UIKit
 
 enum PersistenceError: Error {
     case noRecordsFound
@@ -52,10 +53,9 @@ extension PersistenceController {
         let recordZoneID = CKRecordZone.ID(zoneName: "com.apple.coredata.cloudkit.zone", ownerName: CKCurrentUserDefaultName)
         let shareRecord = CKShare(recordZoneID: recordZoneID)
 
-        var fullName = "Luca"
-        shareRecord[CKShare.SystemFieldKey.title] = String(format: NSLocalizedString("SHARING_LIST_OF_USER", comment:" "), fullName)
-//        let image = UIImage(named: kFileNameLogo)!.pngData()
-//        shareRecord[CKShare.SystemFieldKey.thumbnailImageData] = image
+        shareRecord[CKShare.SystemFieldKey.title] = "Share naps"
+        let image = UIImage(named: "sleeping_teddy")!.pngData()
+        shareRecord[CKShare.SystemFieldKey.thumbnailImageData] = image
 //        // Include a custom UTI that describes the share's content.
 //        shareRecord[CKShare.SystemFieldKey.shareType] = "com.zeh4soft.ShopEasy.shoppingList"
 

@@ -55,7 +55,7 @@ struct Activity: ReducerProtocol {
         case startActivity(ActivityType)
         case endActivity(ActivityModel)
         case endAllActiveActivities
-        case binding(BindingAction<Activity.State>)
+        case binding(BindingAction<State>)
         case deleteActivity(Int)
         case activitiesUpdated
         case activityDetailAction(ActivityDetail.Action)
@@ -135,7 +135,7 @@ struct Activity: ReducerProtocol {
 
                     return .activitiesUpdated
                 }
-            case .binding:
+            case .binding(\.$isSleeping):
                 if !state.isSleeping {
                     return .task {
                         return .startActivity(.sleep)
@@ -145,7 +145,9 @@ struct Activity: ReducerProtocol {
                         return .endAllActiveActivities
                     }
                 }
-                
+            case .binding(_) :
+                print("Binding")
+                return .none
             case let .setSelectedActivityId(.some(id)):
                 state.selectedActivityId = id
                 if let activity = state.activities.first(where: { $0.id == id }) {
