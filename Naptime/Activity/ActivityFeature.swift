@@ -64,6 +64,7 @@ struct Activity: ReducerProtocol {
         case activityTimerAction(TimerFeature.Action)
         case activityTiles(ActivityTiles.Action)
         case shareTapped
+        case refreshActivities
         case shareCreated(CKShare)
     }
     
@@ -87,6 +88,8 @@ struct Activity: ReducerProtocol {
                         
                         return .activitiesUpdated
                     }
+                case .refreshActivities:
+                    return .none
                 case .activitiesUpdated:
                     state.groupedActivities = groupActivities(state.activities)
                     state.activityHeaderDates = activityHeaders(state.groupedActivities)

@@ -7,54 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5035C32D-E173-4390-A5D8-4D66BD7966C0"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Naptime/Activity/ActivityView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "body"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "5035C32D-E173-4390-A5D8-4D66BD7966C0 - ba386162ce244edc"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #1 () -&gt; () in closure #1 () -&gt; SwiftUI.Button&lt;SwiftUI.Image&gt; in closure #2 () -&gt; &lt;&lt;opaque return type of static SwiftUI.ToolbarContentBuilder.buildBlock&lt;&#x3c4;_0_0 where &#x3c4;_0_0: SwiftUI.ToolbarContent&gt;(&#x3c4;_0_0) -&gt; some&gt;&gt;.0 in Naptime.ActivityView.body.getter : some"
-                  moduleName = "Naptime"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/luca/git/Naptime/Naptime/Activity/ActivityView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "104"
-                  endingLineNumber = "104"
-                  offsetFromSymbolStart = "188">
-               </Location>
-               <Location
-                  uuid = "5035C32D-E173-4390-A5D8-4D66BD7966C0 - d3fd7c630030ada"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(5) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #1 () -&gt; () in closure #1 () -&gt; SwiftUI.Button&lt;SwiftUI.Image&gt; in closure #2 () -&gt; &lt;&lt;opaque return type of static SwiftUI.ToolbarContentBuilder.buildBlock&lt;&#x3c4;_0_0 where &#x3c4;_0_0: SwiftUI.ToolbarContent&gt;(&#x3c4;_0_0) -&gt; some&gt;&gt;.0 in Naptime.ActivityView.body.getter : some"
-                  moduleName = "Naptime"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/luca/git/Naptime/Naptime/Activity/ActivityView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "104"
-                  endingLineNumber = "104"
-                  offsetFromSymbolStart = "144">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "3FA5BDFD-3A26-4862-B0EC-E30E4651CB87"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -64,54 +16,6 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "101"
             endingLineNumber = "101"
-            landmarkName = "getShareRecord()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A5569539-E6B4-4794-B9E6-0C43D18E0991"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NapTimeData/Sources/NapTimeData/Persistence+CloudKit.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
-            landmarkName = "getShareRecord()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "669656A0-0FD5-49A0-9BDC-4AD67F54A930"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NapTimeData/Sources/NapTimeData/Persistence+CloudKit.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "getShareRecord()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "BD699F5B-367A-4494-A1C7-BE120EA754F7"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NapTimeData/Sources/NapTimeData/Persistence+CloudKit.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
             landmarkName = "getShareRecord()"
             landmarkType = "7">
          </BreakpointContent>
@@ -130,54 +34,6 @@
             endingLineNumber = "62"
             landmarkName = "share()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "02F05D93-CB44-42CF-81F3-A5121C3DAF0C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NapTimeData/Sources/NapTimeData/Persistence+CloudKit.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "getShareRecord()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "02F05D93-CB44-42CF-81F3-A5121C3DAF0C - 2ffbad0d7f63a6c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.CheckedContinuation&lt;Swift.Optional&lt;__C.CKShare&gt;, Swift.Never&gt;) -&gt; () in NapTimeData.PersistenceController.getShareRecord() async -&gt; Swift.Optional&lt;__C.CKShare&gt;"
-                  moduleName = "Naptime"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/luca/git/Naptime/NapTimeData/Sources/NapTimeData/Persistence+CloudKit.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "81"
-                  endingLineNumber = "81"
-                  offsetFromSymbolStart = "156">
-               </Location>
-               <Location
-                  uuid = "02F05D93-CB44-42CF-81F3-A5121C3DAF0C - 97aa8cc2aae1642b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;(matchResults: Swift.Array&lt;(__C.CKRecordID, Swift.Result&lt;__C.CKRecord, Swift.Error&gt;)&gt;, queryCursor: Swift.Optional&lt;__C.CKQueryCursor&gt;), Swift.Error&gt;) -&gt; () in closure #1 (Swift.CheckedContinuation&lt;Swift.Optional&lt;__C.CKShare&gt;, Swift.Never&gt;) -&gt; () in NapTimeData.PersistenceController.getShareRecord() async -&gt; Swift.Optional&lt;__C.CKShare&gt;"
-                  moduleName = "Naptime"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/luca/git/Naptime/NapTimeData/Sources/NapTimeData/Persistence+CloudKit.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "83"
-                  endingLineNumber = "83"
-                  offsetFromSymbolStart = "128">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

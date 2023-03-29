@@ -37,6 +37,7 @@ struct ActivityView: View {
                                 VStack {
                                     ActivityTilesView(store: store.scope(state: \.activityTilesState, action: Activity.Action.activityTiles))
                                         .frame(height: max(geometry.size.height / 3, 0))
+                                        .padding(.top, 25)
                                     Spacer()
                                 }
                                 VStack {
@@ -85,6 +86,9 @@ struct ActivityView: View {
                         }
                         .height(min: minHeight, max: maxHeight)
                         .collapseProgress($progress)
+                        .refreshable {
+                            viewStore.send(.refreshActivities)
+                        }
                         sleepToggle
                     }
                     .ignoresSafeArea()

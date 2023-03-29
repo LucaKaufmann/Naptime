@@ -13,7 +13,7 @@ struct ActivityTilesView: View {
     
     let store: Store<ActivityTiles.State, ActivityTiles.Action>
     
-    @ScaledMetric var tileHeight: CGFloat = 120
+    @ScaledMetric var tileHeight: CGFloat = 100
     @ScaledMetric var tileWidth: CGFloat = 140
     
     var body: some View {

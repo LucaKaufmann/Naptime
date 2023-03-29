@@ -30,7 +30,8 @@ struct Root: ReducerProtocol {
             switch action {
             case .onAppear:
                 return Future(asyncFunc: {
-                    await activityService.fetchActivities()
+                    let date = Calendar.current.date(byAdding: .day, value: -7, to: Date())?.startOf(.day)
+                    return await activityService.fetchActivitiesAfter(date)
                 }).receive(on: DispatchQueue.main)
                   .catchToEffect()
                   .map(Action.loadedActivities)
@@ -48,6 +49,8 @@ struct Root: ReducerProtocol {
                 return .task {
                     return .activityAction(.activitiesUpdated)
                 }
+                case .activityAction(.refreshActivities):
+                    return .send(.onAppear)
             default:
                 return .none
             }
