@@ -26,91 +26,74 @@ struct ActivityView: View {
     var body: some View {
         GeometryReader { geometry in
             WithViewStore(self.store) { viewStore in
-                    ZStack {
-                        VStack(spacing: 0) {
-                            Color("ocean")
-                                .frame(height: max(geometry.size.height / 3, 0))
-                            Color("slate")
-                        }
-                        ScalingHeaderScrollView {
-                            ZStack {
-                                VStack {
-                                    ActivityTilesView(store: store.scope(state: \.activityTilesState, action: Activity.Action.activityTiles))
-                                        .frame(height: max(geometry.size.height / 3, 0))
-                                        .padding(.top, 25)
-                                    Spacer()
-                                }
-                                VStack {
-                                    Spacer()
-                                    BackgroundShape()
-                                        .foregroundColor(Color("slate"))
-                                        .edgesIgnoringSafeArea(.all)
-                                        .frame(width: geometry.size.width, height: 150)
-                                }
-                                VStack {
-                                    Spacer()
-                                    Button {
-                                        Task {
-                                            viewStore.send(.shareTapped)
-                                         }
-                                    } label: {
-                                        HStack {
-                                            Text("Invite")
-                                            Image(systemName: "square.and.arrow.up")
-                                        }.foregroundColor(Color("sand"))
-                                    }
-                                    IfLetStore(
-                                        store.scope(state: \.lastActivityTimerState,
-                                                    action: Activity.Action.activityTimerAction),
-                                        then: { store in
-                                            TimerFeatureView(store: store,
-                                                             label: viewStore.isSleeping ? "Asleep for" : "Awake for",
-                                                             fontSize: 18,
-                                                             fontDesign: .rounded)
+                ZStack {
+                    VStack(spacing: 0) {
+                        Color("ocean")
+                            .frame(height: max(geometry.size.height / 3, 0))
+                        Color("slate")
+                    }
+                    ScalingHeaderScrollView {
+                        ZStack {
+                            VStack {
+                                ActivityTilesView(store: store.scope(state: \.activityTilesState, action: Activity.Action.activityTiles))
+                                    .frame(height: max(geometry.size.height / 3, 0))
+                                    .padding(.top, 25)
+                                Spacer()
+                            }
+                            VStack {
+                                Spacer()
+                                BackgroundShape()
+                                    .foregroundColor(Color("slate"))
+                                    .edgesIgnoringSafeArea(.all)
+                                    .frame(width: geometry.size.width, height: 150)
+                            }
+                            VStack {
+                                Spacer()
+                                IfLetStore(
+                                    store.scope(state: \.lastActivityTimerState,
+                                                action: Activity.Action.activityTimerAction),
+                                    then: { store in
+                                        TimerFeatureView(store: store,
+                                                         label: viewStore.isSleeping ? "Asleep for" : "Awake for",
+                                                         fontSize: 18,
+                                                         fontDesign: .rounded)
+                                        .foregroundColor(Color("sand"))
+                                        .padding()
+                                        
+                                    },
+                                    else: { Text("Time for a nap!")
+                                            .font(.headline)
                                             .foregroundColor(Color("sand"))
                                             .padding()
-
-                                        },
-                                        else: { Text("Time for a nap!")
-                                                .font(.headline)
-                                                .foregroundColor(Color("sand"))
-                                                .padding()
-                                            
-                                        }
-                                    )
-                                }
+                                        
+                                    }
+                                )
                             }
-                        } content: {
-                            ActivityListView(store: store)
-                                .background(Color("slate").ignoresSafeArea())
                         }
-                        .height(min: minHeight, max: maxHeight)
-                        .collapseProgress($progress)
-                        .refreshable {
-                            viewStore.send(.refreshActivities)
-                        }
-                        sleepToggle
+                    } content: {
+                        ActivityListView(store: store)
+                            .background(Color("slate").ignoresSafeArea())
                     }
-                    .ignoresSafeArea()
-                    .sheet(isPresented: viewStore.binding(\.$showShareSheet), content: { shareView(share: viewStore.share) })
+                    .height(min: minHeight, max: maxHeight)
+                    .collapseProgress($progress)
+                    .refreshable {
+                        viewStore.send(.refreshActivities)
+                    }
+                    sleepToggle
+                }
+                .ignoresSafeArea()
+                .sheet(isPresented: viewStore.binding(\.$showShareSheet), content: { shareView(share: viewStore.share) })
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            viewStore.send(.shareTapped)
+                        } label: {
+                            Image(systemName: "square.and.arrow.up")
+                                .foregroundColor(Color("sand"))
+                        }
+                    }
                 }
             }
-            .toolbar {
-              ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    Task {
-                        if let shareRecord = await PersistenceController.shared.getShareRecord() {
-                            activeShare = shareRecord
-                        } else {
-                            let shareRecord = await PersistenceController.shared.share()
-                            activeShare = shareRecord
-                        }
-                        showShareSheet = true
-                    }
-                } label: {
-                  Image(systemName: "square.and.arrow.up")
-                }
-              }
         }.edgesIgnoringSafeArea(.vertical)
     }
     
@@ -137,7 +120,7 @@ struct ActivityView: View {
         guard let share else {
             return nil
         }
-
+        
         return CloudKitShareView(share: share)
     }
 }
@@ -152,14 +135,14 @@ struct BackgroundShape : Shape {
             y: topLeftCorner
         )
         p.move(
-           to: startingPoint
-       )
-//        p.addLine(
-//            to: CGPoint(
-//                x: rect.width,
-//                y: topLeftCorner)
-//        )
-//        p.addArc(center: CGPoint(x: rect.width/2, y:rect.height), radius: radius, startAngle: .degrees(-125), endAngle: .degrees(-55), clockwise: false)
+            to: startingPoint
+        )
+        //        p.addLine(
+        //            to: CGPoint(
+        //                x: rect.width,
+        //                y: topLeftCorner)
+        //        )
+        //        p.addArc(center: CGPoint(x: rect.width/2, y:rect.height), radius: radius, startAngle: .degrees(-125), endAngle: .degrees(-55), clockwise: false)
         p.addQuadCurve(to: CGPoint(x: rect.width, y: topLeftCorner), control: CGPoint(x: rect.width/2, y: topLeftCorner-60))
         p.addLine(
             to: CGPoint(
@@ -174,7 +157,7 @@ struct BackgroundShape : Shape {
         p.addLine(
             to: startingPoint
         )
-
+        
         return p
     }
 }
