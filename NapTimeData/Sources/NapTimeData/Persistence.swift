@@ -73,12 +73,7 @@ public class PersistenceController {
     public let container: PersistentContainer
     
     public var ckContainer: CKContainer {
-      let storeDescription = container.persistentStoreDescriptions.first
-      guard let identifier = storeDescription?
-        .cloudKitContainerOptions?.containerIdentifier else {
-        fatalError("Unable to get container identifier")
-      }
-      return CKContainer(identifier: identifier)
+        return CloudKitService.container
     }
 
 

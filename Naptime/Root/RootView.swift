@@ -17,18 +17,20 @@ struct RootView: View {
     let store: Store<Root.State, Root.Action>
     
     var body: some View {
-        WithViewStore(self.store.stateless) { viewStore in
-            ActivityView(store: store.scope(state: \.activityState,
-                                            action: Root.Action.activityAction))
-            .onChange(of: scenePhase) { newPhase in
-                           if newPhase == .active {
-                               viewStore.send(.onAppear)
-                           }
-                       }
-//            .onAppear {
-//                viewStore.send(.onAppear)
-//            }
-        }
+        NavigationView {
+            WithViewStore(self.store.stateless) { viewStore in
+                ActivityView(store: store.scope(state: \.activityState,
+                                                action: Root.Action.activityAction))
+                .onChange(of: scenePhase) { newPhase in
+                    if newPhase == .active {
+                        viewStore.send(.onAppear)
+                    }
+                }
+                //            .onAppear {
+                //                viewStore.send(.onAppear)
+                //            }
+            }
+        }.navigationViewStyle(.stack)
     }
 }
 

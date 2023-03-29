@@ -28,7 +28,7 @@ extension PersistenceController {
 //        shareRecord[CKShare.SystemFieldKey.shareType] = "com.zeh4soft.ShopEasy.shoppingList"
 
         let recordsToSave = [shareRecord]
-        let container = CKContainer.default()
+        let container = CloudKitService.container
         let privateDatabase = container.privateCloudDatabase
         let operation = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
         operation.perRecordProgressBlock = { (record, progress) in
@@ -60,7 +60,7 @@ extension PersistenceController {
 //        shareRecord[CKShare.SystemFieldKey.shareType] = "com.zeh4soft.ShopEasy.shoppingList"
 
         let recordsToSave = [shareRecord]
-        let container = CKContainer.default()
+        let container = CloudKitService.container
         let privateDatabase = container.privateCloudDatabase
         let operation = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
         operation.perRecordProgressBlock = { (record, progress) in
@@ -76,7 +76,7 @@ extension PersistenceController {
 
     public func getShareRecord() async -> CKShare? {
         let query = CKQuery(recordType: "cloudkit.share", predicate: NSPredicate(value: true))
-        let container = CKContainer.default()
+        let container = CloudKitService.container
         return try await withCheckedContinuation { continuation in
             container.privateCloudDatabase.fetch(withQuery: query) { result in
                 switch result {

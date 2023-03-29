@@ -26,7 +26,6 @@ struct ActivityView: View {
     var body: some View {
         GeometryReader { geometry in
             WithViewStore(self.store) { viewStore in
-                NavigationView {
                     ZStack {
                         VStack(spacing: 0) {
                             Color("ocean")
@@ -108,7 +107,6 @@ struct ActivityView: View {
                   Image(systemName: "square.and.arrow.up")
                 }
               }
-            }
         }.edgesIgnoringSafeArea(.vertical)
     }
     

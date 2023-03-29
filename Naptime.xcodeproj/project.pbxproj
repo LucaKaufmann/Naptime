@@ -96,6 +96,7 @@
 		8169623F298A68E9006359F1 /* ActivityListAwakeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListAwakeRow.swift; sourceTree = "<group>"; };
 		8170283029D04AE60053BDA6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8170283229D04B900053BDA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8170283429D064670053BDA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		81787EE6294655A60031BE99 /* NapTimeData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NapTimeData; sourceTree = "<group>"; };
 		818507BE29943BF400CAC510 /* ActivityTilesFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTilesFeature.swift; sourceTree = "<group>"; };
 		818507C029943C7100CAC510 /* ActivityTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTile.swift; sourceTree = "<group>"; };
@@ -315,6 +316,7 @@
 		81F2519829291CFC00B90C0E /* Naptime */ = {
 			isa = PBXGroup;
 			children = (
+				8170283429D064670053BDA6 /* Info.plist */,
 				811089E329857E69001D4E58 /* ViewComponents */,
 				815550A8293F99BF000A2952 /* Extensions */,
 				81CD4F13293C88F8007CE048 /* Activity */,
@@ -703,6 +705,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Naptime/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -743,6 +746,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Naptime/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
