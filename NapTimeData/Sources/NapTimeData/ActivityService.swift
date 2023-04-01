@@ -44,6 +44,16 @@ public struct ActivityService {
         newPersistenceActivity.endDate = newActivity.endDate
         newPersistenceActivity.activityTypeValue = newActivity.type.rawValue
         
+        let shares = persistence.getSharedShareRecord()
+        
+        for share in shares {
+            do {
+                _ = try await persistence.shareObject(newPersistenceActivity, to: share)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        
         await saveContext()
     }
     
@@ -79,6 +89,16 @@ public struct ActivityService {
         
         if let type {
             activityToUpdate.activityTypeValue = type.rawValue
+        }
+        
+        let shares = persistence.getSharedShareRecord()
+        
+        for share in shares {
+            do {
+                _ = try await persistence.shareObject(activityToUpdate, to: share)
+            } catch {
+                print(error.localizedDescription)
+            }
         }
         
         await saveContext()

@@ -8,6 +8,7 @@
 
 import CloudKit
 import UIKit
+import CoreData
 
 enum PersistenceError: Error {
     case noRecordsFound
@@ -56,6 +57,7 @@ extension PersistenceController {
         shareRecord[CKShare.SystemFieldKey.title] = "Share naps"
         let image = UIImage(named: "sleeping_teddy")!.pngData()
         shareRecord[CKShare.SystemFieldKey.thumbnailImageData] = image
+        shareRecord.publicPermission = .readWrite
 //        // Include a custom UTI that describes the share's content.
 //        shareRecord[CKShare.SystemFieldKey.shareType] = "com.zeh4soft.ShopEasy.shoppingList"
 
@@ -72,6 +74,46 @@ extension PersistenceController {
         privateDatabase.add(operation)
 
         return shareRecord
+    }
+    
+    public func getSharedShareRecord() -> [CKShare] {
+        do {
+            let shares = try container.fetchShares(in: sharedPersistentStore)
+            return shares
+        } catch {
+            return []
+        }
+//        let query = CKQuery(recordType: "cloudkit.share", predicate: NSPredicate(value: true))
+//        let container = CloudKitService.container
+//
+//
+//
+//        return try await withCheckedContinuation { continuation in
+//            container.sharedCloudDatabase.fetch(withQuery: query) { result in
+//                switch result {
+//                    case .success(let returned):
+//                        // .success((matchResults: [CKRecord.ID : Result<CKRecord, Error>], queryCursor: CKQueryOperation.Cursor?))
+//                        let matchResults = returned.matchResults // [CKRecord.ID : Result<CKRecord, Error>]
+//                        if let matchResult = matchResults.first {
+//                            switch matchResult.1 {
+//                                case .success(let ckRecord):
+//                                    continuation.resume(returning: ckRecord as? CKShare)
+//                                case .failure(let error):
+//                                    continuation.resume(returning: nil)
+////                                    continuation.resume(throwing: error)
+//                            }
+//                        } else {
+//                            continuation.resume(returning: nil)
+//
+////                            continuation.resume(throwing: PersistenceError.noRecordsFound)
+//                        }
+//                    case .failure(let error):
+////                        continuation.resume(throwing: error)
+//                        continuation.resume(returning: nil)
+//
+//                }
+//            }
+//        }
     }
 
     public func getShareRecord() async -> CKShare? {
@@ -104,6 +146,29 @@ extension PersistenceController {
             }
         }
         
+    }
+    
+    func shareObject(_ unsharedObject: NSManagedObject, to existingShare: CKShare?) async throws -> CKShare?
+    {
+        return try await withCheckedThrowingContinuation { continuation in
+            container.share([unsharedObject], to: existingShare) { (objectIDs, share, container, error) in
+                guard error == nil, let share = share else {
+                    print("\(#function): Failed to share an object: \(error!))")
+                    continuation.resume(throwing: error!)
+                    return
+                }
+                /**
+                 Synchronize the changes on the share to the private persistent store.
+                 */
+                self.container.persistUpdatedShare(share, in: self.privatePersistentStore) { (share, error) in
+                    if let error = error {
+                        print("\(#function): Failed to persist updated share: \(error)")
+                        continuation.resume(throwing: error)
+                    }
+                    continuation.resume(returning: share)
+                }
+            }
+        }
     }
 
 }
