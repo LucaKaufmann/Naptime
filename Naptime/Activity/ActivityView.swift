@@ -20,8 +20,8 @@ struct ActivityView: View {
     
     let store: Store<Activity.State, Activity.Action>
     
-    private let minHeight = 90.0
-    private let maxHeight = 372.0
+    private let minHeight = 0.0
+    private let maxHeight = 322.0
     
     var body: some View {
         GeometryReader { geometry in
@@ -35,9 +35,10 @@ struct ActivityView: View {
                     ScalingHeaderScrollView {
                         ZStack {
                             VStack {
+                                Spacer()
                                 ActivityTilesView(store: store.scope(state: \.activityTilesState, action: Activity.Action.activityTiles))
                                     .frame(height: max(geometry.size.height / 3, 0))
-                                    .padding(.top, 25)
+//                                    .padding(.top, 25)
                                 Spacer()
                             }
                             VStack {
@@ -45,29 +46,29 @@ struct ActivityView: View {
                                 BackgroundShape()
                                     .foregroundColor(Color("slate"))
                                     .edgesIgnoringSafeArea(.all)
-                                    .frame(width: geometry.size.width, height: 150)
+                                    .frame(width: geometry.size.width, height: 60)
                             }
                             VStack {
                                 Spacer()
-                                IfLetStore(
-                                    store.scope(state: \.lastActivityTimerState,
-                                                action: Activity.Action.activityTimerAction),
-                                    then: { store in
-                                        TimerFeatureView(store: store,
-                                                         label: viewStore.isSleeping ? "Asleep for" : "Awake for",
-                                                         fontSize: 18,
-                                                         fontDesign: .rounded)
-                                        .foregroundColor(Color("sand"))
-                                        .padding()
-                                        
-                                    },
-                                    else: { Text("Time for a nap!")
-                                            .font(.headline)
-                                            .foregroundColor(Color("sand"))
-                                            .padding()
-                                        
-                                    }
-                                )
+//                                IfLetStore(
+//                                    store.scope(state: \.lastActivityTimerState,
+//                                                action: Activity.Action.activityTimerAction),
+//                                    then: { store in
+//                                        TimerFeatureView(store: store,
+//                                                         label: viewStore.isSleeping ? "Asleep for" : "Awake for",
+//                                                         fontSize: 18,
+//                                                         fontDesign: .rounded)
+//                                        .foregroundColor(Color("sand"))
+//                                        .padding()
+//
+//                                    },
+//                                    else: { Text("Time for a nap!")
+//                                            .font(.headline)
+//                                            .foregroundColor(Color("sand"))
+//                                            .padding()
+//
+//                                    }
+//                                )
                             }
                         }
                     } content: {
@@ -84,6 +85,35 @@ struct ActivityView: View {
                 .ignoresSafeArea()
                 .sheet(isPresented: viewStore.binding(\.$showShareSheet), content: { shareView(share: viewStore.share) })
                 .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            viewStore.send(.refreshActivities)
+                        } label: {
+                            Image(systemName: "arrow.triangle.2.circlepath")
+                                .foregroundColor(Color("sand"))
+                        }
+                    }
+                    ToolbarItem(placement: .principal) {
+                        IfLetStore(
+                            store.scope(state: \.lastActivityTimerState,
+                                        action: Activity.Action.activityTimerAction),
+                            then: { store in
+                                TimerFeatureView(store: store,
+                                                 label: viewStore.isSleeping ? "Asleep for" : "Awake for",
+                                                 fontSize: 18,
+                                                 fontDesign: .rounded)
+                                .foregroundColor(Color("sand"))
+                                .padding()
+                                
+                            },
+                            else: { Text("Time for a nap!")
+                                    .font(.headline)
+                                    .foregroundColor(Color("sand"))
+                                    .padding()
+                                
+                            }
+                        )
+                    }
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
                             viewStore.send(.shareTapped)

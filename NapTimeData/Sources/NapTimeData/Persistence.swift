@@ -17,6 +17,22 @@ public enum CoreDataError: Error {
     case unknown
 }
 
+/**
+ This app doesn't necessarily post notifications from the main queue.
+ */
+public extension Notification.Name {
+    public static let cdcksStoreDidChange = Notification.Name("cdcksStoreDidChange")
+}
+
+struct TransactionAuthor {
+    static let app = "app"
+}
+
+struct UserInfoKey {
+    static let storeUUID = "storeUUID"
+    static let transactions = "transactions"
+}
+
 public class PersistenceController {
     public static let shared = PersistenceController()
     
@@ -125,9 +141,10 @@ public class PersistenceController {
                 }
             }
         })
+    
         
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        container.viewContext.transactionAuthor = appTransactionAuthorName
+        container.viewContext.transactionAuthor = TransactionAuthor.app
         
         // Pin the viewContext to the current generation token, and set it to keep itself up to date with local changes.
         container.viewContext.automaticallyMergesChangesFromParent = true
@@ -137,12 +154,42 @@ public class PersistenceController {
             fatalError("###\(#function): Failed to pin viewContext to the current generation:\(error)")
         }
         
+        #if InitializeCloudKitSchema
+        do {
+            try container.initializeCloudKitSchema()
+        } catch {
+            print("\(#function): initializeCloudKitSchema: \(error)")
+        }
+        #else
+        /**
+         Observe the following notifications:
+         - The remote change notifications from container.persistentStoreCoordinator.
+         - The .NSManagedObjectContextDidSave notifications from any context.
+         - The event change notifications from the container.
+         */
+        NotificationCenter.default.addObserver(self, selector: #selector(storeRemoteChange(_:)),
+                                               name: .NSPersistentStoreRemoteChange,
+                                               object: container.persistentStoreCoordinator)
+        NotificationCenter.default.addObserver(self, selector: #selector(containerEventChanged(_:)),
+                                               name: NSPersistentCloudKitContainer.eventChangedNotification,
+                                               object: container)
+        #endif
+        
 //        // Observe Core Data remote change notifications.
 //        NotificationCenter.default.addObserver(self,
 //                                               selector: #selector(storeRemoteChange(_:)),
 //                                               name: .NSPersistentStoreRemoteChange,
 //                                               object: container.persistentStoreCoordinator)
     }
+    
+    /**
+     An operation queue for handling history-processing tasks: watching changes, deduplicating tags, and triggering UI updates, if needed.
+     */
+    lazy var historyQueue: OperationQueue = {
+        let queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
     
     public lazy var backgroundContext: NSManagedObjectContext = {
         let context = container.newBackgroundContext()
@@ -186,6 +233,28 @@ public class PersistenceController {
             os_log("Destroyed data store \n %@ ",
                    log: OSLog.persistence,
                    type: .debug, store.description)
+        }
+    }
+    
+    public func activityTransactions(from notification: Notification) -> [NSPersistentHistoryTransaction] {
+        var results = [NSPersistentHistoryTransaction]()
+        if let transactions = notification.userInfo?[UserInfoKey.transactions] as? [NSPersistentHistoryTransaction] {
+            let entityName = ActivityPersistenceModel.entity().name
+            for transaction in transactions where transaction.changes != nil {
+                for change in transaction.changes! where change.changedObjectID.entity.name == entityName {
+                    results.append(transaction)
+                    break // Jump to the next transaction.
+                }
+            }
+        }
+        return results
+    }
+    
+    public func mergeTransactions(_ transactions: [NSPersistentHistoryTransaction], to context: NSManagedObjectContext) {
+        context.perform {
+            for transaction in transactions {
+                context.mergeChanges(fromContextDidSave: transaction.objectIDNotification())
+            }
         }
     }
 }
