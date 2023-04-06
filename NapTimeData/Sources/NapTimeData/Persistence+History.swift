@@ -52,7 +52,7 @@ extension PersistenceController {
     private func processHistoryAsynchronously(storeUUID: String) {
         historyQueue.addOperation {
             let taskContext = self.container.newTaskContext()
-            taskContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+            taskContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             taskContext.performAndWait {
                 self.performHistoryProcessing(storeUUID: storeUUID, performingContext: taskContext)
             }
