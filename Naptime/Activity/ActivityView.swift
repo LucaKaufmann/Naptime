@@ -67,7 +67,7 @@ struct ActivityView: View {
                             viewStore.send(.refreshActivities)
                         } label: {
                             Image(systemName: "arrow.triangle.2.circlepath")
-                                .foregroundColor(Color("sand"))
+                                .foregroundColor(Color("sandLight"))
                         }
                     }
                     ToolbarItem(placement: .principal) {
@@ -96,7 +96,7 @@ struct ActivityView: View {
                             viewStore.send(.shareTapped)
                         } label: {
                             Image(systemName: "square.and.arrow.up")
-                                .foregroundColor(Color("sand"))
+                                .foregroundColor(Color("sandLight"))
                         }
                     }
                 }
