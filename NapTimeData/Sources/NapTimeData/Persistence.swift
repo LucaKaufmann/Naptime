@@ -144,6 +144,7 @@ public class PersistenceController {
     
         
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+//        container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         container.viewContext.transactionAuthor = TransactionAuthor.app
         
         // Pin the viewContext to the current generation token, and set it to keep itself up to date with local changes.
@@ -193,6 +194,7 @@ public class PersistenceController {
     
     public lazy var backgroundContext: NSManagedObjectContext = {
         let context = container.newBackgroundContext()
+//        context.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
         context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
         return context
     }()
