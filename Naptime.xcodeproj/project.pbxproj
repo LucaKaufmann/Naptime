@@ -44,6 +44,7 @@
 		81EB50D62987BD6E007ABC32 /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D52987BD6E007ABC32 /* ToggleView.swift */; };
 		81EB50D92987C38E007ABC32 /* ToggleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D82987C38E007ABC32 /* ToggleContentView.swift */; };
 		81EB50DB29883698007ABC32 /* ScaleNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50DA29883698007ABC32 /* ScaleNumbers.swift */; };
+		81F22CB929DED0CB0056A536 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 81F22CB829DED0CB0056A536 /* AsyncAlgorithms */; };
 		81F2519A29291CFC00B90C0E /* NaptimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F2519929291CFC00B90C0E /* NaptimeApp.swift */; };
 		81F251A329291CFD00B90C0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81F251A229291CFD00B90C0E /* Assets.xcassets */; };
 		81F251A729291CFD00B90C0E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81F251A629291CFD00B90C0E /* Preview Assets.xcassets */; };
@@ -138,6 +139,7 @@
 				81FDB60C296D3A6E00B0231A /* NapTimeData in Frameworks */,
 				81F251CD29291E1800B90C0E /* Dependencies in Frameworks */,
 				81B7211729991F09006A04C1 /* ScalingHeaderScrollView in Frameworks */,
+				81F22CB929DED0CB0056A536 /* AsyncAlgorithms in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +390,7 @@
 				81F251CC29291E1800B90C0E /* Dependencies */,
 				81FDB60B296D3A6E00B0231A /* NapTimeData */,
 				81B7211629991F09006A04C1 /* ScalingHeaderScrollView */,
+				81F22CB829DED0CB0056A536 /* AsyncAlgorithms */,
 			);
 			productName = Naptime;
 			productReference = 81F2519629291CFC00B90C0E /* Naptime.app */;
@@ -464,6 +467,7 @@
 			packageReferences = (
 				81F251C929291E1800B90C0E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				81B7211529991F09006A04C1 /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */,
+				81F22CB729DED0CB0056A536 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
 			);
 			productRefGroup = 81F2519729291CFC00B90C0E /* Products */;
 			projectDirPath = "";
@@ -914,6 +918,14 @@
 				kind = branch;
 			};
 		};
+		81F22CB729DED0CB0056A536 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-async-algorithms";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
 		81F251C929291E1800B90C0E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -929,6 +941,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 81B7211529991F09006A04C1 /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */;
 			productName = ScalingHeaderScrollView;
+		};
+		81F22CB829DED0CB0056A536 /* AsyncAlgorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81F22CB729DED0CB0056A536 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
+			productName = AsyncAlgorithms;
 		};
 		81F251CA29291E1800B90C0E /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -10,6 +10,7 @@ import Combine
 import Foundation
 import os.log
 import NapTimeData
+import AsyncAlgorithms
 
 struct Root: ReducerProtocol {
     
@@ -32,10 +33,16 @@ struct Root: ReducerProtocol {
                 case .onAppear:
                     return .run { send in
                         await send(.refreshActivities)
-                        for await _ in NotificationCenter.default.notifications(named: Notification.Name.cdcksStoreDidChange) {
-                            print("store changed") // This works
-                            await send(.refreshActivities)
-                        }
+                        if #available(iOS 16.0, *) {
+                            for await _ in NotificationCenter.default.notifications(named: Notification.Name.cdcksStoreDidChange).debounce(for: .seconds(1)) {
+                                print("store changed") // This works
+                                await send(.refreshActivities)
+                            }
+                        } else {
+                            for await _ in NotificationCenter.default.notifications(named: Notification.Name.cdcksStoreDidChange) {
+                                print("store changed") // This works
+                                await send(.refreshActivities)
+                            }                        }
                     }
 
                 case .refreshActivities:

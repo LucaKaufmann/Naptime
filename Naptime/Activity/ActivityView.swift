@@ -38,7 +38,6 @@ struct ActivityView: View {
                                 Spacer()
                                 ActivityTilesView(store: store.scope(state: \.activityTilesState, action: Activity.Action.activityTiles))
                                     .frame(height: max(geometry.size.height / 3, 0))
-//                                    .padding(.top, 25)
                                 Spacer()
                             }
                             VStack {
@@ -47,28 +46,6 @@ struct ActivityView: View {
                                     .foregroundColor(Color("slate"))
                                     .edgesIgnoringSafeArea(.all)
                                     .frame(width: geometry.size.width, height: 60)
-                            }
-                            VStack {
-                                Spacer()
-//                                IfLetStore(
-//                                    store.scope(state: \.lastActivityTimerState,
-//                                                action: Activity.Action.activityTimerAction),
-//                                    then: { store in
-//                                        TimerFeatureView(store: store,
-//                                                         label: viewStore.isSleeping ? "Asleep for" : "Awake for",
-//                                                         fontSize: 18,
-//                                                         fontDesign: .rounded)
-//                                        .foregroundColor(Color("sand"))
-//                                        .padding()
-//
-//                                    },
-//                                    else: { Text("Time for a nap!")
-//                                            .font(.headline)
-//                                            .foregroundColor(Color("sand"))
-//                                            .padding()
-//
-//                                    }
-//                                )
                             }
                         }
                     } content: {
@@ -102,7 +79,7 @@ struct ActivityView: View {
                                                  label: viewStore.isSleeping ? "Asleep for" : "Awake for",
                                                  fontSize: 18,
                                                  fontDesign: .rounded)
-                                .foregroundColor(Color("sand"))
+                                .foregroundColor(Color("sandLight"))
                                 .padding()
                                 
                             },

@@ -45,7 +45,6 @@ struct ActivityListView: View {
                         .frame(width: 250, height: 250)
                         Spacer()
                     }
-//                    .opacity(0.5)
                     Spacer()
                 } else {
                     ForEach(viewStore.activityHeaderDates, id: \.self) { header in
@@ -76,6 +75,8 @@ struct ActivityListView: View {
                             }
                         }
                     }
+                    Spacer()
+                        .frame(height: 120)
                 }
             }
         }
