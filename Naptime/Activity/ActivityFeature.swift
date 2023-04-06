@@ -39,6 +39,7 @@ struct Activity: ReducerProtocol {
         var activityTilesState: ActivityTiles.State
         var lastActivityDate: Date?
         var lastActivityTimerState: TimerFeature.State?
+        var lastUpdated: Date?
         
         @BindingState var isSleeping: Bool = false
         @BindingState var showShareSheet: Bool = false
@@ -91,6 +92,12 @@ struct Activity: ReducerProtocol {
                 case .refreshActivities:
                     return .none
                 case .activitiesUpdated:
+//                    if let lastUpdated = state.lastUpdated {
+//                        if -lastUpdated.timeIntervalSinceNow > 10 {
+//                            return .none
+//                        }
+//                    }
+//                    state.lastUpdated = Date()
                     state.groupedActivities = groupActivities(state.activities)
                     state.activityHeaderDates = activityHeaders(state.groupedActivities)
                     state.lastActivityDate = state.activities[safe: 0]?.endDate ?? state.activities[safe: 0]?.startDate
@@ -101,9 +108,10 @@ struct Activity: ReducerProtocol {
                     }
                     state.isSleeping = state.activitiesActive
                     let activities = state.activities
-                    return .task {
-                        return .activityTiles(.updateTiles(activities))
-                    }
+                    return .none
+//                    return .task {
+//                        return .activityTiles(.updateTiles(activities))
+//                    }
                     
                 case .endActivity(let activity):
                     guard activity.endDate == nil else {
