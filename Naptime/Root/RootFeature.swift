@@ -36,12 +36,12 @@ struct Root: ReducerProtocol {
                         if #available(iOS 16.0, *) {
                             for await _ in NotificationCenter.default.notifications(named: Notification.Name.cdcksStoreDidChange).debounce(for: .seconds(1)) {
                                 print("store changed") // This works
-//                                await send(.refreshActivities)
+                                await send(.refreshActivities)
                             }
                         } else {
                             for await _ in NotificationCenter.default.notifications(named: Notification.Name.cdcksStoreDidChange) {
                                 print("store changed") // This works
-//                                await send(.refreshActivities)
+                                await send(.refreshActivities)
                             }                        }
                     }
 
