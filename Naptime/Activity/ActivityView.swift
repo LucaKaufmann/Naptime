@@ -13,7 +13,6 @@ import CloudKit
 
 struct ActivityView: View {
     
-    @State var progress: CGFloat = 0
     @State private var showShareSheet = false
     
     @State var activeShare: CKShare?
@@ -76,7 +75,6 @@ struct ActivityView: View {
                             .background(Color("slate").ignoresSafeArea())
                     }
                     .height(min: minHeight, max: maxHeight)
-                    .collapseProgress($progress)
                     .refreshable {
                         viewStore.send(.refreshActivities)
                     }
@@ -90,7 +88,7 @@ struct ActivityView: View {
                             viewStore.send(.refreshActivities)
                         } label: {
                             Image(systemName: "arrow.triangle.2.circlepath")
-                                .foregroundColor(Color("sand"))
+                                .foregroundColor(Color("sandLight"))
                         }
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -98,7 +96,7 @@ struct ActivityView: View {
                             viewStore.send(.shareTapped)
                         } label: {
                             Image(systemName: "square.and.arrow.up")
-                                .foregroundColor(Color("sand"))
+                                .foregroundColor(Color("sandLight"))
                         }
                     }
                 }
