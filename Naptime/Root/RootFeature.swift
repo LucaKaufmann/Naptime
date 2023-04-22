@@ -46,8 +46,9 @@ struct Root: ReducerProtocol {
                     }
 
                 case .refreshActivities:
+                    let timeSpan = state.activityState.selectedTimeRange
                     return Future(asyncFunc: {
-                        let date = Calendar.current.date(byAdding: .day, value: -7, to: Date())?.startOf(.day)
+                        let date: Date? = timeSpan == .week ? Calendar.current.date(byAdding: .day, value: -7, to: Date())?.startOf(.day) : nil
                         return await activityService.fetchActivitiesAfter(date)
                     }).receive(on: DispatchQueue.main)
                         .catchToEffect()

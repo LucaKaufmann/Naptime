@@ -25,9 +25,19 @@ extension DependencyValues {
     }
 }
 
+enum ActivityTimeRange: Int, Equatable {
+    case week = 0
+    case all = 1
+}
+
 struct Activity: ReducerProtocol {
     
     @Dependency(\.activityService) private var activityService
+    
+    internal struct ActivityViewState: Equatable {
+        let groupedActivities: [Date: IdentifiedArrayOf<ActivityDetail.State>]
+        let activityHeaderDates: [Date]
+    }
     
     struct State: Equatable {
         var share: CKShare?
@@ -41,6 +51,7 @@ struct Activity: ReducerProtocol {
         var lastActivityTimerState: TimerFeature.State?
         
         @BindingState var isSleeping: Bool = false
+        @BindingState var selectedTimeRange: ActivityTimeRange = .week
         @BindingState var showShareSheet: Bool = false
         
         var activitiesActive: Bool {
@@ -59,6 +70,7 @@ struct Activity: ReducerProtocol {
         case binding(BindingAction<State>)
         case deleteActivity(Int)
         case activitiesUpdated
+        case activityViewStateUpdated(ActivityViewState)
         case activityDetailAction(ActivityDetail.Action)
         case setSelectedActivityId(ActivityModel.ID?)
         case activityTimerAction(TimerFeature.Action)
@@ -69,6 +81,7 @@ struct Activity: ReducerProtocol {
     }
     
     var body: some ReducerProtocol<State, Action> {
+        BindingReducer()
         Reduce { state, action in
             switch action {
                 case .startActivity(let type):
@@ -91,8 +104,6 @@ struct Activity: ReducerProtocol {
                 case .refreshActivities:
                     return .none
                 case .activitiesUpdated:
-                    state.groupedActivities = groupActivities(state.activities)
-                    state.activityHeaderDates = activityHeaders(state.groupedActivities)
                     state.lastActivityDate = state.activities[safe: 0]?.endDate ?? state.activities[safe: 0]?.startDate
                     if let lastActivityDate = state.activities[safe: 0]?.endDate ?? state.activities[safe: 0]?.startDate {
                         state.lastActivityTimerState = TimerFeature.State(startDate: lastActivityDate, isTimerRunning: true)
@@ -101,10 +112,17 @@ struct Activity: ReducerProtocol {
                     }
                     state.isSleeping = state.activitiesActive
                     let activities = state.activities
-                    return .task {
-                        return .activityTiles(.updateTiles(activities))
+                    return .run { send in
+                        let groupedActivities = await groupActivities(activities)
+                        let activityHeaders = await activityHeaders(groupedActivities)
+                        let updatedViewState = ActivityViewState(groupedActivities: groupedActivities, activityHeaderDates: activityHeaders)
+                        await send(.activityViewStateUpdated(updatedViewState))
+                        await send(.activityTiles(.updateTiles(activities)))
                     }
-                    
+                case .activityViewStateUpdated(let viewState):
+                    state.groupedActivities = viewState.groupedActivities
+                    state.activityHeaderDates = viewState.activityHeaderDates
+                    return .none
                 case .endActivity(let activity):
                     guard activity.endDate == nil else {
                         return .none
@@ -142,7 +160,7 @@ struct Activity: ReducerProtocol {
                         return .activitiesUpdated
                     }
                 case .binding(\.$isSleeping):
-                    if !state.isSleeping {
+                    if state.isSleeping {
                         return .task {
                             return .startActivity(.sleep)
                         }
@@ -151,6 +169,8 @@ struct Activity: ReducerProtocol {
                             return .endAllActiveActivities
                         }
                     }
+                case .binding(\.$selectedTimeRange):
+                    return .send(.refreshActivities)
                 case .binding(_) :
                     print("Binding")
                     return .none
@@ -218,13 +238,12 @@ struct Activity: ReducerProtocol {
         .ifLet(\.lastActivityTimerState, action: /Action.activityTimerAction) {
             TimerFeature()
         }
-        BindingReducer()
         Scope(state: \.activityTilesState, action: /Action.activityTiles) {
             ActivityTiles()
         }
     }
     
-    private func groupActivities(_ activities: [ActivityModel]) ->  [Date: IdentifiedArrayOf<ActivityDetail.State>]{
+    private func groupActivities(_ activities: [ActivityModel]) async ->  [Date: IdentifiedArrayOf<ActivityDetail.State>]{
         let calendar = Calendar.current
         var grouped = [Date: IdentifiedArrayOf<ActivityDetail.State>]()
         for (index, activity) in activities.enumerated() {
@@ -250,7 +269,7 @@ struct Activity: ReducerProtocol {
         return grouped
     }
     
-    private func activityHeaders(_ activities: [Date: IdentifiedArrayOf<ActivityDetail.State>]) -> [Date] {
+    private func activityHeaders(_ activities: [Date: IdentifiedArrayOf<ActivityDetail.State>]) async -> [Date] {
         activities.map({ $0.key }).sorted(by: { $0.compare($1) == .orderedDescending })
     }
     

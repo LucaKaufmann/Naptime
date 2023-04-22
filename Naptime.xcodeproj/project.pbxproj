@@ -41,6 +41,7 @@
 		81CD4EFD2937E0AD007CE048 /* RootFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4EFC2937E0AD007CE048 /* RootFeature.swift */; };
 		81CD4F00293917AE007CE048 /* SystemEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4EFF293917AE007CE048 /* SystemEnvironment.swift */; };
 		81CD4F15293C8918007CE048 /* ActivityFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4F14293C8918007CE048 /* ActivityFeature.swift */; };
+		81DA975729F2C73A00F45BEC /* LoadingBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA975629F2C73A00F45BEC /* LoadingBadgeView.swift */; };
 		81EB50D62987BD6E007ABC32 /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D52987BD6E007ABC32 /* ToggleView.swift */; };
 		81EB50D92987C38E007ABC32 /* ToggleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D82987C38E007ABC32 /* ToggleContentView.swift */; };
 		81EB50DB29883698007ABC32 /* ScaleNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50DA29883698007ABC32 /* ScaleNumbers.swift */; };
@@ -112,6 +113,7 @@
 		81CD4EFC2937E0AD007CE048 /* RootFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootFeature.swift; sourceTree = "<group>"; };
 		81CD4EFF293917AE007CE048 /* SystemEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemEnvironment.swift; sourceTree = "<group>"; };
 		81CD4F14293C8918007CE048 /* ActivityFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFeature.swift; sourceTree = "<group>"; };
+		81DA975629F2C73A00F45BEC /* LoadingBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingBadgeView.swift; sourceTree = "<group>"; };
 		81EB50D52987BD6E007ABC32 /* ToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleView.swift; sourceTree = "<group>"; };
 		81EB50D82987C38E007ABC32 /* ToggleContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleContentView.swift; sourceTree = "<group>"; };
 		81EB50DA29883698007ABC32 /* ScaleNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleNumbers.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				8159C4422941D05400716330 /* TimerView.swift */,
 				81EB50D52987BD6E007ABC32 /* ToggleView.swift */,
 				8169623D298A4C72006359F1 /* AwakeRow.swift */,
+				81DA975629F2C73A00F45BEC /* LoadingBadgeView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 				81F8C2D6299EA99A00E225FE /* TimerFeature.swift in Sources */,
 				81B2212429717D1C005C4A15 /* FormTextField.swift in Sources */,
 				81CD4EF92937E060007CE048 /* RootView.swift in Sources */,
+				81DA975729F2C73A00F45BEC /* LoadingBadgeView.swift in Sources */,
 				815871B0299682590015CB30 /* ActivityTilesView.swift in Sources */,
 				815871B22996928B0015CB30 /* Date+Stuff.swift in Sources */,
 				81CD4F00293917AE007CE048 /* SystemEnvironment.swift in Sources */,

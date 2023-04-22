@@ -27,6 +27,8 @@ public struct ActivityModel: Equatable, Identifiable {
     public var startDate: Date
     public var endDate: Date?
     public var type: ActivityType
+    public var formattedStartDate: String
+    public var formattedEndDate: String
     
     public var duration: TimeInterval {
         if endDate == nil {
@@ -40,16 +42,16 @@ public struct ActivityModel: Equatable, Identifiable {
         return endDate == nil
     }
     
-    public var formattedStartDate: String {
-        return formattedDate(startDate)
-    }
-    
-    public var formattedEndDate: String {
-        guard let endDate else {
-            return ""
-        }
-        return formattedDate(endDate)
-    }
+//    public var formattedStartDate: String {
+//        return formattedDate(startDate)
+//    }
+//
+//    public var formattedEndDate: String {
+//        guard let endDate else {
+//            return ""
+//        }
+//        return formattedDate(endDate)
+//    }
     
     private func formattedDate(_ date: Date) -> String {
         let calendar = Calendar.current
@@ -63,6 +65,19 @@ public struct ActivityModel: Equatable, Identifiable {
         self.startDate = startDate
         self.endDate = endDate
         self.type = type
+        
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = calendar.isDateInToday(startDate) ? "HH:mm" : "E HH:mm"
+        self.formattedStartDate = dateFormatter.string(from: startDate)
+        
+        if let endDate {
+            dateFormatter.dateFormat = calendar.isDateInToday(endDate) ? "HH:mm" : "E HH:mm"
+            self.formattedEndDate = dateFormatter.string(from: endDate)
+        } else {
+            self.formattedEndDate = ""
+        }
     }
     
     public init(persistenceModel: ActivityPersistenceModel) {

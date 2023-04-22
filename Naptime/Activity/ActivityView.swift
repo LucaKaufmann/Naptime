@@ -14,13 +14,21 @@ import CloudKit
 struct ActivityView: View {
     
     @State private var showShareSheet = false
-    
     @State var activeShare: CKShare?
     
-    let store: Store<Activity.State, Activity.Action>
+    let store: StoreOf<Activity>
     
     private let minHeight = 0.0
     private let maxHeight = 322.0
+    
+    init(store: StoreOf<Activity>) {
+        self.store = store
+        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(named: "sandLight")
+        UISegmentedControl.appearance().backgroundColor =
+        UIColor(Color("slate").opacity(0.3))
+        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.primary)], for: .selected)
+        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.secondary)], for: .normal)
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -91,6 +99,14 @@ struct ActivityView: View {
                                 .foregroundColor(Color("sandLight"))
                         }
                     }
+                    ToolbarItem(placement: .principal) {
+                                        Picker("Activities", selection: viewStore.binding(\.$selectedTimeRange)) {
+                                            Text("7d").tag(ActivityTimeRange.week)
+                                            Text("All").tag(ActivityTimeRange.all)
+                                        }
+                                        .pickerStyle(SegmentedPickerStyle())
+                                        .padding(.horizontal, 30)
+                                    }
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
                             viewStore.send(.shareTapped)
