@@ -10,10 +10,11 @@ import ComposableArchitecture
 struct SettingsFeature: ReducerProtocol {
     
     struct State: Equatable {
-        var showLiveAction: Bool
+        @BindingState var showLiveAction: Bool
     }
-    enum Action: Equatable {
+    enum Action: Equatable, BindableAction {
         case shareTapped
+        case binding(BindingAction<State>)
     }
     
     var body: some ReducerProtocol<State, Action> {
@@ -21,7 +22,10 @@ struct SettingsFeature: ReducerProtocol {
             switch action {
                 case .shareTapped:
                     return .none
+                case .binding(_):
+                    return .none
             }
         }
+        BindingReducer()
     }
 }

@@ -27,7 +27,9 @@ struct RootView: View {
                     }
                 }
             }
-        }.navigationViewStyle(.stack)
+        }
+        .navigationViewStyle(.stack)
+        .accentColor(Color("sandLight"))
     }
 }
 

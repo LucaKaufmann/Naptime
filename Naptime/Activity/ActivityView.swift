@@ -92,7 +92,7 @@ struct ActivityView: View {
                 .navigationDestination(
                       store: self.store.scope(state: \.$settings, action: Activity.Action.settings)
                     ) { store in
-                      Text("Settings")
+                      SettingsView(store: store)
                     }
                 .sheet(isPresented: viewStore.binding(\.$showShareSheet), content: { shareView(share: viewStore.share) })
                 .toolbar {

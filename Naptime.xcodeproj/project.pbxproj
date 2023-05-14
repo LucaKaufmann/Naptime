@@ -43,6 +43,7 @@
 		81CD4F15293C8918007CE048 /* ActivityFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4F14293C8918007CE048 /* ActivityFeature.swift */; };
 		81DA975729F2C73A00F45BEC /* LoadingBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA975629F2C73A00F45BEC /* LoadingBadgeView.swift */; };
 		81DD88052A10B7A5005E5C6D /* SettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DD88042A10B7A5005E5C6D /* SettingsFeature.swift */; };
+		81DD88072A10BDC1005E5C6D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DD88062A10BDC1005E5C6D /* SettingsView.swift */; };
 		81EB50D62987BD6E007ABC32 /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D52987BD6E007ABC32 /* ToggleView.swift */; };
 		81EB50D92987C38E007ABC32 /* ToggleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D82987C38E007ABC32 /* ToggleContentView.swift */; };
 		81EB50DB29883698007ABC32 /* ScaleNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50DA29883698007ABC32 /* ScaleNumbers.swift */; };
@@ -116,6 +117,7 @@
 		81CD4F14293C8918007CE048 /* ActivityFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFeature.swift; sourceTree = "<group>"; };
 		81DA975629F2C73A00F45BEC /* LoadingBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingBadgeView.swift; sourceTree = "<group>"; };
 		81DD88042A10B7A5005E5C6D /* SettingsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFeature.swift; sourceTree = "<group>"; };
+		81DD88062A10BDC1005E5C6D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		81EB50D52987BD6E007ABC32 /* ToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleView.swift; sourceTree = "<group>"; };
 		81EB50D82987C38E007ABC32 /* ToggleContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleContentView.swift; sourceTree = "<group>"; };
 		81EB50DA29883698007ABC32 /* ScaleNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleNumbers.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				81DD88042A10B7A5005E5C6D /* SettingsFeature.swift */,
+				81DD88062A10BDC1005E5C6D /* SettingsView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 				81F8C2D8299EC72A00E225FE /* TimerFeatureView.swift in Sources */,
 				811089E629857E7B001D4E58 /* RoundedButton.swift in Sources */,
 				81EB50DB29883698007ABC32 /* ScaleNumbers.swift in Sources */,
+				81DD88072A10BDC1005E5C6D /* SettingsView.swift in Sources */,
 				818507BF29943BF400CAC510 /* ActivityTilesFeature.swift in Sources */,
 				8170283329D04B920053BDA6 /* AppDelegate.swift in Sources */,
 				811089EA298583D8001D4E58 /* Array+safeIndex.swift in Sources */,
