@@ -89,6 +89,11 @@ struct ActivityView: View {
                     sleepToggle
                 }
                 .ignoresSafeArea()
+                .navigationDestination(
+                      store: self.store.scope(state: \.$settings, action: Activity.Action.settings)
+                    ) { store in
+                      Text("Settings")
+                    }
                 .sheet(isPresented: viewStore.binding(\.$showShareSheet), content: { shareView(share: viewStore.share) })
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
@@ -107,11 +112,19 @@ struct ActivityView: View {
                                         .pickerStyle(SegmentedPickerStyle())
                                         .padding(.horizontal, 30)
                                     }
+//                    ToolbarItem(placement: .navigationBarTrailing) {
+//                        Button {
+//                            viewStore.send(.shareTapped)
+//                        } label: {
+//                            Image(systemName: "square.and.arrow.up")
+//                                .foregroundColor(Color("sandLight"))
+//                        }
+//                    }
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
-                            viewStore.send(.shareTapped)
+                            viewStore.send(.settingsButtonTapped)
                         } label: {
-                            Image(systemName: "square.and.arrow.up")
+                            Image(systemName: "gear")
                                 .foregroundColor(Color("sandLight"))
                         }
                     }

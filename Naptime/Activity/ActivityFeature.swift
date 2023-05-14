@@ -54,6 +54,8 @@ struct Activity: ReducerProtocol {
         @BindingState var selectedTimeRange: ActivityTimeRange = .week
         @BindingState var showShareSheet: Bool = false
         
+        @PresentationState var settings: SettingsFeature.State?
+        
         var activitiesActive: Bool {
             return activities.filter({ $0.isActive }).count > 0
         }
@@ -64,6 +66,7 @@ struct Activity: ReducerProtocol {
     }
     
     enum Action: Equatable, BindableAction {
+
         case startActivity(ActivityType)
         case endActivity(ActivityModel)
         case endAllActiveActivities
@@ -76,8 +79,11 @@ struct Activity: ReducerProtocol {
         case activityTimerAction(TimerFeature.Action)
         case activityTiles(ActivityTiles.Action)
         case shareTapped
+        case settingsButtonTapped
         case refreshActivities
         case shareCreated(CKShare)
+        
+        case settings(PresentationAction<SettingsFeature.Action>)
     }
     
     var body: some ReducerProtocol<State, Action> {
@@ -169,11 +175,6 @@ struct Activity: ReducerProtocol {
                             return .endAllActiveActivities
                         }
                     }
-                case .binding(\.$selectedTimeRange):
-                    return .send(.refreshActivities)
-                case .binding(_) :
-                    print("Binding")
-                    return .none
                 case let .setSelectedActivityId(.some(id)):
                     state.selectedActivityId = id
                     if let activity = state.activities.first(where: { $0.id == id }) {
@@ -183,6 +184,9 @@ struct Activity: ReducerProtocol {
                     
                 case .setSelectedActivityId(nil):
                     state.selectedActivityId = nil
+                    return .none
+                case .settingsButtonTapped:
+                    state.settings = .init(showLiveAction: true)
                     return .none
                 case .shareTapped:
                     return .task {
@@ -227,6 +231,12 @@ struct Activity: ReducerProtocol {
                     break
                 case .activityTimerAction(_):
                     break
+                case .binding(\.$selectedTimeRange):
+                    return .send(.refreshActivities)
+                case .binding(_) :
+                    break
+                case .settings(_):
+                    break
             }
             
             return .none
@@ -238,6 +248,9 @@ struct Activity: ReducerProtocol {
         .ifLet(\.lastActivityTimerState, action: /Action.activityTimerAction) {
             TimerFeature()
         }
+        .ifLet(\.$settings, action: /Action.settings) {
+            SettingsFeature()
+          }
         Scope(state: \.activityTilesState, action: /Action.activityTiles) {
             ActivityTiles()
         }

@@ -17,7 +17,7 @@ struct RootView: View {
     let store: Store<Root.State, Root.Action>
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             WithViewStore(self.store.stateless) { viewStore in
                 ActivityView(store: store.scope(state: \.activityState,
                                                 action: Root.Action.activityAction))

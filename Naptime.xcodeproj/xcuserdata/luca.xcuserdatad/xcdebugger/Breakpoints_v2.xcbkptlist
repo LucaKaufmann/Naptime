@@ -49,6 +49,21 @@
                   endingLineNumber = "164"
                   offsetFromSymbolStart = "116">
                </Location>
+               <Location
+                  uuid = "9B54963F-F58F-4012-8BCC-289536D7EA34 - fbc268c12bc8dcc1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.CKShare&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.Optional&lt;Swift.Set&lt;__C.NSManagedObjectID&gt;&gt;, Swift.Optional&lt;__C.CKShare&gt;, Swift.Optional&lt;__C.CKContainer&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.CheckedContinuation&lt;Swift.Optional&lt;__C.CKShare&gt;, Swift.Error&gt;) -&gt; () in NapTimeData.PersistenceController.shareObject(_: __C.NSManagedObject, to: Swift.Optional&lt;__C.CKShare&gt;) async throws -&gt; Swift.Optional&lt;__C.CKShare&gt;"
+                  moduleName = "Naptime"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/luca/git/Naptime/NapTimeData/Sources/NapTimeData/Persistence+CloudKit.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "164"
+                  endingLineNumber = "164"
+                  offsetFromSymbolStart = "124">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>

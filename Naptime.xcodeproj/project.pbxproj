@@ -42,6 +42,7 @@
 		81CD4F00293917AE007CE048 /* SystemEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4EFF293917AE007CE048 /* SystemEnvironment.swift */; };
 		81CD4F15293C8918007CE048 /* ActivityFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD4F14293C8918007CE048 /* ActivityFeature.swift */; };
 		81DA975729F2C73A00F45BEC /* LoadingBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA975629F2C73A00F45BEC /* LoadingBadgeView.swift */; };
+		81DD88052A10B7A5005E5C6D /* SettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DD88042A10B7A5005E5C6D /* SettingsFeature.swift */; };
 		81EB50D62987BD6E007ABC32 /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D52987BD6E007ABC32 /* ToggleView.swift */; };
 		81EB50D92987C38E007ABC32 /* ToggleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D82987C38E007ABC32 /* ToggleContentView.swift */; };
 		81EB50DB29883698007ABC32 /* ScaleNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50DA29883698007ABC32 /* ScaleNumbers.swift */; };
@@ -114,6 +115,7 @@
 		81CD4EFF293917AE007CE048 /* SystemEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemEnvironment.swift; sourceTree = "<group>"; };
 		81CD4F14293C8918007CE048 /* ActivityFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFeature.swift; sourceTree = "<group>"; };
 		81DA975629F2C73A00F45BEC /* LoadingBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingBadgeView.swift; sourceTree = "<group>"; };
+		81DD88042A10B7A5005E5C6D /* SettingsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFeature.swift; sourceTree = "<group>"; };
 		81EB50D52987BD6E007ABC32 /* ToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleView.swift; sourceTree = "<group>"; };
 		81EB50D82987C38E007ABC32 /* ToggleContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleContentView.swift; sourceTree = "<group>"; };
 		81EB50DA29883698007ABC32 /* ScaleNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleNumbers.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 		81CD4F13293C88F8007CE048 /* Activity */ = {
 			isa = PBXGroup;
 			children = (
+				81DD88032A10B791005E5C6D /* Settings */,
 				8119D33C29C30FD900CCA5F7 /* Share */,
 				818507BD29943BC700CAC510 /* ActivityTiles */,
 				81EB50D72987C376007ABC32 /* Toggle */,
@@ -286,6 +289,14 @@
 				8169623F298A68E9006359F1 /* ActivityListAwakeRow.swift */,
 			);
 			path = Activity;
+			sourceTree = "<group>";
+		};
+		81DD88032A10B791005E5C6D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				81DD88042A10B7A5005E5C6D /* SettingsFeature.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		81EB50D72987C376007ABC32 /* Toggle */ = {
@@ -525,6 +536,7 @@
 				8159C43E2940D55600716330 /* ActivitySectionHeaderView.swift in Sources */,
 				81696240298A68E9006359F1 /* ActivityListAwakeRow.swift in Sources */,
 				818507C129943C7100CAC510 /* ActivityTile.swift in Sources */,
+				81DD88052A10B7A5005E5C6D /* SettingsFeature.swift in Sources */,
 				8159C4432941D05400716330 /* TimerView.swift in Sources */,
 				814D3F91293CDD2E00553B46 /* ActivityView.swift in Sources */,
 				815550AA293F99CD000A2952 /* Async+Future.swift in Sources */,
@@ -726,7 +738,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
@@ -769,7 +781,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
@@ -938,8 +950,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.52.0;
+				branch = "navigation-beta";
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
