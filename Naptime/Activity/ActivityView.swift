@@ -94,7 +94,7 @@ struct ActivityView: View {
                     ) { store in
                       SettingsView(store: store)
                     }
-                .sheet(isPresented: viewStore.binding(\.$showShareSheet), content: { shareView(share: viewStore.share) })
+//                .sheet(isPresented: viewStore.binding(\.$showShareSheet), content: { shareView(share: viewStore.share) })
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {

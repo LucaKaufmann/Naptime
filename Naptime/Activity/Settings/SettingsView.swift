@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import CloudKit
 
 struct SettingsView: View {
     
@@ -18,6 +19,11 @@ struct SettingsView: View {
                 SettingsToggleRowView(label: "Show on lockscreen", setting: viewStore.binding(\.$showLiveAction))
                 SettingsButtonRowView(store: store, label: "Share with others", systemIcon: "square.and.arrow.up")
             }
+            .sheet(
+                store: self.store.scope(state: \.$shareSheet, action: SettingsFeature.Action.shareSheet)
+                ) { store in
+                    shareView(share: viewStore.share)
+                }
             .scrollContentBackground(.hidden)
             .background {
                 Color("slate")
@@ -25,7 +31,17 @@ struct SettingsView: View {
             
         }
         .navigationBarTitleDisplayMode(.inline)
+
 //        .toolbarBackground(Color("ocean"))
+    }
+    
+    /// Builds a `CloudSharingView` with state after processing a share.
+    private func shareView(share: CKShare?) -> CloudKitShareView? {
+        guard let share else {
+            return nil
+        }
+        
+        return CloudKitShareView(share: share)
     }
 }
 

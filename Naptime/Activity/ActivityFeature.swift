@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import NapTimeData
-import CloudKit
+
 
 private enum ActivityServiceKey: DependencyKey {
     static let liveValue = ActivityService(persistence: PersistenceController.shared)
@@ -40,7 +40,6 @@ struct Activity: ReducerProtocol {
     }
     
     struct State: Equatable {
-        var share: CKShare?
         var activities: [ActivityModel]
         var groupedActivities: [Date: IdentifiedArrayOf<ActivityDetail.State>]
         var activityHeaderDates: [Date]
@@ -78,10 +77,8 @@ struct Activity: ReducerProtocol {
         case setSelectedActivityId(ActivityModel.ID?)
         case activityTimerAction(TimerFeature.Action)
         case activityTiles(ActivityTiles.Action)
-        case shareTapped
         case settingsButtonTapped
         case refreshActivities
-        case shareCreated(CKShare)
         
         case settings(PresentationAction<SettingsFeature.Action>)
     }
@@ -187,21 +184,6 @@ struct Activity: ReducerProtocol {
                     return .none
                 case .settingsButtonTapped:
                     state.settings = .init(showLiveAction: true)
-                    return .none
-                case .shareTapped:
-                    return .task {
-                        let shareRecord: CKShare
-                        if let storedShare = await PersistenceController.shared.getShareRecord() {
-                            shareRecord = storedShare
-                        } else {
-                            shareRecord = await PersistenceController.shared.share()
-                        }
-
-                        return .shareCreated(shareRecord)
-                    }
-                case .shareCreated(let share):
-                    state.share = share
-                    state.showShareSheet = true
                     return .none
                 case .activityDetailAction(let action):
                     switch action {
