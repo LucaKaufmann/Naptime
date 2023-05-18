@@ -94,10 +94,6 @@ struct ActivityFeature: ReducerProtocol {
                     state.activities.insert(newActivity, at: 0)
                     return .task {
                         await activityService.addActivity(newActivity)
-                        if UserDefaults.standard.bool(forKey: "showLiveAction"), #available(iOS 16.2, *) {
-                            await stopLiveActivities()
-                            await startNewLiveActivity()
-                        }
 
                         return .activitiesUpdated
                     }
@@ -118,7 +114,8 @@ struct ActivityFeature: ReducerProtocol {
                     } else {
                         state.lastActivityTimerState = nil
                     }
-                    state.isSleeping = state.activitiesActive
+                    let activitiesActive = state.activitiesActive
+                    state.isSleeping = activitiesActive
                     let activities = state.activities
                     return .run { send in
                         let groupedActivities = await groupActivities(activities)
@@ -126,6 +123,17 @@ struct ActivityFeature: ReducerProtocol {
                         let updatedViewState = ActivityViewState(groupedActivities: groupedActivities, activityHeaderDates: activityHeaders)
                         await send(.activityViewStateUpdated(updatedViewState))
                         await send(.activityTiles(.updateTiles(activities)))
+                        
+                        if #available(iOS 16.2, *) {
+                            await stopLiveActivities()
+                            
+                            if activitiesActive {
+                                if UserDefaults.standard.bool(forKey: "showLiveAction") {
+                                    await startNewLiveActivity()
+                                }
+                            }
+                                
+                        }
                     }
                 case .activityViewStateUpdated(let viewState):
                     state.groupedActivities = viewState.groupedActivities
@@ -144,9 +152,6 @@ struct ActivityFeature: ReducerProtocol {
                         
                         return .task {
                             await activityService.endActivity(activity.id)
-                            if #available(iOS 16.2, *) {
-                                await stopLiveActivities()
-                            }
                             
                             return .activitiesUpdated
                         }
@@ -167,10 +172,6 @@ struct ActivityFeature: ReducerProtocol {
                     
                     return .task {
                         await activityService.endActivities(activities)
-                        if #available(iOS 16.2, *) {
-                            await stopLiveActivities()
-                        }
-                        
                         return .activitiesUpdated
                     }
                 case .binding(\.$isSleeping):
@@ -194,7 +195,7 @@ struct ActivityFeature: ReducerProtocol {
                     state.selectedActivityId = nil
                     return .none
                 case .settingsButtonTapped:
-                    state.settings = .init(showLiveAction: UserDefaults.standard.bool(forKey: "showLiveAction") ?? false, lastActivity: state.activities.last)
+                    state.settings = .init(showLiveAction: UserDefaults.standard.bool(forKey: "showLiveAction") ?? false, lastActivity: state.activities.first)
                     return .none
                 case .activityDetailAction(let action):
                     switch action {

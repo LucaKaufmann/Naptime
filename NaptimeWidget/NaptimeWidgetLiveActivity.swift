@@ -35,8 +35,8 @@ struct NaptimeWidgetLiveActivity: Widget {
                     } compactTrailing: {
                         Text(timerInterval: context.state.startDate...Date(timeInterval: 12 * 60*60, since: .now), countsDown: false)
                     } minimal: {
-                        Image(systemName: "circle")
-                            .foregroundColor(.green)
+                        Image(systemName: "bed.double.circle")
+                            .foregroundColor(Color("sandLight"))
                     }
                 }
 //        ActivityConfiguration(for: NaptimeWidgetAttributes.self) { context in
