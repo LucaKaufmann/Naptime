@@ -23,9 +23,7 @@ struct NaptimeWidgetAttributes: ActivityAttributes {
 struct NaptimeWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: NaptimeWidgetAttributes.self) { context in
-                    VStack {
-                        Text(timerInterval: context.state.startDate...Date(timeInterval: 12 * 60*60, since: .now), countsDown: false)
-                    }
+            NaptimeWidgetLiveContentView(startDate: context.state.startDate)
                 } dynamicIsland: { context in
                     DynamicIsland {
                         DynamicIslandExpandedRegion(.leading) {
