@@ -36,7 +36,7 @@ struct NaptimeWidgetLiveContentView: View {
                     .frame(width: 4, alignment: .center)
             }
             VStack(alignment: .leading) {
-                    Text("Asleet since \(formatter.string(from: startDate))")
+                    Text("Asleep since \(formatter.string(from: startDate))")
                     Text(timerInterval: startDate...Date(timeInterval: 12 * 60*60, since: .now), countsDown: false)
                 
             }.padding(.horizontal)

@@ -30,10 +30,10 @@ struct NaptimeWidgetLiveActivity: Widget {
                             Text("Context")
                         }
                     } compactLeading: {
-                        Image(systemName: "circle")
-                            .foregroundColor(.green)
+                        Image(systemName: "bed.double.circle")
+                            .foregroundColor(Color("sandLight"))
                     } compactTrailing: {
-                        Text("Context")
+                        Text(timerInterval: context.state.startDate...Date(timeInterval: 12 * 60*60, since: .now), countsDown: false)
                     } minimal: {
                         Image(systemName: "circle")
                             .foregroundColor(.green)

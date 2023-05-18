@@ -8,6 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import NapTimeData
+import ActivityKit
 
 
 private enum ActivityServiceKey: DependencyKey {
@@ -93,7 +94,11 @@ struct ActivityFeature: ReducerProtocol {
                     state.activities.insert(newActivity, at: 0)
                     return .task {
                         await activityService.addActivity(newActivity)
-                        
+                        if UserDefaults.standard.bool(forKey: "showLiveAction"), #available(iOS 16.2, *) {
+                            await stopLiveActivities()
+                            await startNewLiveActivity()
+                        }
+
                         return .activitiesUpdated
                     }
                 case .deleteActivity(let index):
@@ -139,6 +144,9 @@ struct ActivityFeature: ReducerProtocol {
                         
                         return .task {
                             await activityService.endActivity(activity.id)
+                            if #available(iOS 16.2, *) {
+                                await stopLiveActivities()
+                            }
                             
                             return .activitiesUpdated
                         }
@@ -159,6 +167,9 @@ struct ActivityFeature: ReducerProtocol {
                     
                     return .task {
                         await activityService.endActivities(activities)
+                        if #available(iOS 16.2, *) {
+                            await stopLiveActivities()
+                        }
                         
                         return .activitiesUpdated
                     }
@@ -183,7 +194,7 @@ struct ActivityFeature: ReducerProtocol {
                     state.selectedActivityId = nil
                     return .none
                 case .settingsButtonTapped:
-                    state.settings = .init(showLiveAction: true)
+                    state.settings = .init(showLiveAction: UserDefaults.standard.bool(forKey: "showLiveAction") ?? false, lastActivity: state.activities.last)
                     return .none
                 case .activityDetailAction(let action):
                     switch action {
@@ -277,6 +288,30 @@ struct ActivityFeature: ReducerProtocol {
         //      } catch {
         //        print("Failed to create share")
         //      }
+    }
+    
+    @available(iOS 16.2, *)
+    private func startNewLiveActivity() async {
+        if ActivityAuthorizationInfo().areActivitiesEnabled {
+            
+            let activityAttributes = NaptimeWidgetAttributes(name: "test")
+            let activityContent = NaptimeWidgetAttributes.ContentState(startDate: Date())
+            
+            do {
+                let deliveryActivity = try Activity<NaptimeWidgetAttributes>.request(attributes: activityAttributes, contentState: activityContent)
+                print("Starting live activity")
+            } catch (let error) {
+                print("Error requesting pizza delivery Live Activity \(error.localizedDescription).")
+            }
+        }
+        
+    }
+    
+    @available(iOS 16.2, *)
+    private func stopLiveActivities() async {
+        for activity in Activity<NaptimeWidgetAttributes>.activities{
+            await activity.end(dismissalPolicy: .immediate)
+        }
     }
     
 }

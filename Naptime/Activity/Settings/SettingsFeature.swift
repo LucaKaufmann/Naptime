@@ -18,6 +18,7 @@ struct SettingsFeature: ReducerProtocol {
         @PresentationState var shareSheet: ShareSheetFeature.State?
         
         var share: CKShare?
+        var lastActivity: ActivityModel?
     }
     enum Action: Equatable, BindableAction {
         case shareTapped
@@ -47,18 +48,33 @@ struct SettingsFeature: ReducerProtocol {
                     return .none
                 case .binding(\.$showLiveAction):
                     if #available(iOS 16.1, *) {
-                        if ActivityAuthorizationInfo().areActivitiesEnabled {
+                        UserDefaults.standard.set(!state.showLiveAction, forKey: "showLiveAction")
+                        if state.showLiveAction {
+                            Task {
+                                for activity in Activity<NaptimeWidgetAttributes>.activities{
+                                    await activity.end(dismissalPolicy: .immediate)
+                                }
+                            }
+                        } else {
                             
-                            let activityAttributes = NaptimeWidgetAttributes(name: "test")
-                            let activityContent = NaptimeWidgetAttributes.ContentState(startDate: Date())
-                            
-                            do {
-                                let deliveryActivity = try Activity<NaptimeWidgetAttributes>.request(attributes: activityAttributes, contentState: activityContent)
-                                print("Starting live activity")
-                            } catch (let error) {
-                                print("Error requesting pizza delivery Live Activity \(error.localizedDescription).")
+                            if let lastActivity = state.lastActivity {
+                                if lastActivity.endDate == nil {
+                                    if ActivityAuthorizationInfo().areActivitiesEnabled {
+                                        
+                                        let activityAttributes = NaptimeWidgetAttributes(name: "\(lastActivity.id.uuidString)")
+                                        let activityContent = NaptimeWidgetAttributes.ContentState(startDate: lastActivity.startDate)
+                                        
+                                        do {
+                                            let deliveryActivity = try Activity<NaptimeWidgetAttributes>.request(attributes: activityAttributes, contentState: activityContent)
+                                            print("Starting live activity")
+                                        } catch (let error) {
+                                            print("Error requesting pizza delivery Live Activity \(error.localizedDescription).")
+                                        }
+                                    }
+                                }
                             }
                         }
+                        
                     }
                     return .none
                 case .binding(_):
