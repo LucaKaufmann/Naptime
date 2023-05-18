@@ -13,7 +13,7 @@ struct ActivityListView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
-    let store: Store<Activity.State, Activity.Action>
+    let store: Store<ActivityFeature.State, ActivityFeature.Action>
     
     var formatter: DateComponentsFormatter = {
           let formatter = DateComponentsFormatter()
@@ -62,7 +62,7 @@ struct ActivityListView: View {
 
 struct ActivityWeekList: View {
     
-    let store: StoreOf<Activity>
+    let store: StoreOf<ActivityFeature>
     
     var body: some View {
         WithViewStore(store, observe: {$0}) { viewStore in
@@ -75,12 +75,12 @@ struct ActivityWeekList: View {
                                     tag: activity.id,
                                     selection: viewStore.binding(
                                         get: \.selectedActivityId,
-                                        send: Activity.Action.setSelectedActivityId
+                                        send: ActivityFeature.Action.setSelectedActivityId
                                     )
                                 ){
                                     IfLetStore(
                                         store.scope(state: \.selectedActivity,
-                                                    action: Activity.Action.activityDetailAction),
+                                                    action: ActivityFeature.Action.activityDetailAction),
                                         then: ActivityDetailView.init(store:),
                                         else: { Text("Nothing here") }
                                     )
@@ -102,7 +102,7 @@ struct ActivityWeekList: View {
 
 struct ActivityAllList: View {
     
-    let store: StoreOf<Activity>
+    let store: StoreOf<ActivityFeature>
     
     var body: some View {
         WithViewStore(store, observe: { $0.activityHeaderDates }) { viewStore in

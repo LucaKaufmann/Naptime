@@ -30,7 +30,7 @@ enum ActivityTimeRange: Int, Equatable {
     case all = 1
 }
 
-struct Activity: ReducerProtocol {
+struct ActivityFeature: ReducerProtocol {
     
     @Dependency(\.activityService) private var activityService
     

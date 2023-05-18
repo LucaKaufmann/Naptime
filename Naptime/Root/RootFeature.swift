@@ -17,11 +17,11 @@ struct Root: ReducerProtocol {
     @Dependency(\.activityService) private var activityService
     
     struct State: Equatable {
-        var activityState: Activity.State
+        var activityState: ActivityFeature.State
     }
     
     enum Action {
-        case activityAction(Activity.Action)
+        case activityAction(ActivityFeature.Action)
         case onAppear
         case refreshActivities
         case loadedActivities(Result<[ActivityModel], Error>)
@@ -75,7 +75,7 @@ struct Root: ReducerProtocol {
             
         }
         Scope(state: \.activityState, action: /Action.activityAction) {
-            Activity()
+            ActivityFeature()
         }
     }
     

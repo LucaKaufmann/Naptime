@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import CloudKit
 import NapTimeData
+import ActivityKit
 
 struct SettingsFeature: ReducerProtocol {
     
@@ -43,6 +44,22 @@ struct SettingsFeature: ReducerProtocol {
                 case .shareCreated(let share):
                     state.share = share
                     state.shareSheet = .init(id: UUID())
+                    return .none
+                case .binding(\.$showLiveAction):
+                    if #available(iOS 16.1, *) {
+                        if ActivityAuthorizationInfo().areActivitiesEnabled {
+                            
+                            let activityAttributes = NaptimeWidgetAttributes(name: "test")
+                            let activityContent = NaptimeWidgetAttributes.ContentState(startDate: Date())
+                            
+                            do {
+                                let deliveryActivity = try Activity<NaptimeWidgetAttributes>.request(attributes: activityAttributes, contentState: activityContent)
+                                print("Starting live activity")
+                            } catch (let error) {
+                                print("Error requesting pizza delivery Live Activity \(error.localizedDescription).")
+                            }
+                        }
+                    }
                     return .none
                 case .binding(_):
                     return .none

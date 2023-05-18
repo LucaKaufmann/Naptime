@@ -11,7 +11,7 @@ import NapTimeData
 
 struct ActivityButtonsView: View {
     
-    let store: Store<Activity.State, Activity.Action>    
+    let store: Store<ActivityFeature.State, ActivityFeature.Action>    
     var body: some View {
         WithViewStore(store) { viewStore in
             ToggleView(isOn: viewStore.binding(\.$isSleeping)) {
@@ -38,17 +38,17 @@ struct ActivityButtonsView_Previews: PreviewProvider {
         let grouped: [Date: IdentifiedArrayOf<ActivityDetail.State>] = [date: [ActivityDetail.State(id: UUID(), activity: activities.first)]]
         Group {
             ActivityButtonsView(store: Store(
-                initialState: Activity.State(activities: activities,
+                initialState: ActivityFeature.State(activities: activities,
                                              groupedActivities: grouped,
                                              activityHeaderDates: [Date()], activityTilesState: ActivityTiles.State()),
-                reducer: Activity()))
+                reducer: ActivityFeature()))
             .previewDisplayName("Light")
             .preferredColorScheme(.light)
             ActivityButtonsView(store: Store(
-                initialState: Activity.State(activities: activities,
+                initialState: ActivityFeature.State(activities: activities,
                                              groupedActivities: grouped,
                                              activityHeaderDates: [Date()], activityTilesState: ActivityTiles.State()),
-                reducer: Activity()))
+                reducer: ActivityFeature()))
             .previewDisplayName("Dark")
             .preferredColorScheme(.dark)
         }

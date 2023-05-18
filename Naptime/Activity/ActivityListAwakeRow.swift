@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct ActivityListAwakeRow: View {
     
-    let store: Store<Activity.State, Activity.Action>
+    let store: Store<ActivityFeature.State, ActivityFeature.Action>
     
     var body: some View {
         WithViewStore(store) { viewStore in

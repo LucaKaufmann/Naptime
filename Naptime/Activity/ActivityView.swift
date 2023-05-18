@@ -16,12 +16,12 @@ struct ActivityView: View {
     @State private var showShareSheet = false
     @State var activeShare: CKShare?
     
-    let store: StoreOf<Activity>
+    let store: StoreOf<ActivityFeature>
     
     private let minHeight = 0.0
     private let maxHeight = 322.0
     
-    init(store: StoreOf<Activity>) {
+    init(store: StoreOf<ActivityFeature>) {
         self.store = store
         UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(named: "sandLight")
         UISegmentedControl.appearance().backgroundColor =
@@ -43,7 +43,7 @@ struct ActivityView: View {
                         ZStack {
                             VStack {
                                 Spacer()
-                                ActivityTilesView(store: store.scope(state: \.activityTilesState, action: Activity.Action.activityTiles))
+                                ActivityTilesView(store: store.scope(state: \.activityTilesState, action: ActivityFeature.Action.activityTiles))
                                     .frame(height: max(geometry.size.height / 3, 0))
                                 //                                    .padding(.top, 25)
                                 Spacer()
@@ -59,7 +59,7 @@ struct ActivityView: View {
                                 Spacer()
                                 IfLetStore(
                                     store.scope(state: \.lastActivityTimerState,
-                                                action: Activity.Action.activityTimerAction),
+                                                action: ActivityFeature.Action.activityTimerAction),
                                     then: { store in
                                         TimerFeatureView(store: store,
                                                          label: viewStore.isSleeping ? "Asleep for" : "Awake for",
@@ -90,7 +90,7 @@ struct ActivityView: View {
                 }
                 .ignoresSafeArea()
                 .navigationDestination(
-                      store: self.store.scope(state: \.$settings, action: Activity.Action.settings)
+                      store: self.store.scope(state: \.$settings, action: ActivityFeature.Action.settings)
                     ) { store in
                       SettingsView(store: store)
                     }
@@ -205,9 +205,9 @@ struct ActivityView_Previews: PreviewProvider {
         let grouped: [Date: IdentifiedArrayOf<ActivityDetail.State>] = [date: [ActivityDetail.State(id: UUID(), activity: activities.first)]]
         ActivityView(
             store: Store(
-                initialState: Activity.State(activities: activities,
+                initialState: ActivityFeature.State(activities: activities,
                                              groupedActivities: grouped,
                                              activityHeaderDates: [Date()], activityTilesState: ActivityTiles.State()),
-                reducer: Activity()))
+                reducer: ActivityFeature()))
     }
 }

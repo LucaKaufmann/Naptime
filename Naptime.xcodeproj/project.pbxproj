@@ -45,6 +45,16 @@
 		81DD88052A10B7A5005E5C6D /* SettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DD88042A10B7A5005E5C6D /* SettingsFeature.swift */; };
 		81DD88072A10BDC1005E5C6D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DD88062A10BDC1005E5C6D /* SettingsView.swift */; };
 		81DD88092A10F6FA005E5C6D /* ShareSheetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DD88082A10F6FA005E5C6D /* ShareSheetFeature.swift */; };
+		81DD88102A1174CA005E5C6D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DD880F2A1174C9005E5C6D /* WidgetKit.framework */; };
+		81DD88122A1174CA005E5C6D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DD88112A1174CA005E5C6D /* SwiftUI.framework */; };
+		81DD88152A1174CA005E5C6D /* NaptimeWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DD88142A1174CA005E5C6D /* NaptimeWidgetBundle.swift */; };
+		81DD88172A1174CA005E5C6D /* NaptimeWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DD88162A1174CA005E5C6D /* NaptimeWidgetLiveActivity.swift */; };
+		81DD88192A1174CA005E5C6D /* NaptimeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DD88182A1174CA005E5C6D /* NaptimeWidget.swift */; };
+		81DD881C2A1174CC005E5C6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81DD881B2A1174CC005E5C6D /* Assets.xcassets */; };
+		81DD881E2A1174CC005E5C6D /* NaptimeWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 81DD881A2A1174CA005E5C6D /* NaptimeWidget.intentdefinition */; };
+		81DD881F2A1174CC005E5C6D /* NaptimeWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 81DD881A2A1174CA005E5C6D /* NaptimeWidget.intentdefinition */; };
+		81DD88222A1174CC005E5C6D /* NaptimeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 81DD880E2A1174C9005E5C6D /* NaptimeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		81DD88272A117ABB005E5C6D /* NaptimeWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DD88162A1174CA005E5C6D /* NaptimeWidgetLiveActivity.swift */; };
 		81EB50D62987BD6E007ABC32 /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D52987BD6E007ABC32 /* ToggleView.swift */; };
 		81EB50D92987C38E007ABC32 /* ToggleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D82987C38E007ABC32 /* ToggleContentView.swift */; };
 		81EB50DB29883698007ABC32 /* ScaleNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50DA29883698007ABC32 /* ScaleNumbers.swift */; };
@@ -64,6 +74,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		81DD88202A1174CC005E5C6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 81F2518E29291CFC00B90C0E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81DD880D2A1174C9005E5C6D;
+			remoteInfo = NaptimeWidgetExtension;
+		};
 		81F251AD29291CFD00B90C0E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 81F2518E29291CFC00B90C0E /* Project object */;
@@ -79,6 +96,20 @@
 			remoteInfo = Naptime;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		81DD88262A1174CC005E5C6D /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				81DD88222A1174CC005E5C6D /* NaptimeWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		811089E129857C36001D4E58 /* ActivityButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityButtonsView.swift; sourceTree = "<group>"; };
@@ -120,6 +151,15 @@
 		81DD88042A10B7A5005E5C6D /* SettingsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFeature.swift; sourceTree = "<group>"; };
 		81DD88062A10BDC1005E5C6D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		81DD88082A10F6FA005E5C6D /* ShareSheetFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetFeature.swift; sourceTree = "<group>"; };
+		81DD880E2A1174C9005E5C6D /* NaptimeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NaptimeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		81DD880F2A1174C9005E5C6D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		81DD88112A1174CA005E5C6D /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		81DD88142A1174CA005E5C6D /* NaptimeWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaptimeWidgetBundle.swift; sourceTree = "<group>"; };
+		81DD88162A1174CA005E5C6D /* NaptimeWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaptimeWidgetLiveActivity.swift; sourceTree = "<group>"; };
+		81DD88182A1174CA005E5C6D /* NaptimeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaptimeWidget.swift; sourceTree = "<group>"; };
+		81DD881A2A1174CA005E5C6D /* NaptimeWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = NaptimeWidget.intentdefinition; sourceTree = "<group>"; };
+		81DD881B2A1174CC005E5C6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		81DD881D2A1174CC005E5C6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81EB50D52987BD6E007ABC32 /* ToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleView.swift; sourceTree = "<group>"; };
 		81EB50D82987C38E007ABC32 /* ToggleContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleContentView.swift; sourceTree = "<group>"; };
 		81EB50DA29883698007ABC32 /* ScaleNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleNumbers.swift; sourceTree = "<group>"; };
@@ -139,6 +179,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		81DD880B2A1174C9005E5C6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81DD88122A1174CA005E5C6D /* SwiftUI.framework in Frameworks */,
+				81DD88102A1174CA005E5C6D /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		81F2519329291CFC00B90C0E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -233,6 +282,8 @@
 		81787EE7294659B90031BE99 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				81DD880F2A1174C9005E5C6D /* WidgetKit.framework */,
+				81DD88112A1174CA005E5C6D /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -305,6 +356,19 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		81DD88132A1174CA005E5C6D /* NaptimeWidget */ = {
+			isa = PBXGroup;
+			children = (
+				81DD88142A1174CA005E5C6D /* NaptimeWidgetBundle.swift */,
+				81DD88162A1174CA005E5C6D /* NaptimeWidgetLiveActivity.swift */,
+				81DD88182A1174CA005E5C6D /* NaptimeWidget.swift */,
+				81DD881A2A1174CA005E5C6D /* NaptimeWidget.intentdefinition */,
+				81DD881B2A1174CC005E5C6D /* Assets.xcassets */,
+				81DD881D2A1174CC005E5C6D /* Info.plist */,
+			);
+			path = NaptimeWidget;
+			sourceTree = "<group>";
+		};
 		81EB50D72987C376007ABC32 /* Toggle */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,6 +384,7 @@
 				81F2519829291CFC00B90C0E /* Naptime */,
 				81F251AF29291CFD00B90C0E /* NaptimeTests */,
 				81F251B929291CFD00B90C0E /* NaptimeUITests */,
+				81DD88132A1174CA005E5C6D /* NaptimeWidget */,
 				81F2519729291CFC00B90C0E /* Products */,
 				81787EE7294659B90031BE99 /* Frameworks */,
 			);
@@ -331,6 +396,7 @@
 				81F2519629291CFC00B90C0E /* Naptime.app */,
 				81F251AC29291CFD00B90C0E /* NaptimeTests.xctest */,
 				81F251B629291CFD00B90C0E /* NaptimeUITests.xctest */,
+				81DD880E2A1174C9005E5C6D /* NaptimeWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -392,6 +458,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		81DD880D2A1174C9005E5C6D /* NaptimeWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81DD88232A1174CC005E5C6D /* Build configuration list for PBXNativeTarget "NaptimeWidgetExtension" */;
+			buildPhases = (
+				81DD880A2A1174C9005E5C6D /* Sources */,
+				81DD880B2A1174C9005E5C6D /* Frameworks */,
+				81DD880C2A1174C9005E5C6D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NaptimeWidgetExtension;
+			productName = NaptimeWidgetExtension;
+			productReference = 81DD880E2A1174C9005E5C6D /* NaptimeWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		81F2519529291CFC00B90C0E /* Naptime */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 81F251C029291CFD00B90C0E /* Build configuration list for PBXNativeTarget "Naptime" */;
@@ -399,10 +482,12 @@
 				81F2519229291CFC00B90C0E /* Sources */,
 				81F2519329291CFC00B90C0E /* Frameworks */,
 				81F2519429291CFC00B90C0E /* Resources */,
+				81DD88262A1174CC005E5C6D /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				81DD88212A1174CC005E5C6D /* PBXTargetDependency */,
 			);
 			name = Naptime;
 			packageProductDependencies = (
@@ -459,9 +544,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1410;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1410;
 				TargetAttributes = {
+					81DD880D2A1174C9005E5C6D = {
+						CreatedOnToolsVersion = 14.3;
+					};
 					81F2519529291CFC00B90C0E = {
 						CreatedOnToolsVersion = 14.1;
 					};
@@ -496,11 +584,20 @@
 				81F2519529291CFC00B90C0E /* Naptime */,
 				81F251AB29291CFD00B90C0E /* NaptimeTests */,
 				81F251B529291CFD00B90C0E /* NaptimeUITests */,
+				81DD880D2A1174C9005E5C6D /* NaptimeWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		81DD880C2A1174C9005E5C6D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81DD881C2A1174CC005E5C6D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		81F2519429291CFC00B90C0E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -527,6 +624,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		81DD880A2A1174C9005E5C6D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81DD88152A1174CA005E5C6D /* NaptimeWidgetBundle.swift in Sources */,
+				81DD881E2A1174CC005E5C6D /* NaptimeWidget.intentdefinition in Sources */,
+				81DD88192A1174CA005E5C6D /* NaptimeWidget.swift in Sources */,
+				81DD88172A1174CA005E5C6D /* NaptimeWidgetLiveActivity.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		81F2519229291CFC00B90C0E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -537,6 +645,7 @@
 				81B2212029717CDE005C4A15 /* ActivityDetailView.swift in Sources */,
 				8159C4402941CB4B00716330 /* ActivityRowView.swift in Sources */,
 				811089E229857C36001D4E58 /* ActivityButtonsView.swift in Sources */,
+				81DD88272A117ABB005E5C6D /* NaptimeWidgetLiveActivity.swift in Sources */,
 				81F2519A29291CFC00B90C0E /* NaptimeApp.swift in Sources */,
 				8169623E298A4C72006359F1 /* AwakeRow.swift in Sources */,
 				8159C43E2940D55600716330 /* ActivitySectionHeaderView.swift in Sources */,
@@ -544,6 +653,7 @@
 				818507C129943C7100CAC510 /* ActivityTile.swift in Sources */,
 				81DD88052A10B7A5005E5C6D /* SettingsFeature.swift in Sources */,
 				8159C4432941D05400716330 /* TimerView.swift in Sources */,
+				81DD881F2A1174CC005E5C6D /* NaptimeWidget.intentdefinition in Sources */,
 				814D3F91293CDD2E00553B46 /* ActivityView.swift in Sources */,
 				815550AA293F99CD000A2952 /* Async+Future.swift in Sources */,
 				81CD4F15293C8918007CE048 /* ActivityFeature.swift in Sources */,
@@ -598,6 +708,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		81DD88212A1174CC005E5C6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81DD880D2A1174C9005E5C6D /* NaptimeWidgetExtension */;
+			targetProxy = 81DD88202A1174CC005E5C6D /* PBXContainerItemProxy */;
+		};
 		81F251AE29291CFD00B90C0E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 81F2519529291CFC00B90C0E /* Naptime */;
@@ -611,6 +726,65 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		81DD88242A1174CC005E5C6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6Y9C574C9M;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NaptimeWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NaptimeWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hotky.Naptime.NaptimeWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		81DD88252A1174CC005E5C6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6Y9C574C9M;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NaptimeWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NaptimeWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hotky.Naptime.NaptimeWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		81F251BE29291CFD00B90C0E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -723,6 +897,7 @@
 		81F251C129291CFD00B90C0E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Naptime/Naptime.entitlements;
@@ -735,6 +910,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Naptime/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -766,6 +942,7 @@
 		81F251C229291CFD00B90C0E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Naptime/Naptime.entitlements;
@@ -778,6 +955,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Naptime/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -899,6 +1077,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		81DD88232A1174CC005E5C6D /* Build configuration list for PBXNativeTarget "NaptimeWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81DD88242A1174CC005E5C6D /* Debug */,
+				81DD88252A1174CC005E5C6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		81F2519129291CFC00B90C0E /* Build configuration list for PBXProject "Naptime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
