@@ -128,8 +128,8 @@ struct ActivityFeature: ReducerProtocol {
                             await stopLiveActivities()
                             
                             if activitiesActive {
-                                if UserDefaults.standard.bool(forKey: "showLiveAction") {
-                                    await startNewLiveActivity()
+                                if let lastActivity = activities.first, UserDefaults.standard.bool(forKey: "showLiveAction") {
+                                    await startNewLiveActivity(date: lastActivity.startDate)
                                 }
                             }
                                 
@@ -292,11 +292,11 @@ struct ActivityFeature: ReducerProtocol {
     }
     
     @available(iOS 16.2, *)
-    private func startNewLiveActivity() async {
+    private func startNewLiveActivity(date: Date) async {
         if ActivityAuthorizationInfo().areActivitiesEnabled {
             
             let activityAttributes = NaptimeWidgetAttributes(name: "test")
-            let activityContent = NaptimeWidgetAttributes.ContentState(startDate: Date())
+            let activityContent = NaptimeWidgetAttributes.ContentState(startDate: date)
             
             do {
                 let deliveryActivity = try Activity<NaptimeWidgetAttributes>.request(attributes: activityAttributes, contentState: activityContent)

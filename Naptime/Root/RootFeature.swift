@@ -18,6 +18,7 @@ struct Root: ReducerProtocol {
     
     struct State: Equatable {
         var activityState: ActivityFeature.State
+        var listeningToStoreChanges: Bool
     }
     
     enum Action {
@@ -31,10 +32,15 @@ struct Root: ReducerProtocol {
         Reduce { state, action in
             switch action {
                 case .onAppear:
+                    guard !state.listeningToStoreChanges else {
+                        print("Already listening to store changes")
+                        return .none
+                    }
+                    state.listeningToStoreChanges = true
                     return .run { send in
                         await send(.refreshActivities)
                         if #available(iOS 16.0, *) {
-                            for await _ in NotificationCenter.default.notifications(named: Notification.Name.cdcksStoreDidChange).debounce(for: .seconds(1)) {
+                            for await _ in NotificationCenter.default.notifications(named: Notification.Name.cdcksStoreDidChange).debounce(for: .seconds(2)) {
                                 print("store changed") // This works
                                 await send(.refreshActivities)
                             }
