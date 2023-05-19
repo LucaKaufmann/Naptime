@@ -32,5 +32,6 @@ struct LiveActivityPromoFeature: ReducerProtocol {
                     return .none
             }
         }
+        BindingReducer()
     }
 }

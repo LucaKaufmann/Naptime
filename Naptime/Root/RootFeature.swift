@@ -39,7 +39,7 @@ struct Root: ReducerProtocol {
                 case .onAppear:
                     
                     if state.showLiveActivityPromo {
-                        state.promo = .init(id: uuid(), liveActivity: LiveActivityPromoFeature.State(liveActivitiesEnabled: false))
+                        state.promo = .init(id: uuid(), liveActivity: LiveActivityPromoFeature.State(liveActivitiesEnabled: UserDefaults.standard.bool(forKey: Constants.showLiveActivitiesKey)))
                         state.showLiveActivityPromo = false
                         UserDefaults.standard.set(true, forKey: Constants.showLiveActivitiesPromoKey)
                     }
@@ -91,6 +91,9 @@ struct Root: ReducerProtocol {
                     return .none
             }
             
+        }
+        .ifLet(\.$promo, action: /Action.promoAction) {
+            ActivityPromoFeature()
         }
         Scope(state: \.activityState, action: /Action.activityAction) {
             ActivityFeature()

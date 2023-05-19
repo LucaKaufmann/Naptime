@@ -48,25 +48,25 @@ struct LiveActivityPromoView: View {
     
     let store: StoreOf<LiveActivityPromoFeature>
     
-    @State var showLiveAction = false
-    
     var body: some View {
-        VStack {
-            Image("live_activity_promo")
-            Text("Live activities are now supported and can be enabled to show up on the lockscreen. (This can be changed later in the settings)")
-                .padding(.horizontal)
-            SettingsToggleRowView(label: "Show on lockscreen", setting: $showLiveAction)
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color("slate"))
-                )
-                .padding()
-            Button(action: {
-                ViewStore(store).send(.dismissTapped)
-            }, label: {
-                Text("Maybe later")
-            })
+        WithViewStore(store) { viewStore in
+            VStack {
+                Image("live_activity_promo")
+                Text("Live activities are now supported and can be enabled to show up on the lockscreen. (This can be changed later in the settings)")
+                    .padding(.horizontal)
+                SettingsToggleRowView(label: "Show on lockscreen", setting: viewStore.binding(\.$liveActivitiesEnabled))
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color("slate"))
+                    )
+                    .padding()
+                Button(action: {
+                    ViewStore(store).send(.dismissTapped)
+                }, label: {
+                    Text("Maybe later")
+                })
+            }
         }
     }
 }
