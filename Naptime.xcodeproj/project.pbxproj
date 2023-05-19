@@ -17,6 +17,7 @@
 		812A320D2A16505D007303EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81F251A229291CFD00B90C0E /* Assets.xcassets */; };
 		812A320E2A165582007303EB /* NaptimeWidgetLiveContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812A320B2A164FE4007303EB /* NaptimeWidgetLiveContentView.swift */; };
 		812A320F2A16558C007303EB /* NaptimeWidgetLiveContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812A320B2A164FE4007303EB /* NaptimeWidgetLiveContentView.swift */; };
+		812A32102A176926007303EB /* Date+Stuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815871B12996928B0015CB30 /* Date+Stuff.swift */; };
 		814D3F91293CDD2E00553B46 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D3F90293CDD2E00553B46 /* ActivityView.swift */; };
 		815550AA293F99CD000A2952 /* Async+Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815550A9293F99CD000A2952 /* Async+Future.swift */; };
 		815871B0299682590015CB30 /* ActivityTilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815871AF299682590015CB30 /* ActivityTilesView.swift */; };
@@ -638,6 +639,7 @@
 				81DD88152A1174CA005E5C6D /* NaptimeWidgetBundle.swift in Sources */,
 				81DD881E2A1174CC005E5C6D /* NaptimeWidget.intentdefinition in Sources */,
 				81DD88192A1174CA005E5C6D /* NaptimeWidget.swift in Sources */,
+				812A32102A176926007303EB /* Date+Stuff.swift in Sources */,
 				81DD88172A1174CA005E5C6D /* NaptimeWidgetLiveActivity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

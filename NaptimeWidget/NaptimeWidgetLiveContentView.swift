@@ -11,13 +11,6 @@ struct NaptimeWidgetLiveContentView: View {
     
     let startDate: Date
     
-    @State var formatter: DateFormatter = {
-        let calendar = Calendar.current
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-        return dateFormatter
-      }()
-    
     var body: some View {
         HStack {
             VStack(spacing: 0) {
@@ -26,6 +19,7 @@ struct NaptimeWidgetLiveContentView: View {
                     .frame(width: 4, alignment: .center)
                 Image(systemName: "bed.double.circle")
                     .resizable()
+                    .foregroundColor(Color("slateInverted"))
                     .frame(width: 40, height: 40)
                     .background(
                         Circle()
@@ -35,15 +29,21 @@ struct NaptimeWidgetLiveContentView: View {
                     .fill(Color("ocean"))
                     .frame(width: 4, alignment: .center)
             }
+            .padding(.leading)
+
+            .background(
+                Color("sandLight").offset(x: -20)
+            )
             VStack(alignment: .leading) {
-                    Text("Asleep since \(formatter.string(from: startDate))")
+                    Text("Asleep since \(formatDate(startDate))")
+                    .foregroundColor(Color("slateInverted"))
                     Text(timerInterval: startDate...Date(timeInterval: 12 * 60*60, since: .now), countsDown: false)
+                    .foregroundColor(Color("slateInverted"))
                 
             }.padding(.horizontal)
             Spacer()
 //            Image(systemName: "chevron.right")
         }
-        .padding(.horizontal)
         .background(
             Color("ocean")
                 .offset(x: 34)
@@ -51,6 +51,13 @@ struct NaptimeWidgetLiveContentView: View {
                     LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.3), Color.black.opacity(0)]), startPoint: .leading, endPoint: .trailing)
                 )
         )
+    }
+    
+    func formatDate(_ date: Date) -> String {
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = calendar.isDateInToday(date) ? "HH:mm" : "E HH:mm"
+        return dateFormatter.string(from: date)
     }
 }
 
