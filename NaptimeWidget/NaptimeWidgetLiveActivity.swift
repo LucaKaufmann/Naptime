@@ -11,12 +11,11 @@ import SwiftUI
 
 struct NaptimeWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
-        // Dynamic stateful properties about your activity go here!
         var startDate: Date
     }
 
     // Fixed non-changing properties about your activity go here!
-    var name: String
+    var id: UUID
 }
 
 @available(iOS 16.2, *)
@@ -67,7 +66,7 @@ struct NaptimeWidgetLiveActivity: Widget {
 
 @available(iOS 16.2, *)
 struct NaptimeWidgetLiveActivity_Previews: PreviewProvider {
-    static let attributes = NaptimeWidgetAttributes(name: "Me")
+    static let attributes = NaptimeWidgetAttributes(id: UUID())
     static let contentState = NaptimeWidgetAttributes.ContentState(startDate: Date())
 
     static var previews: some View {

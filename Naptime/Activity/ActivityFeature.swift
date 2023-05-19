@@ -125,14 +125,13 @@ struct ActivityFeature: ReducerProtocol {
                         await send(.activityTiles(.updateTiles(activities)))
                         
                         if #available(iOS 16.2, *) {
-                            await stopLiveActivities()
-                            
                             if activitiesActive {
                                 if let lastActivity = activities.first, UserDefaults.standard.bool(forKey: "showLiveAction") {
-                                    await startNewLiveActivity(date: lastActivity.startDate)
+                                    await startNewLiveActivity(activity: lastActivity)
                                 }
+                            } else {
+                                await stopLiveActivities()
                             }
-                                
                         }
                     }
                 case .activityViewStateUpdated(let viewState):
@@ -292,17 +291,25 @@ struct ActivityFeature: ReducerProtocol {
     }
     
     @available(iOS 16.2, *)
-    private func startNewLiveActivity(date: Date) async {
+    private func startNewLiveActivity(activity: ActivityModel) async {
         if ActivityAuthorizationInfo().areActivitiesEnabled {
-            
-            let activityAttributes = NaptimeWidgetAttributes(name: "test")
-            let activityContent = NaptimeWidgetAttributes.ContentState(startDate: date)
-            
-            do {
-                let deliveryActivity = try Activity<NaptimeWidgetAttributes>.request(attributes: activityAttributes, contentState: activityContent)
-                print("Starting live activity")
-            } catch (let error) {
-                print("Error requesting pizza delivery Live Activity \(error.localizedDescription).")
+            if let existingActivity = Activity<NaptimeWidgetAttributes>.activities.filter({
+                $0.attributes.id == activity.id
+            }).first {
+                let updatedContentState = NaptimeWidgetAttributes.ContentState(startDate: activity.startDate)
+                
+                await existingActivity.update(using: updatedContentState)
+            } else {
+                
+                let activityAttributes = NaptimeWidgetAttributes(id: activity.id)
+                let activityContent = NaptimeWidgetAttributes.ContentState(startDate: activity.startDate)
+                
+                do {
+                    let deliveryActivity = try Activity<NaptimeWidgetAttributes>.request(attributes: activityAttributes, contentState: activityContent)
+                    print("Starting live activity")
+                } catch (let error) {
+                    print("Error requesting pizza delivery Live Activity \(error.localizedDescription).")
+                }
             }
         }
         

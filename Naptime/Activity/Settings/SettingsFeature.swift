@@ -61,7 +61,7 @@ struct SettingsFeature: ReducerProtocol {
                                 if lastActivity.endDate == nil {
                                     if ActivityAuthorizationInfo().areActivitiesEnabled {
                                         
-                                        let activityAttributes = NaptimeWidgetAttributes(name: "\(lastActivity.id.uuidString)")
+                                        let activityAttributes = NaptimeWidgetAttributes(id: lastActivity.id)
                                         let activityContent = NaptimeWidgetAttributes.ContentState(startDate: lastActivity.startDate)
                                         
                                         do {
