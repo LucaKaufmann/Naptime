@@ -126,7 +126,7 @@ struct ActivityFeature: ReducerProtocol {
                         
                         if #available(iOS 16.2, *) {
                             if activitiesActive {
-                                if let lastActivity = activities.first, UserDefaults.standard.bool(forKey: "showLiveAction") {
+                                if let lastActivity = activities.first, UserDefaults.standard.bool(forKey: Constants.showLiveActivitiesKey) {
                                     await startNewLiveActivity(activity: lastActivity)
                                 }
                             } else {
@@ -194,7 +194,7 @@ struct ActivityFeature: ReducerProtocol {
                     state.selectedActivityId = nil
                     return .none
                 case .settingsButtonTapped:
-                    state.settings = .init(showLiveAction: UserDefaults.standard.bool(forKey: "showLiveAction") ?? false, lastActivity: state.activities.first)
+                    state.settings = .init(showLiveAction: UserDefaults.standard.bool(forKey: Constants.showLiveActivitiesKey), lastActivity: state.activities.first)
                     return .none
                 case .activityDetailAction(let action):
                     switch action {

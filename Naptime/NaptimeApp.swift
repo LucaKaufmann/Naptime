@@ -21,7 +21,7 @@ struct NaptimeApp: App {
             RootView(store: Store(
                 initialState: Root.State(activityState: .init(activities: [],
                                                               groupedActivities: [Date: IdentifiedArrayOf<ActivityDetail.State>](),
-                                                              activityHeaderDates: [], activityTilesState: ActivityTiles.State()), listeningToStoreChanges: false),
+                                                              activityHeaderDates: [], activityTilesState: ActivityTiles.State()), listeningToStoreChanges: false, showLiveActivityPromo: !UserDefaults.standard.bool(forKey: Constants.showLiveActivitiesPromoKey)),
                 reducer: Root()))
         }
     }

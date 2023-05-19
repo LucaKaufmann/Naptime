@@ -15,10 +15,14 @@ import AsyncAlgorithms
 struct Root: ReducerProtocol {
     
     @Dependency(\.activityService) private var activityService
+    @Dependency(\.uuid) private var uuid
     
     struct State: Equatable {
         var activityState: ActivityFeature.State
         var listeningToStoreChanges: Bool
+        var showLiveActivityPromo: Bool
+        
+        @PresentationState var promo: ActivityPromoFeature.State?
     }
     
     enum Action {
@@ -26,12 +30,20 @@ struct Root: ReducerProtocol {
         case onAppear
         case refreshActivities
         case loadedActivities(Result<[ActivityModel], Error>)
+        case promoAction(PresentationAction<ActivityPromoFeature.Action>)
     }
     
     var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
                 case .onAppear:
+                    
+                    if state.showLiveActivityPromo {
+                        state.promo = .init(id: uuid(), liveActivity: LiveActivityPromoFeature.State(liveActivitiesEnabled: false))
+                        state.showLiveActivityPromo = false
+                        UserDefaults.standard.set(true, forKey: Constants.showLiveActivitiesPromoKey)
+                    }
+                    
                     guard !state.listeningToStoreChanges else {
                         print("Already listening to store changes")
                         return .none

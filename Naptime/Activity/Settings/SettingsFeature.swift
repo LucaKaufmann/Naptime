@@ -48,7 +48,7 @@ struct SettingsFeature: ReducerProtocol {
                     return .none
                 case .binding(\.$showLiveAction):
                     if #available(iOS 16.1, *) {
-                        UserDefaults.standard.set(!state.showLiveAction, forKey: "showLiveAction")
+                        UserDefaults.standard.set(!state.showLiveAction, forKey: Constants.showLiveActivitiesKey)
                         if state.showLiveAction {
                             Task {
                                 for activity in Activity<NaptimeWidgetAttributes>.activities{
