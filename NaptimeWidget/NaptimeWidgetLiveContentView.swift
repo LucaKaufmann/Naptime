@@ -45,6 +45,7 @@ struct NaptimeWidgetLiveContentView: View {
                 }.foregroundColor(Color("sand"))
                 .font(.headline)
                     Text(timerInterval: startDate...Date(timeInterval: 12 * 60*60, since: .now), countsDown: false)
+                    .font(.footnote.monospacedDigit())
                     .foregroundColor(Color("slateInverted"))
                 
             }.padding(.horizontal)
