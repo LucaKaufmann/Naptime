@@ -38,7 +38,7 @@ struct Root: ReducerProtocol {
             switch action {
                 case .onAppear:
                     
-                    if state.showLiveActivityPromo {
+                    if state.showLiveActivityPromo, #available(iOS 16.2, *) {
                         state.promo = .init(id: uuid(), liveActivity: LiveActivityPromoFeature.State(liveActivitiesEnabled: UserDefaults.standard.bool(forKey: Constants.showLiveActivitiesKey)))
                         state.showLiveActivityPromo = false
                         UserDefaults.standard.set(true, forKey: Constants.showLiveActivitiesPromoKey)
