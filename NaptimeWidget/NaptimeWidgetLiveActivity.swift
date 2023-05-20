@@ -26,7 +26,7 @@ struct NaptimeWidgetLiveActivity: Widget {
                 } dynamicIsland: { context in
                     DynamicIsland {
                         DynamicIslandExpandedRegion(.leading) {
-                            Text("Context")
+                            NaptimeWidgetLiveContentView(startDate: context.state.startDate)
                         }
                     } compactLeading: {
                         Image(systemName: "bed.double.circle")

@@ -35,8 +35,15 @@ struct NaptimeWidgetLiveContentView: View {
                 Color("sandLight").offset(x: -20)
             )
             VStack(alignment: .leading) {
-                    Text("Asleep since \(formatDate(startDate))")
-                    .foregroundColor(Color("slateInverted"))
+                HStack {
+                    Image(systemName: "powersleep")
+                    Text("\(formatDate(startDate))")
+                    Spacer()
+                    Text("Naptime")
+                        .font(.footnote)
+                        .foregroundColor(Color("slateInverted"))
+                }.foregroundColor(Color("sand"))
+                .font(.headline)
                     Text(timerInterval: startDate...Date(timeInterval: 12 * 60*60, since: .now), countsDown: false)
                     .foregroundColor(Color("slateInverted"))
                 
@@ -48,7 +55,7 @@ struct NaptimeWidgetLiveContentView: View {
             Color("ocean")
                 .offset(x: 34)
                 .mask(
-                    LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.3), Color.black.opacity(0)]), startPoint: .leading, endPoint: .trailing)
+                    LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.8), Color.black.opacity(0)]), startPoint: .leading, endPoint: .trailing)
                 )
         )
     }
