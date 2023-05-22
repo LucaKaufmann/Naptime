@@ -19,7 +19,7 @@ struct ActivityView: View {
     let store: StoreOf<ActivityFeature>
     
     private let minHeight = 0.0
-    private let maxHeight = 322.0
+    private let maxHeight = 320.0
     
     init(store: StoreOf<ActivityFeature>) {
         self.store = store
@@ -28,108 +28,119 @@ struct ActivityView: View {
         UIColor(Color("slate").opacity(0.3))
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.primary)], for: .selected)
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.secondary)], for: .normal)
+        
+        UIScrollView.appearance().backgroundColor = .clear
     }
     
     var body: some View {
-        GeometryReader { geometry in
-            WithViewStore(self.store) { viewStore in
-                ZStack {
-                    VStack(spacing: 0) {
-                        Color("ocean")
-                            .frame(height: max(geometry.size.height / 3, 0))
-                        Color("slate")
-                    }
-                    ScalingHeaderScrollView {
-                        ZStack {
-                            VStack {
-                                Spacer()
-                                ActivityTilesView(store: store.scope(state: \.activityTilesState, action: ActivityFeature.Action.activityTiles))
-                                    .frame(height: max(geometry.size.height / 3, 0))
-                                //                                    .padding(.top, 25)
-                                Spacer()
-                            }
-                            VStack {
-                                Spacer()
-                                BackgroundShape()
-                                    .foregroundColor(Color("slate"))
-                                    .edgesIgnoringSafeArea(.all)
-                                    .frame(width: geometry.size.width, height: 60)
-                            }
-                            VStack {
-                                Spacer()
-                                IfLetStore(
-                                    store.scope(state: \.lastActivityTimerState,
-                                                action: ActivityFeature.Action.activityTimerAction),
-                                    then: { store in
-                                        TimerFeatureView(store: store,
-                                                         label: viewStore.isSleeping ? "Asleep for" : "Awake for",
-                                                         fontSize: 18,
-                                                         fontDesign: .rounded)
+        //        GeometryReader { geometry in
+        WithViewStore(self.store) { viewStore in
+            ZStack {
+                ScalingHeaderScrollView {
+                    ZStack(alignment: .center) {
+                        VStack {
+                            Spacer()
+                            ActivityTilesView(store: store.scope(state: \.activityTilesState, action: ActivityFeature.Action.activityTiles))
+                                .frame(height: max(maxHeight, 0))
+                            //                                    .padding(.top, 25)
+                            Spacer()
+                        }
+                        VStack(alignment: .center) {
+                            Spacer()
+                            
+                            //                                BackgroundShape()
+                            //                                    .foregroundColor(Color("slate"))
+                            //                                    .edgesIgnoringSafeArea(.all)
+                            //                                    .frame(width: geometry.size.width, height: 60)
+                        }
+                        VStack {
+                            Spacer()
+                            IfLetStore(
+                                store.scope(state: \.lastActivityTimerState,
+                                            action: ActivityFeature.Action.activityTimerAction),
+                                then: { store in
+                                    TimerFeatureView(store: store,
+                                                     label: viewStore.isSleeping ? "Asleep for" : "Awake for",
+                                                     fontSize: 18,
+                                                     fontDesign: .rounded)
+                                    .foregroundColor(Color("sand"))
+                                    .padding()
+                                    
+                                },
+                                else: { Text("Time for a nap!")
+                                        .font(.headline)
                                         .foregroundColor(Color("sand"))
                                         .padding()
-                                        
-                                    },
-                                    else: { Text("Time for a nap!")
-                                            .font(.headline)
-                                            .foregroundColor(Color("sand"))
-                                            .padding()
-                                        
-                                    }
-                                )
-                            }
+                                    
+                                }
+                            )
                         }
-                    } content: {
-                        ActivityListView(store: store)
-                            .background(Color("slate").ignoresSafeArea())
-                    }
-                    .height(min: minHeight, max: maxHeight)
-                    .refreshable {
-                        viewStore.send(.refreshActivities)
-                    }
-                    sleepToggle
+                    }.background(
+                        ZStack {
+                            Color("ocean")
+                            Circle()
+                                .stroke(Color("slate"), lineWidth: 250)
+                                .offset(y: maxHeight+50)
+                            //                                    .fill(Color("slate"))
+                            //                                    .offset(y: ((geometry.size.height / 3) / 2)+200)
+                        }.edgesIgnoringSafeArea(.all)
+                    )
+                } content: {
+                    ActivityListView(store: store)
+                        .background(Color("slate").ignoresSafeArea())
                 }
-                .ignoresSafeArea()
-                .navigationDestination(
-                      store: self.store.scope(state: \.$settings, action: ActivityFeature.Action.settings)
-                    ) { store in
-                      SettingsView(store: store)
+                .height(min: minHeight, max: maxHeight)
+                .refreshable {
+                    viewStore.send(.refreshActivities)
+                }
+                sleepToggle
+            }
+            .scrollContentBackground(.hidden)
+            .ignoresSafeArea()
+            .background(
+                Color("slate")
+            )
+            .navigationDestination(
+                store: self.store.scope(state: \.$settings, action: ActivityFeature.Action.settings)
+            ) { store in
+                SettingsView(store: store)
+            }
+            //                .sheet(isPresented: viewStore.binding(\.$showShareSheet), content: { shareView(share: viewStore.share) })
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        viewStore.send(.refreshActivities)
+                    } label: {
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                            .foregroundColor(Color("sandLight"))
                     }
-//                .sheet(isPresented: viewStore.binding(\.$showShareSheet), content: { shareView(share: viewStore.share) })
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            viewStore.send(.refreshActivities)
-                        } label: {
-                            Image(systemName: "arrow.triangle.2.circlepath")
-                                .foregroundColor(Color("sandLight"))
-                        }
+                }
+                ToolbarItem(placement: .principal) {
+                    Picker("Activities", selection: viewStore.binding(\.$selectedTimeRange)) {
+                        Text("7d").tag(ActivityTimeRange.week)
+                        Text("All").tag(ActivityTimeRange.all)
                     }
-                    ToolbarItem(placement: .principal) {
-                                        Picker("Activities", selection: viewStore.binding(\.$selectedTimeRange)) {
-                                            Text("7d").tag(ActivityTimeRange.week)
-                                            Text("All").tag(ActivityTimeRange.all)
-                                        }
-                                        .pickerStyle(SegmentedPickerStyle())
-                                        .padding(.horizontal, 30)
-                                    }
-//                    ToolbarItem(placement: .navigationBarTrailing) {
-//                        Button {
-//                            viewStore.send(.shareTapped)
-//                        } label: {
-//                            Image(systemName: "square.and.arrow.up")
-//                                .foregroundColor(Color("sandLight"))
-//                        }
-//                    }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            viewStore.send(.settingsButtonTapped)
-                        } label: {
-                            Image(systemName: "gear")
-                                .foregroundColor(Color("sandLight"))
-                        }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding(.horizontal, 30)
+                }
+                //                    ToolbarItem(placement: .navigationBarTrailing) {
+                //                        Button {
+                //                            viewStore.send(.shareTapped)
+                //                        } label: {
+                //                            Image(systemName: "square.and.arrow.up")
+                //                                .foregroundColor(Color("sandLight"))
+                //                        }
+                //                    }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        viewStore.send(.settingsButtonTapped)
+                    } label: {
+                        Image(systemName: "gear")
+                            .foregroundColor(Color("sandLight"))
                     }
                 }
             }
+            //            }
         }.edgesIgnoringSafeArea(.vertical)
     }
     
@@ -206,8 +217,8 @@ struct ActivityView_Previews: PreviewProvider {
         ActivityView(
             store: Store(
                 initialState: ActivityFeature.State(activities: activities,
-                                             groupedActivities: grouped,
-                                             activityHeaderDates: [Date()], activityTilesState: ActivityTiles.State()),
+                                                    groupedActivities: grouped,
+                                                    activityHeaderDates: [date], activityTilesState: ActivityTiles.State()),
                 reducer: ActivityFeature()))
     }
 }
