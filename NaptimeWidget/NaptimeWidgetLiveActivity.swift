@@ -26,11 +26,53 @@ struct NaptimeWidgetLiveActivity: Widget {
                 } dynamicIsland: { context in
                     DynamicIsland {
                         DynamicIslandExpandedRegion(.leading) {
-                            NaptimeWidgetLiveContentView(startDate: context.state.startDate)
+                            VStack(spacing: 0) {
+                                Rectangle()
+                                    .fill(Color("ocean"))
+                                    .frame(width: 4, alignment: .center)
+                                Image(systemName: "bed.double.circle")
+                                    .resizable()
+                                    .foregroundColor(Color("slateInverted"))
+                                    .frame(width: 40, height: 40)
+                                    .background(
+                                        Circle()
+                                           .fill(Color("slate"))
+                                    )
+                                Rectangle()
+                                    .fill(Color("ocean"))
+                                    .frame(width: 4, alignment: .center)
+                            }
+                            .padding(.leading)
+
+                            .background(
+                                Color("sandLight").offset(x: -20)
+                            )
+                        }
+                        DynamicIslandExpandedRegion(.center) {
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Image(systemName: "powersleep")
+                                    Text("\(formatDate(context.state.startDate))")
+                                }.foregroundColor(Color("sand"))
+                                .font(.headline)
+                                    Text(timerInterval: context.state.startDate...Date(timeInterval: 12 * 60*60, since: .now), countsDown: false)
+                                    .font(.footnote.monospacedDigit())
+                                    .foregroundColor(Color("slateInverted"))
+                                
+                            }.padding(.horizontal)
+                        }
+                        DynamicIslandExpandedRegion(.trailing) {
+                            Text("Naptime")
+                                .font(.footnote)
+                                .foregroundColor(Color("slateInverted"))
                         }
                     } compactLeading: {
-                        Image(systemName: "bed.double.circle")
-                            .foregroundColor(Color("sandLight"))
+                        HStack {
+                            Image(systemName: "bed.double.circle")
+                                .foregroundColor(Color("sandLight"))
+                            Text("Naptime")
+                                .font(.footnote)
+                        }
                     } compactTrailing: {
                         Text(timerInterval: context.state.startDate...Date(timeInterval: 12 * 60*60, since: .now), countsDown: false)
                     } minimal: {
@@ -61,6 +103,13 @@ struct NaptimeWidgetLiveActivity: Widget {
 //                Text("Minimal")
 //            }
 //        }
+    }
+    
+    func formatDate(_ date: Date) -> String {
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = calendar.isDateInToday(date) ? "HH:mm" : "E HH:mm"
+        return dateFormatter.string(from: date)
     }
 }
 
