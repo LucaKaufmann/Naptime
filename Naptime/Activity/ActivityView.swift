@@ -75,15 +75,18 @@ struct ActivityView: View {
                                 }
                             )
                         }
-                    }.background(
+                    }
+                    .background(
                         ZStack {
                             Color("ocean")
                             Circle()
-                                .stroke(Color("slate"), lineWidth: 250)
-                                .offset(y: maxHeight+50)
+                                .stroke(Color("slate"), lineWidth: 265)
+                                .offset(y: maxHeight+65)
                             //                                    .fill(Color("slate"))
                             //                                    .offset(y: ((geometry.size.height / 3) / 2)+200)
-                        }.edgesIgnoringSafeArea(.all)
+                        }
+                            .edgesIgnoringSafeArea(.all)
+                            .allowsHitTesting(false)
                     )
                 } content: {
                     ActivityListView(store: store)
