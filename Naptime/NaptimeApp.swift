@@ -21,8 +21,13 @@ struct NaptimeApp: App {
             RootView(store: Store(
                 initialState: Root.State(activityState: .init(activities: [],
                                                               groupedActivities: [Date: IdentifiedArrayOf<ActivityDetail.State>](),
-                                                              activityHeaderDates: [], activityTilesState: ActivityTiles.State()), listeningToStoreChanges: false, showLiveActivityPromo: !UserDefaults.standard.bool(forKey: Constants.showLiveActivitiesPromoKey)),
+                                                              activityHeaderDates: [], activityTilesState: ActivityTiles.State()), listeningToStoreChanges: false),
                 reducer: Root()))
+            .onAppear {
+                if UserDefaults.standard.object(forKey: Constants.showAsleepLiveActivitiesKey) == nil {
+                    UserDefaults.standard.set(true, forKey: Constants.showAsleepLiveActivitiesKey)
+                }
+            }
         }
     }
 }

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct NaptimeWidgetLiveContentView: View {
     
-    let startDate: Date
+    
+    let contentState: NaptimeWidgetAttributes.ContentState
     
     var body: some View {
         HStack {
@@ -17,13 +18,15 @@ struct NaptimeWidgetLiveContentView: View {
                 Rectangle()
                     .fill(Color("ocean"))
                     .frame(width: 4, alignment: .center)
-                Image(systemName: "bed.double.circle")
+                Image(systemName: contentState.iconName)
                     .resizable()
                     .foregroundColor(Color("slateInverted"))
                     .frame(width: 40, height: 40)
                     .background(
                         Circle()
-                           .fill(Color("slate"))
+                            .fill(Color("slate")
+                                .opacity(contentState.activityState == .asleep ? 1 : 0.5)
+)
                     )
                 Rectangle()
                     .fill(Color("ocean"))
@@ -32,28 +35,32 @@ struct NaptimeWidgetLiveContentView: View {
             .padding(.leading)
 
             .background(
-                Color("sandLight").offset(x: -20)
+                Color("sandLight")
+                    .offset(x: -20)
+                    .opacity(contentState.activityState == .asleep ? 1 : 0)
             )
             VStack(alignment: .leading) {
                 HStack {
-                    Image(systemName: "powersleep")
-                    Text("\(formatDate(startDate))")
+                    Image(systemName: contentState.titleIconName)
+                    Text("\(formatDate(contentState.startDate))")
                     Spacer()
                     Text("Naptime")
                         .font(.footnote)
                         .foregroundColor(Color("slateInverted"))
                 }.foregroundColor(Color("sand"))
                 .font(.headline)
-                    Text(timerInterval: startDate...Date(timeInterval: 12 * 60*60, since: .now), countsDown: false)
-                    .font(.footnote.monospacedDigit())
+                HStack(spacing: 0) {
+                    Text("\(contentState.activityState.rawValue) for ")
+                    Text(timerInterval: contentState.startDate...Date(timeInterval: 12 * 60*60, since: .now), countsDown: false)
+                        
+                }.font(.footnote.monospacedDigit())
                     .foregroundColor(Color("slateInverted"))
                 
             }.padding(.horizontal)
             Spacer()
-//            Image(systemName: "chevron.right")
         }
         .background(
-            Color("ocean")
+            Color(contentState.activityState == .asleep ? "ocean" : "oceanLight")
                 .offset(x: 34)
                 .mask(
                     LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.8), Color.black.opacity(0)]), startPoint: .leading, endPoint: .trailing)
@@ -71,6 +78,7 @@ struct NaptimeWidgetLiveContentView: View {
 
 struct NaptimeWidgetLiveContentView_Previews: PreviewProvider {
     static var previews: some View {
-        NaptimeWidgetLiveContentView(startDate: Date())
+        NaptimeWidgetLiveContentView(contentState: .init(startDate: Date(), activityState: .awake))
+        NaptimeWidgetLiveContentView(contentState: .init(startDate: Date(), activityState: .asleep))
     }
 }

@@ -16,9 +16,13 @@ struct SettingsView: View {
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             Form {
-                SettingsToggleRowView(label: "Show awake live activity", setting: viewStore.binding(\.$showAwakeLiveAction))
-                SettingsToggleRowView(label: "Show asleep live activity", setting: viewStore.binding(\.$showAsleepLiveAction))
-                SettingsButtonRowView(store: store, label: "Share with others", systemIcon: "square.and.arrow.up")
+                Section {
+                    SettingsToggleRowView(label: "Show asleep live activity", setting: viewStore.binding(\.$showAsleepLiveAction))
+                    SettingsToggleRowView(label: "Show awake live activity", setting: viewStore.binding(\.$showAwakeLiveAction))
+                }
+                Section {
+                    SettingsButtonRowView(store: store, label: "Share with others", systemIcon: "square.and.arrow.up")
+                }
             }
             .sheet(
                 store: self.store.scope(state: \.$shareSheet, action: SettingsFeature.Action.shareSheet)

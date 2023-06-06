@@ -20,7 +20,7 @@ struct Root: ReducerProtocol {
     struct State: Equatable {
         var activityState: ActivityFeature.State
         var listeningToStoreChanges: Bool
-        var showLiveActivityPromo: Bool
+//        var showLiveActivityPromo: Bool
         
         @PresentationState var promo: ActivityPromoFeature.State?
     }
@@ -38,11 +38,11 @@ struct Root: ReducerProtocol {
             switch action {
                 case .onAppear:
                     
-                    if state.showLiveActivityPromo, #available(iOS 16.2, *) {
-                        state.promo = .init(id: uuid(), liveActivity: LiveActivityPromoFeature.State(liveActivitiesEnabled: UserDefaults.standard.bool(forKey: Constants.showLiveActivitiesKey)))
-                        state.showLiveActivityPromo = false
-                        UserDefaults.standard.set(true, forKey: Constants.showLiveActivitiesPromoKey)
-                    }
+//                    if state.showLiveActivityPromo, #available(iOS 16.2, *) {
+//                        state.promo = .init(id: uuid(), liveActivity: LiveActivityPromoFeature.State(liveActivitiesEnabled: UserDefaults.standard.bool(forKey: Constants.showLiveActivitiesKey)))
+//                        state.showLiveActivityPromo = false
+//                        UserDefaults.standard.set(true, forKey: Constants.showLiveActivitiesPromoKey)
+//                    }
                     
                     guard !state.listeningToStoreChanges else {
                         print("Already listening to store changes")

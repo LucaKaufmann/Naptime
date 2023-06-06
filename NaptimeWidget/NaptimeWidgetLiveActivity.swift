@@ -9,8 +9,9 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
-enum NaptimeActivityState: Codable {
-    case asleep, awake
+enum NaptimeActivityState: String, Codable {
+    case asleep = "Asleep"
+    case awake = "Awake"
 }
 
 struct NaptimeWidgetAttributes: ActivityAttributes {
@@ -19,7 +20,11 @@ struct NaptimeWidgetAttributes: ActivityAttributes {
         var activityState: NaptimeActivityState
         
         var iconName: String {
-            return activityState == .asleep ? "bed.double.circle" : "sun.and.horizon"
+            return activityState == .asleep ? "bed.double.circle" : "sun.max"
+        }
+        
+        var titleIconName: String {
+            return activityState == .asleep ? "powersleep" : "sun.and.horizon"
         }
     }
 
@@ -31,7 +36,7 @@ struct NaptimeWidgetAttributes: ActivityAttributes {
 struct NaptimeWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: NaptimeWidgetAttributes.self) { context in
-            NaptimeWidgetLiveContentView(startDate: context.state.startDate)
+            NaptimeWidgetLiveContentView(contentState: context.state)
                 } dynamicIsland: { context in
                     DynamicIsland {
                         DynamicIslandExpandedRegion(.leading) {
@@ -54,21 +59,27 @@ struct NaptimeWidgetLiveActivity: Widget {
                             .padding(.leading)
 
                             .background(
-                                Color("sandLight").offset(x: -20)
+                                Color("sandLight")
+                                    .offset(x: -20)
+                                    .opacity(context.state.activityState == .asleep ? 1 : 0)
                             )
                         }
                         DynamicIslandExpandedRegion(.center) {
                             VStack(alignment: .leading) {
                                 HStack {
-                                    Image(systemName: "powersleep")
+                                    Image(systemName: context.state.titleIconName)
                                     Text("\(formatDate(context.state.startDate))")
                                 }.foregroundColor(Color("sand"))
                                 .font(.headline)
+                                HStack(spacing: 0) {
+                                    Text("\(context.state.activityState.rawValue) for ")
                                     Text(timerInterval: context.state.startDate...Date(timeInterval: 12 * 60*60, since: .now), countsDown: false)
-                                    .font(.footnote.monospacedDigit())
+                                        
+                                }.font(.footnote.monospacedDigit())
                                     .foregroundColor(Color("slateInverted"))
                                 
-                            }.padding(.horizontal)
+                            }
+                            .padding(.horizontal)
                         }
                         DynamicIslandExpandedRegion(.trailing) {
                             Text("Naptime")
@@ -77,7 +88,7 @@ struct NaptimeWidgetLiveActivity: Widget {
                         }
                     } compactLeading: {
                         HStack {
-                            Image(systemName: context.state.iconName)
+                            Image(systemName: context.state.titleIconName)
                                 .foregroundColor(Color("sandLight"))
                             Text("Naptime")
                                 .font(.footnote)
@@ -85,7 +96,7 @@ struct NaptimeWidgetLiveActivity: Widget {
                     } compactTrailing: {
                         Text(timerInterval: context.state.startDate...Date(timeInterval: 12 * 60*60, since: .now), countsDown: false)
                     } minimal: {
-                        Image(systemName: "bed.double.circle")
+                        Image(systemName: context.state.iconName)
                             .foregroundColor(Color("sandLight"))
                     }
                 }

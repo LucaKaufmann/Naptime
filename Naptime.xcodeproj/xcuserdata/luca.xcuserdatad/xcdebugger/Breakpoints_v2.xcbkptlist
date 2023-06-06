@@ -143,6 +143,21 @@
                   endingLineNumber = "159"
                   offsetFromSymbolStart = "124">
                </Location>
+               <Location
+                  uuid = "EFD755B1-B4A1-4200-8F6B-117E990FC18F - 8bf103f7b2749deb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #4 @Sendable () async -&gt; Naptime.ActivityFeature.Action in closure #1 (inout Naptime.ActivityFeature.State, Naptime.ActivityFeature.Action) -&gt; ComposableArchitecture.EffectPublisher&lt;Naptime.ActivityFeature.Action, Swift.Never&gt; in Naptime.ActivityFeature.body.getter : some"
+                  moduleName = "Naptime"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/luca/git/Naptime/Naptime/Activity/ActivityFeature.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "160"
+                  endingLineNumber = "160"
+                  offsetFromSymbolStart = "124">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>

@@ -199,8 +199,7 @@ struct ActivityFeature: ReducerProtocol {
                     state.selectedActivityId = nil
                     return .none
                 case .settingsButtonTapped:
-                    state.settings = .init(showLiveAction: UserDefaults.standard.bool(forKey: Constants.showLiveActivitiesKey),
-                                           showAsleepLiveAction: UserDefaults.standard.bool(forKey: Constants.showAsleepLiveActivitiesKey),
+                    state.settings = .init(showAsleepLiveAction: UserDefaults.standard.bool(forKey: Constants.showAsleepLiveActivitiesKey),
                                            showAwakeLiveAction: UserDefaults.standard.bool(forKey: Constants.showAwakeLiveActivitiesKey),
                                            lastActivity: state.activities.first)
                     return .none
