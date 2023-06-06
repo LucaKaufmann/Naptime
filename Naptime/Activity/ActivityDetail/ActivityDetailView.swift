@@ -28,8 +28,12 @@ struct ActivityDetailView: View {
                 Section {
                     HStack {
                         if startDate != nil {
+                            Text("Start Time")
+                            DatePicker(selection: Binding<Date>(get: {self.startDate ?? Date()}, set: {self.startDate = $0}), in: ...Date(), displayedComponents: .date) {
+                                            EmptyView()
+                                        }
                             DatePicker(selection: Binding<Date>(get: {self.startDate ?? Date()}, set: {self.startDate = $0}), in: ...Date(), displayedComponents: .hourAndMinute) {
-                                            Text("Start time")
+                                            EmptyView()
                                         }
                         } else {
                             Text("Start Time")
@@ -40,21 +44,30 @@ struct ActivityDetailView: View {
                                 }
                         }
                     }
-                    HStack {
+                    VStack(alignment: .trailing) {
+                        HStack {
+                            if endDate != nil {
+                                Text("End Time")
+                                DatePicker(selection: Binding<Date>(get: {self.endDate ?? Date()}, set: {self.endDate = $0}), in: ...Date(), displayedComponents: .date) {
+                                    EmptyView()
+                                }
+                                DatePicker(selection: Binding<Date>(get: {self.endDate ?? Date()}, set: {self.endDate = $0}), in: ...Date(), displayedComponents: .hourAndMinute) {
+                                    EmptyView()
+                                }
+
+                            } else {
+                                Text("End Time")
+                                Spacer()
+                                Text("-")
+                                    .onTapGesture {
+                                        endDate = Date()
+                                    }
+                            }
+                        }
                         if endDate != nil {
-                            DatePicker(selection: Binding<Date>(get: {self.endDate ?? Date()}, set: {self.endDate = $0}), in: ...Date(), displayedComponents: .hourAndMinute) {
-                                            Text("End time")
-                                        }
                             Button("Clear") {
                                 endDate = nil
                             }
-                        } else {
-                            Text("End Time")
-                            Spacer()
-                            Text("-")
-                                .onTapGesture {
-                                    endDate = Date()
-                                }
                         }
                     }
                 }
@@ -82,6 +95,11 @@ struct ActivityDetailView: View {
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
+            }
+            .scrollContentBackground(.hidden)
+            .navigationBarTitleDisplayMode(.inline)
+            .background {
+                Color("slate")
             }
             .onAppear {
                 self.startDate = viewStore.activity?.startDate ?? Date()
@@ -113,7 +131,7 @@ struct ActivityDetailView: View {
 
 struct ActivityDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        let activity = ActivityModel(id: UUID(), startDate: Date(), endDate: nil, type: .sleep)
+        let activity = ActivityModel(id: UUID(), startDate: Date(), endDate: Date(), type: .sleep)
         ActivityDetailView(
             store: Store(
                 initialState: ActivityDetail.State(id: activity.id, activity: activity),
