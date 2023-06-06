@@ -26,21 +26,21 @@ struct LiveActivityService {
     func startNewLiveActivity(activity: ActivityModel) async {
         if ActivityAuthorizationInfo().areActivitiesEnabled {
             let activityState: NaptimeActivityState = activity.isActive ? .asleep : .awake
+            let activityDate: Date = activity.endDate ?? activity.startDate
 
             if let existingActivity = Activity<NaptimeWidgetAttributes>.activities.filter({
                 $0.attributes.id == activity.id
             }).first {
-                let updatedContentState = NaptimeWidgetAttributes.ContentState(startDate: activity.startDate, activityState: activityState)
+                let updatedContentState = NaptimeWidgetAttributes.ContentState(startDate: activityDate, activityState: activityState)
                 
                 await existingActivity.update(using: updatedContentState)
             } else {
                 
                 let activityAttributes = NaptimeWidgetAttributes(id: activity.id)
-                let activityContent = NaptimeWidgetAttributes.ContentState(startDate: activity.startDate, activityState: activityState)
+                let activityContent = NaptimeWidgetAttributes.ContentState(startDate: activityDate, activityState: activityState)
                 
                 do {
                     let deliveryActivity = try Activity<NaptimeWidgetAttributes>.request(attributes: activityAttributes, contentState: activityContent)
-                    print("Starting live activity")
                 } catch (let error) {
                     print("Error requesting pizza delivery Live Activity \(error.localizedDescription).")
                 }
