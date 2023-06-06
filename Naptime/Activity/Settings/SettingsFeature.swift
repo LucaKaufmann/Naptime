@@ -14,6 +14,9 @@ struct SettingsFeature: ReducerProtocol {
     
     struct State: Equatable {
         @BindingState var showLiveAction: Bool
+        @BindingState var showAsleepLiveAction: Bool
+        @BindingState var showAwakeLiveAction: Bool
+
         
         @PresentationState var shareSheet: ShareSheetFeature.State?
         
@@ -29,6 +32,7 @@ struct SettingsFeature: ReducerProtocol {
     }
     
     var body: some ReducerProtocol<State, Action> {
+        BindingReducer()
         Reduce { state, action in
             switch action {
                 case .shareTapped:
@@ -48,8 +52,8 @@ struct SettingsFeature: ReducerProtocol {
                     return .none
                 case .binding(\.$showLiveAction):
                     if #available(iOS 16.1, *) {
-                        UserDefaults.standard.set(!state.showLiveAction, forKey: Constants.showLiveActivitiesKey)
-                        if state.showLiveAction {
+                        UserDefaults.standard.set(state.showLiveAction, forKey: Constants.showLiveActivitiesKey)
+                        if !state.showLiveAction {
                             Task {
                                 for activity in Activity<NaptimeWidgetAttributes>.activities{
                                     await activity.end(dismissalPolicy: .immediate)
@@ -62,11 +66,10 @@ struct SettingsFeature: ReducerProtocol {
                                     if ActivityAuthorizationInfo().areActivitiesEnabled {
                                         
                                         let activityAttributes = NaptimeWidgetAttributes(id: lastActivity.id)
-                                        let activityContent = NaptimeWidgetAttributes.ContentState(startDate: lastActivity.startDate)
+                                        let activityContent = NaptimeWidgetAttributes.ContentState(startDate: lastActivity.startDate, activityState: .asleep)
                                         
                                         do {
                                             let deliveryActivity = try Activity<NaptimeWidgetAttributes>.request(attributes: activityAttributes, contentState: activityContent)
-                                            print("Starting live activity")
                                         } catch (let error) {
                                             print("Error requesting pizza delivery Live Activity \(error.localizedDescription).")
                                         }
@@ -77,6 +80,12 @@ struct SettingsFeature: ReducerProtocol {
                         
                     }
                     return .none
+                case .binding(\.$showAwakeLiveAction):
+                    UserDefaults.standard.set(state.showAwakeLiveAction, forKey: Constants.showLiveActivitiesKey)
+                    return .none
+                case .binding(\.$showAsleepLiveAction):
+                    UserDefaults.standard.set(state.showAwakeLiveAction, forKey: Constants.showLiveActivitiesKey)
+                    return .none
                 case .binding(_):
                     return .none
                 case .shareSheet(_):
@@ -86,6 +95,5 @@ struct SettingsFeature: ReducerProtocol {
         .ifLet(\.$shareSheet, action: /Action.shareSheet) {
             ShareSheetFeature()
         }
-        BindingReducer()
     }
 }

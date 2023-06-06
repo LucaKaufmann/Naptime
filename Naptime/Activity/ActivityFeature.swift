@@ -34,6 +34,7 @@ enum ActivityTimeRange: Int, Equatable {
 struct ActivityFeature: ReducerProtocol {
     
     @Dependency(\.activityService) private var activityService
+    @Dependency(\.liveActivityService) private var liveActivityService
     
     internal struct ActivityViewState: Equatable {
         let groupedActivities: [Date: IdentifiedArrayOf<ActivityDetail.State>]
@@ -125,12 +126,16 @@ struct ActivityFeature: ReducerProtocol {
                         await send(.activityTiles(.updateTiles(activities)))
                         
                         if #available(iOS 16.2, *) {
-                            if activitiesActive {
-                                if let lastActivity = activities.first, UserDefaults.standard.bool(forKey: Constants.showLiveActivitiesKey) {
-                                    await startNewLiveActivity(activity: lastActivity)
+                            if let lastActivity = activities.first {
+                                if UserDefaults.standard.bool(forKey: Constants.showAsleepLiveActivitiesKey), lastActivity.isActive {
+                                    await liveActivityService.startNewLiveActivity(activity: lastActivity)
+                                } else if UserDefaults.standard.bool(forKey: Constants.showAwakeLiveActivitiesKey), !lastActivity.isActive {
+                                    await liveActivityService.startNewLiveActivity(activity: lastActivity)
+                                } else {
+                                    await liveActivityService.stopLiveActivities()
                                 }
                             } else {
-                                await stopLiveActivities()
+                                await liveActivityService.stopLiveActivities()
                             }
                         }
                     }
@@ -194,7 +199,10 @@ struct ActivityFeature: ReducerProtocol {
                     state.selectedActivityId = nil
                     return .none
                 case .settingsButtonTapped:
-                    state.settings = .init(showLiveAction: UserDefaults.standard.bool(forKey: Constants.showLiveActivitiesKey), lastActivity: state.activities.first)
+                    state.settings = .init(showLiveAction: UserDefaults.standard.bool(forKey: Constants.showLiveActivitiesKey),
+                                           showAsleepLiveAction: UserDefaults.standard.bool(forKey: Constants.showAsleepLiveActivitiesKey),
+                                           showAwakeLiveAction: UserDefaults.standard.bool(forKey: Constants.showAwakeLiveActivitiesKey),
+                                           lastActivity: state.activities.first)
                     return .none
                 case .activityDetailAction(let action):
                     switch action {
@@ -288,38 +296,6 @@ struct ActivityFeature: ReducerProtocol {
         //      } catch {
         //        print("Failed to create share")
         //      }
-    }
-    
-    @available(iOS 16.2, *)
-    private func startNewLiveActivity(activity: ActivityModel) async {
-        if ActivityAuthorizationInfo().areActivitiesEnabled {
-            if let existingActivity = Activity<NaptimeWidgetAttributes>.activities.filter({
-                $0.attributes.id == activity.id
-            }).first {
-                let updatedContentState = NaptimeWidgetAttributes.ContentState(startDate: activity.startDate)
-                
-                await existingActivity.update(using: updatedContentState)
-            } else {
-                
-                let activityAttributes = NaptimeWidgetAttributes(id: activity.id)
-                let activityContent = NaptimeWidgetAttributes.ContentState(startDate: activity.startDate)
-                
-                do {
-                    let deliveryActivity = try Activity<NaptimeWidgetAttributes>.request(attributes: activityAttributes, contentState: activityContent)
-                    print("Starting live activity")
-                } catch (let error) {
-                    print("Error requesting pizza delivery Live Activity \(error.localizedDescription).")
-                }
-            }
-        }
-        
-    }
-    
-    @available(iOS 16.2, *)
-    private func stopLiveActivities() async {
-        for activity in Activity<NaptimeWidgetAttributes>.activities{
-            await activity.end(dismissalPolicy: .immediate)
-        }
     }
     
 }

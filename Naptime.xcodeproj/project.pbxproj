@@ -76,6 +76,7 @@
 		81F251BD29291CFD00B90C0E /* NaptimeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F251BC29291CFD00B90C0E /* NaptimeUITestsLaunchTests.swift */; };
 		81F251CB29291E1800B90C0E /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 81F251CA29291E1800B90C0E /* ComposableArchitecture */; };
 		81F251CD29291E1800B90C0E /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 81F251CC29291E1800B90C0E /* Dependencies */; };
+		81F6B3D12A2F6A9700CF5A3B /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F6B3D02A2F6A9700CF5A3B /* LiveActivityManager.swift */; };
 		81F8C2D6299EA99A00E225FE /* TimerFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F8C2D5299EA99A00E225FE /* TimerFeature.swift */; };
 		81F8C2D8299EC72A00E225FE /* TimerFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F8C2D7299EC72A00E225FE /* TimerFeatureView.swift */; };
 		81FD2D652998F46E00D99D9A /* ActivityTilesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FD2D642998F46E00D99D9A /* ActivityTilesFactory.swift */; };
@@ -187,6 +188,7 @@
 		81F251B629291CFD00B90C0E /* NaptimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NaptimeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F251BA29291CFD00B90C0E /* NaptimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaptimeUITests.swift; sourceTree = "<group>"; };
 		81F251BC29291CFD00B90C0E /* NaptimeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaptimeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		81F6B3D02A2F6A9700CF5A3B /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
 		81F8C2D5299EA99A00E225FE /* TimerFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerFeature.swift; sourceTree = "<group>"; };
 		81F8C2D7299EC72A00E225FE /* TimerFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerFeatureView.swift; sourceTree = "<group>"; };
 		81FD2D642998F46E00D99D9A /* ActivityTilesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTilesFactory.swift; sourceTree = "<group>"; };
@@ -431,6 +433,7 @@
 		81F2519829291CFC00B90C0E /* Naptime */ = {
 			isa = PBXGroup;
 			children = (
+				81F6B3CF2A2F6A8A00CF5A3B /* Dependencies */,
 				8170283429D064670053BDA6 /* Info.plist */,
 				811089E329857E69001D4E58 /* ViewComponents */,
 				815550A8293F99BF000A2952 /* Extensions */,
@@ -471,6 +474,14 @@
 				81F251BC29291CFD00B90C0E /* NaptimeUITestsLaunchTests.swift */,
 			);
 			path = NaptimeUITests;
+			sourceTree = "<group>";
+		};
+		81F6B3CF2A2F6A8A00CF5A3B /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				81F6B3D02A2F6A9700CF5A3B /* LiveActivityManager.swift */,
+			);
+			path = Dependencies;
 			sourceTree = "<group>";
 		};
 		81F8C2D4299EA98B00E225FE /* Timer */ = {
@@ -693,6 +704,7 @@
 				81CD4F15293C8918007CE048 /* ActivityFeature.swift in Sources */,
 				81CD4EFD2937E0AD007CE048 /* RootFeature.swift in Sources */,
 				81B2212629718019005C4A15 /* ActivityDetail.swift in Sources */,
+				81F6B3D12A2F6A9700CF5A3B /* LiveActivityManager.swift in Sources */,
 				81F8C2D8299EC72A00E225FE /* TimerFeatureView.swift in Sources */,
 				81DD88092A10F6FA005E5C6D /* ShareSheetFeature.swift in Sources */,
 				812A321C2A17AE50007303EB /* Constants.swift in Sources */,

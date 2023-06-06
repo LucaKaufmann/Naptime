@@ -9,5 +9,7 @@ import Foundation
 
 enum Constants {
     static var showLiveActivitiesKey = "com.naptime.showLiveActivities"
+    static var showAwakeLiveActivitiesKey = "com.naptime.showAwakeLiveActivities"
+    static var showAsleepLiveActivitiesKey = "com.naptime.showAsleepLiveActivities"
     static var showLiveActivitiesPromoKey = "com.naptime.shownLiveActivityPromo"
 }

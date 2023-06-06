@@ -9,9 +9,18 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
+enum NaptimeActivityState: Codable {
+    case asleep, awake
+}
+
 struct NaptimeWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         var startDate: Date
+        var activityState: NaptimeActivityState
+        
+        var iconName: String {
+            return activityState == .asleep ? "bed.double.circle" : "sun.and.horizon"
+        }
     }
 
     // Fixed non-changing properties about your activity go here!
@@ -30,7 +39,7 @@ struct NaptimeWidgetLiveActivity: Widget {
                                 Rectangle()
                                     .fill(Color("ocean"))
                                     .frame(width: 4, alignment: .center)
-                                Image(systemName: "bed.double.circle")
+                                Image(systemName: context.state.iconName)
                                     .resizable()
                                     .foregroundColor(Color("slateInverted"))
                                     .frame(width: 40, height: 40)
@@ -68,7 +77,7 @@ struct NaptimeWidgetLiveActivity: Widget {
                         }
                     } compactLeading: {
                         HStack {
-                            Image(systemName: "bed.double.circle")
+                            Image(systemName: context.state.iconName)
                                 .foregroundColor(Color("sandLight"))
                             Text("Naptime")
                                 .font(.footnote)
@@ -116,7 +125,8 @@ struct NaptimeWidgetLiveActivity: Widget {
 @available(iOS 16.2, *)
 struct NaptimeWidgetLiveActivity_Previews: PreviewProvider {
     static let attributes = NaptimeWidgetAttributes(id: UUID())
-    static let contentState = NaptimeWidgetAttributes.ContentState(startDate: Date())
+    static let asleepState = NaptimeWidgetAttributes.ContentState(startDate: Date(), activityState: .asleep)
+    static let awakeState = NaptimeWidgetAttributes.ContentState(startDate: Date(), activityState: .awake)
 
     static var previews: some View {
 //        attributes
@@ -129,7 +139,10 @@ struct NaptimeWidgetLiveActivity_Previews: PreviewProvider {
 //            .previewContext(contentState, viewKind: .dynamicIsland(.minimal))
 //            .previewDisplayName("Minimal")
         attributes
-            .previewContext(contentState, viewKind: .content)
+            .previewContext(asleepState, viewKind: .content)
+            .previewDisplayName("Notification")
+        attributes
+            .previewContext(awakeState, viewKind: .content)
             .previewDisplayName("Notification")
     }
 }
