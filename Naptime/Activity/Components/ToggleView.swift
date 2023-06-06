@@ -32,7 +32,7 @@ struct ToggleView<Content: View, ButtonContent: View>: View {
                                .fill(Color.white)
                        }
                    }
-                   .frame(width: reader.frame(in: .global).width/2 - 10)
+                   .frame(width: abs(reader.frame(in: .global).width/2 - 10))
                    .onTapGesture {
                        withAnimation {
                            isOn.toggle()
