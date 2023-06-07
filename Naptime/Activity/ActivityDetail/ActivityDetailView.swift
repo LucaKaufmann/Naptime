@@ -29,6 +29,7 @@ struct ActivityDetailView: View {
                     HStack {
                         if startDate != nil {
                             Text("Start Time")
+                            Spacer()
                             DatePicker(selection: Binding<Date>(get: {self.startDate ?? Date()}, set: {self.startDate = $0}), in: ...Date(), displayedComponents: .date) {
                                             EmptyView()
                                         }
@@ -48,6 +49,7 @@ struct ActivityDetailView: View {
                         HStack {
                             if endDate != nil {
                                 Text("End Time")
+                                Spacer()
                                 DatePicker(selection: Binding<Date>(get: {self.endDate ?? Date()}, set: {self.endDate = $0}), in: ...Date(), displayedComponents: .date) {
                                     EmptyView()
                                 }

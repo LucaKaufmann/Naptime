@@ -35,9 +35,9 @@ struct NaptimeWidgetLiveContentView: View {
             .padding(.leading)
 
             .background(
-                Color("sandLight")
+                Color(contentState.activityState == .asleep ? "sandLight" : "oceanLight")
                     .offset(x: -20)
-                    .opacity(contentState.activityState == .asleep ? 1 : 0)
+//                    .opacity(contentState.activityState == .asleep ? 1 : 0)
             )
             VStack(alignment: .leading) {
                 HStack {

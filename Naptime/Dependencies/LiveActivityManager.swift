@@ -46,6 +46,9 @@ struct LiveActivityService {
                 }
             }
         }
+        for activity in Activity<NaptimeWidgetAttributes>.activities.filter({ $0.attributes.id != activity.id }) {
+            await activity.end(dismissalPolicy: .immediate)
+        }
         
     }
     
