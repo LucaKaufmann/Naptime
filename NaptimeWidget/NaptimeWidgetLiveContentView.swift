@@ -16,7 +16,7 @@ struct NaptimeWidgetLiveContentView: View {
         HStack {
             VStack(spacing: 0) {
                 Rectangle()
-                    .fill(Color("ocean"))
+                    .fill(Color(contentState.activityState == .asleep ? "oceanLight" : "sandLight"))
                     .frame(width: 4, alignment: .center)
                 Image(systemName: contentState.iconName)
                     .resizable()
@@ -29,13 +29,13 @@ struct NaptimeWidgetLiveContentView: View {
 )
                     )
                 Rectangle()
-                    .fill(Color("ocean"))
+                    .fill(Color(contentState.activityState == .asleep ? "oceanLight" : "sandLight"))
                     .frame(width: 4, alignment: .center)
             }
             .padding(.leading)
 
             .background(
-                Color(contentState.activityState == .asleep ? "sandLight" : "oceanLight")
+                Color(contentState.activityState == .asleep ? "oceanDark" : "oceanLight")
                     .offset(x: -20)
 //                    .opacity(contentState.activityState == .asleep ? 1 : 0)
             )
@@ -63,7 +63,7 @@ struct NaptimeWidgetLiveContentView: View {
             Color(contentState.activityState == .asleep ? "ocean" : "oceanLight")
                 .offset(x: 34)
                 .mask(
-                    LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.8), Color.black.opacity(0)]), startPoint: .leading, endPoint: .trailing)
+                    LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.6), Color.black.opacity(0)]), startPoint: .leading, endPoint: .trailing)
                 )
         )
     }
