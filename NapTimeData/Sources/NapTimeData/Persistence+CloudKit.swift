@@ -164,6 +164,7 @@ extension PersistenceController {
                     if let error = error {
                         print("\(#function): Failed to persist updated share: \(error)")
                         continuation.resume(throwing: error)
+                        return
                     }
                     continuation.resume(returning: share)
                 }
