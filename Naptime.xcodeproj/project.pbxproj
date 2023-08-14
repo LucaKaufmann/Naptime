@@ -64,6 +64,8 @@
 		81DD881F2A1174CC005E5C6D /* NaptimeWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 81DD881A2A1174CA005E5C6D /* NaptimeWidget.intentdefinition */; };
 		81DD88222A1174CC005E5C6D /* NaptimeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 81DD880E2A1174C9005E5C6D /* NaptimeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		81DD88272A117ABB005E5C6D /* NaptimeWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DD88162A1174CA005E5C6D /* NaptimeWidgetLiveActivity.swift */; };
+		81E8C4CE2A7D7192005B68C4 /* Naptime.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 81E8C4CD2A7D7192005B68C4 /* Naptime.xcconfig */; };
+		81E8C4D12A7D71A3005B68C4 /* NaptimeWidgetExtension.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 81E8C4D02A7D71A3005B68C4 /* NaptimeWidgetExtension.xcconfig */; };
 		81EB50D62987BD6E007ABC32 /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D52987BD6E007ABC32 /* ToggleView.swift */; };
 		81EB50D92987C38E007ABC32 /* ToggleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50D82987C38E007ABC32 /* ToggleContentView.swift */; };
 		81EB50DB29883698007ABC32 /* ScaleNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EB50DA29883698007ABC32 /* ScaleNumbers.swift */; };
@@ -175,6 +177,9 @@
 		81DD881A2A1174CA005E5C6D /* NaptimeWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = NaptimeWidget.intentdefinition; sourceTree = "<group>"; };
 		81DD881B2A1174CC005E5C6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		81DD881D2A1174CC005E5C6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81E8C4CD2A7D7192005B68C4 /* Naptime.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Naptime.xcconfig; sourceTree = SOURCE_ROOT; };
+		81E8C4D02A7D71A3005B68C4 /* NaptimeWidgetExtension.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = NaptimeWidgetExtension.xcconfig; sourceTree = SOURCE_ROOT; };
+		81E8C4D32A7D71BC005B68C4 /* NaptimeProject.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NaptimeProject.xcconfig; sourceTree = SOURCE_ROOT; };
 		81EB50D52987BD6E007ABC32 /* ToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleView.swift; sourceTree = "<group>"; };
 		81EB50D82987C38E007ABC32 /* ToggleContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleContentView.swift; sourceTree = "<group>"; };
 		81EB50DA29883698007ABC32 /* ScaleNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleNumbers.swift; sourceTree = "<group>"; };
@@ -387,6 +392,7 @@
 		81DD88132A1174CA005E5C6D /* NaptimeWidget */ = {
 			isa = PBXGroup;
 			children = (
+				81E8C4CF2A7D7197005B68C4 /* Configurations */,
 				81DD88142A1174CA005E5C6D /* NaptimeWidgetBundle.swift */,
 				81DD88162A1174CA005E5C6D /* NaptimeWidgetLiveActivity.swift */,
 				81DD88182A1174CA005E5C6D /* NaptimeWidget.swift */,
@@ -396,6 +402,30 @@
 				812A320B2A164FE4007303EB /* NaptimeWidgetLiveContentView.swift */,
 			);
 			path = NaptimeWidget;
+			sourceTree = "<group>";
+		};
+		81E8C4CC2A7D7186005B68C4 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				81E8C4CD2A7D7192005B68C4 /* Naptime.xcconfig */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		81E8C4CF2A7D7197005B68C4 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				81E8C4D02A7D71A3005B68C4 /* NaptimeWidgetExtension.xcconfig */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		81E8C4D22A7D71AE005B68C4 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				81E8C4D32A7D71BC005B68C4 /* NaptimeProject.xcconfig */,
+			);
+			path = Configurations;
 			sourceTree = "<group>";
 		};
 		81EB50D72987C376007ABC32 /* Toggle */ = {
@@ -409,6 +439,7 @@
 		81F2518D29291CFC00B90C0E = {
 			isa = PBXGroup;
 			children = (
+				81E8C4D22A7D71AE005B68C4 /* Configurations */,
 				81787EE6294655A60031BE99 /* NapTimeData */,
 				81F2519829291CFC00B90C0E /* Naptime */,
 				81F251AF29291CFD00B90C0E /* NaptimeTests */,
@@ -433,6 +464,7 @@
 		81F2519829291CFC00B90C0E /* Naptime */ = {
 			isa = PBXGroup;
 			children = (
+				81E8C4CC2A7D7186005B68C4 /* Configurations */,
 				81F6B3CF2A2F6A8A00CF5A3B /* Dependencies */,
 				8170283429D064670053BDA6 /* Info.plist */,
 				811089E329857E69001D4E58 /* ViewComponents */,
@@ -632,6 +664,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81E8C4D12A7D71A3005B68C4 /* NaptimeWidgetExtension.xcconfig in Resources */,
 				812A320D2A16505D007303EB /* Assets.xcassets in Resources */,
 				81DD881C2A1174CC005E5C6D /* Assets.xcassets in Resources */,
 			);
@@ -643,6 +676,7 @@
 			files = (
 				81F251A729291CFD00B90C0E /* Preview Assets.xcassets in Resources */,
 				81F251A329291CFD00B90C0E /* Assets.xcassets in Resources */,
+				81E8C4CE2A7D7192005B68C4 /* Naptime.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -776,6 +810,7 @@
 /* Begin XCBuildConfiguration section */
 		81DD88242A1174CC005E5C6D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81E8C4D02A7D71A3005B68C4 /* NaptimeWidgetExtension.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -805,6 +840,7 @@
 		};
 		81DD88252A1174CC005E5C6D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81E8C4D02A7D71A3005B68C4 /* NaptimeWidgetExtension.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -835,6 +871,7 @@
 		};
 		81F251BE29291CFD00B90C0E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81E8C4D32A7D71BC005B68C4 /* NaptimeProject.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -893,6 +930,7 @@
 		};
 		81F251BF29291CFD00B90C0E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81E8C4D32A7D71BC005B68C4 /* NaptimeProject.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -944,6 +982,7 @@
 		};
 		81F251C129291CFD00B90C0E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81E8C4CD2A7D7192005B68C4 /* Naptime.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -989,6 +1028,7 @@
 		};
 		81F251C229291CFD00B90C0E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81E8C4CD2A7D7192005B68C4 /* Naptime.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
