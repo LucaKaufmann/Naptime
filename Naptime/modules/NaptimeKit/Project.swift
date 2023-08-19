@@ -5,7 +5,14 @@ let project = Project(
     name: Feature.NaptimeKit.rawValue,
     targets: [
         .feature(
-            implementation: .NaptimeKit
+            implementation: .NaptimeKit,
+            dependencies: [
+                .external(name: "ComposableArchitecture"),
+                .external(name: "AsyncAlgorithms"),
+            ],
+            coreDataModels: [
+                .init("src/NapTimeData/Naptime.xcdatamodeld")
+            ]
         )
     ]
 )

@@ -1,2 +1,0 @@
-// Module Activity
-import Foundation

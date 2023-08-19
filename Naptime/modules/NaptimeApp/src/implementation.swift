@@ -1,2 +1,0 @@
-// Module NaptimeApp
-import Foundation

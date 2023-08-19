@@ -1,2 +1,0 @@
-// Module NaptimeKit
-import Foundation

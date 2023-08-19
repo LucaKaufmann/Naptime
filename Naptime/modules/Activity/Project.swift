@@ -15,6 +15,8 @@ let project = Project(
             dependencies: [
                 .common,
                 .feature(interface: .Activity),
+                .feature(interface: .DesignSystem),
+                .external(name: "ComposableArchitecture"),
             ],
             resources: [
                 "resources/**"
