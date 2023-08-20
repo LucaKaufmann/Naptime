@@ -1,7 +1,7 @@
 // Module DesignSystem
 import SwiftUI
 
-public enum NaptimeColors {
+public enum NaptimeDesignColors {
     
     /// Ocean
     public static let ocean = Color("ocean", bundle: Bundle.module)

@@ -11,6 +11,7 @@ public extension Target {
         name: String,
         deploymentTarget: ProjectDescription.DeploymentTarget?,
         sources: ProjectDescription.SourceFilesList,
+        resources: ProjectDescription.ResourceFileElements? = [],
         dependencies: [ProjectDescription.TargetDependency]
     ) -> Target {
         Target(
@@ -21,6 +22,29 @@ public extension Target {
             deploymentTarget: deploymentTarget,
             infoPlist: .extendingDefault(with: infoPlistExtension),
             sources: sources,
+            resources: resources,
+            entitlements: .relativeToRoot("Naptime.entitlements"),
+            dependencies: dependencies
+        )
+    }
+    
+    static func makeExtension(
+        name: String,
+        deploymentTarget: ProjectDescription.DeploymentTarget?,
+        infoPlist: InfoPlist? = nil,
+        sources: ProjectDescription.SourceFilesList,
+        resources: ProjectDescription.ResourceFileElements? = [],
+        dependencies: [ProjectDescription.TargetDependency] = []
+    ) -> Target {
+        Target(
+            name: name,
+            platform: .iOS,
+            product: .appExtension,
+            bundleId: makeBundleID(with: "app." + name + ".extension"),
+            deploymentTarget: deploymentTarget,
+            infoPlist: infoPlist,
+            sources: sources,
+            resources: resources,
             entitlements: .relativeToRoot("Naptime.entitlements"),
             dependencies: dependencies
         )
@@ -105,5 +129,24 @@ public extension Target {
             dependencies: dependencies,
             resources: resources
         )
+    }
+    
+    static func appExtension(implementation featureName: Feature,
+                             deploymentTarget: ProjectDescription.DeploymentTarget? = .iOS(targetVersion: "16.0", devices: .iphone),
+                             infoPlist: InfoPlist? = nil,
+                             dependencies: [ProjectDescription.TargetDependency] = []) -> Target {
+        .makeExtension(name: featureName.rawValue,
+                       deploymentTarget: deploymentTarget,
+                       infoPlist: infoPlist,
+                       sources: [
+                           "\(featureName.rawValue)/src/**"
+                       ],
+                       resources: [
+                            "\(featureName.rawValue)/resources/**"
+                       ],
+                       dependencies: [
+                           .common,
+                           .feature(implementation: .DesignSystem),
+                       ])
     }
 }

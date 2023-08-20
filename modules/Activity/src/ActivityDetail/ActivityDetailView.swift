@@ -102,7 +102,7 @@ struct ActivityDetailView: View {
             .scrollContentBackground(.hidden)
             .navigationBarTitleDisplayMode(.inline)
             .background {
-                NaptimeColors.slate
+                NaptimeDesignColors.slate
             }
             .onAppear {
                 self.startDate = viewStore.activity?.startDate ?? Date()

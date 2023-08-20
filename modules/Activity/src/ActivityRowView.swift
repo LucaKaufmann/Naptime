@@ -25,17 +25,17 @@ struct ActivityRowView: View {
         HStack {
             VStack(spacing: 0) {
                 Rectangle()
-                    .fill(NaptimeColors.ocean)
+                    .fill(NaptimeDesignColors.ocean)
                     .frame(width: 4, alignment: .center)
                 Image(systemName: activity.type.icon)
                     .resizable()
                     .frame(width: 40, height: 40)
                     .background(
                         Circle()
-                            .fill(NaptimeColors.slate)
+                            .fill(NaptimeDesignColors.slate)
                     )
                 Rectangle()
-                    .fill(NaptimeColors.ocean)
+                    .fill(NaptimeDesignColors.ocean)
                     .frame(width: 4, alignment: .center)
             }
             VStack(alignment: .leading) {
@@ -59,7 +59,7 @@ struct ActivityRowView: View {
         }
         .padding(.horizontal)
         .background(
-            NaptimeColors.ocean
+            NaptimeDesignColors.ocean
                 .offset(x: 34)
                 .mask(
                     LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.3), Color.black.opacity(0)]), startPoint: .leading, endPoint: .trailing)

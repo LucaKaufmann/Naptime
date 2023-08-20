@@ -25,7 +25,7 @@ struct LoadingBadgeView: View {
 
 struct LoadingBadgeView_Previews: PreviewProvider {
     static var previews: some View {
-        LoadingBadgeView(title: "Loading", color: NaptimeColors.slate)
+        LoadingBadgeView(title: "Loading", color: NaptimeDesignColors.slate)
             .frame(width: 120, height: 80)
     }
 }

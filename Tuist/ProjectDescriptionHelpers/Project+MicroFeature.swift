@@ -12,6 +12,7 @@ public enum Feature: String {
     case NaptimeKit = "NaptimeKit"
     case Activity = "Activity"
     case DesignSystem = "DesignSystem"
+    case NaptimeWidget = "NaptimeWidget"
 }
 
 public enum External: String {
@@ -39,6 +40,9 @@ public extension ProjectDescription.TargetDependency {
     }
 
     static func feature(implementation moduleName: Feature) -> ProjectDescription.TargetDependency {
+        .feature(implementation: moduleName.rawValue)
+    }
+    static func appExtension(implementation moduleName: Feature) -> ProjectDescription.TargetDependency {
         .feature(implementation: moduleName.rawValue)
     }
 

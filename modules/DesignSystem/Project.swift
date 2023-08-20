@@ -5,15 +5,11 @@ let project = Project(
     name: Feature.DesignSystem.rawValue,
     targets: [
         .feature(
-            interface: .DesignSystem,
-            dependencies: [
-                .common
-            ]
+            interface: .DesignSystem
         ),
         .feature(
             implementation: .DesignSystem,
             dependencies: [
-                .common,
                 .feature(interface: .DesignSystem),
             ],
             resources: [

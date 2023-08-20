@@ -26,7 +26,7 @@ public struct ActivityView: View {
         self.store = store
         UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(named: "sandLight")
         UISegmentedControl.appearance().backgroundColor =
-        UIColor(NaptimeColors.slate.opacity(0.3))
+        UIColor(NaptimeDesignColors.slate.opacity(0.3))
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.primary)], for: .selected)
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.secondary)], for: .normal)
         
@@ -64,13 +64,13 @@ public struct ActivityView: View {
                                                      label: viewStore.isSleeping ? "Asleep for" : "Awake for",
                                                      fontSize: 18,
                                                      fontDesign: .rounded)
-                                    .foregroundColor(NaptimeColors.sand)
+                                    .foregroundColor(NaptimeDesignColors.sand)
                                     .padding()
                                     
                                 },
                                 else: { Text("Time for a nap!")
                                         .font(.headline)
-                                        .foregroundColor(NaptimeColors.sand)
+                                        .foregroundColor(NaptimeDesignColors.sand)
                                         .padding()
                                     
                                 }
@@ -79,9 +79,9 @@ public struct ActivityView: View {
                     }
                     .background(
                         ZStack {
-                            NaptimeColors.ocean
+                            NaptimeDesignColors.ocean
                             Circle()
-                                .stroke(NaptimeColors.slate, lineWidth: 265)
+                                .stroke(NaptimeDesignColors.slate, lineWidth: 265)
                                 .offset(y: maxHeight+65)
                             //                                    .fill(Color("slate"))
                             //                                    .offset(y: ((geometry.size.height / 3) / 2)+200)
@@ -91,7 +91,7 @@ public struct ActivityView: View {
                     )
                 } content: {
                     ActivityListView(store: store)
-                        .background(NaptimeColors.slate.ignoresSafeArea())
+                        .background(NaptimeDesignColors.slate.ignoresSafeArea())
                 }
                 .height(min: minHeight, max: maxHeight)
                 .refreshable {
@@ -102,7 +102,7 @@ public struct ActivityView: View {
             .scrollContentBackground(.hidden)
             .ignoresSafeArea()
             .background(
-                NaptimeColors.slate
+                NaptimeDesignColors.slate
             )
             .navigationDestination(
                 store: self.store.scope(state: \.$settings, action: ActivityFeature.Action.settings)
@@ -116,7 +116,7 @@ public struct ActivityView: View {
                         viewStore.send(.refreshActivities)
                     } label: {
                         Image(systemName: "arrow.triangle.2.circlepath")
-                            .foregroundColor(NaptimeColors.sandLight)
+                            .foregroundColor(NaptimeDesignColors.sandLight)
                     }
                 }
                 ToolbarItem(placement: .principal) {
@@ -132,7 +132,7 @@ public struct ActivityView: View {
                         viewStore.send(.settingsButtonTapped)
                     } label: {
                         Image(systemName: "gear")
-                            .foregroundColor(NaptimeColors.sandLight)
+                            .foregroundColor(NaptimeDesignColors.sandLight)
                     }
                 }
             }

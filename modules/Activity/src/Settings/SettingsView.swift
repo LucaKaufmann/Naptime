@@ -32,7 +32,7 @@ struct SettingsView: View {
                 }
             .scrollContentBackground(.hidden)
             .background {
-                NaptimeColors.slate
+                NaptimeDesignColors.slate
             }
             
         }
@@ -69,7 +69,7 @@ struct SettingsButtonRowView: View {
                     }
                     Text(label)
                 }
-            }).accentColor(NaptimeColors.sand)
+            }).accentColor(NaptimeDesignColors.sand)
         }
     }
 }

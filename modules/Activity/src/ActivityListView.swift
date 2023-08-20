@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import NaptimeKit
+import DesignSystem
 
 struct ActivityListView: View {
     
@@ -33,7 +34,7 @@ struct ActivityListView: View {
                         ZStack {
                             Color(.black)
                                 .mask(
-                                    Image("sleeping_teddy")
+                                    DesignSystemAsset.sleepingTeddy.swiftUIImage
                                         .resizable()
                                         .colorInvert()
                                         .luminanceToAlpha()

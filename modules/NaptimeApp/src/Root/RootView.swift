@@ -33,7 +33,7 @@ struct RootView: View {
             }
         }
         .navigationViewStyle(.stack)
-        .accentColor(NaptimeColors.ocean)
+        .accentColor(NaptimeDesignColors.ocean)
     }
 }
 

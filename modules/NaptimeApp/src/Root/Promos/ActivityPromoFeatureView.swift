@@ -61,7 +61,7 @@ struct LiveActivityPromoView: View {
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(NaptimeColors.slate)
+                            .fill(NaptimeDesignColors.slate)
                     )
                     .padding()
                 Button(action: {

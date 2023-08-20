@@ -17,5 +17,6 @@ public let infoPlistExtension: [_: InfoPlist.Value] = [
     "NSHealthUpdateUsageDescription":
             .string("Your health and workout records will be used localy for visualizing and analyzing your data"),
     "NSHealthRecordsUsageDescription":
-            .string("Your health and workout records will be used localy for visualizing and analyzing your data")
+            .string("Your health and workout records will be used localy for visualizing and analyzing your data"),
+    "NSSupportsLiveActivities": true
 ]

@@ -21,18 +21,33 @@ let project = Project(
     ]),
     targets: [
         .makeApp(
-            name: "NaptimeApp",
+            name: "Naptime",
             deploymentTarget: .iOS(targetVersion: "16.0", devices: .iphone),
             sources: [
                 "src/**"
+            ],
+            resources: [
+                "resources/**"
             ],
             dependencies: [
                 .common,
                 .feature(implementation: .Activity),
                 .feature(implementation: .DesignSystem),
+                .target(name: Feature.NaptimeWidget.rawValue),
                 .external(name: "ComposableArchitecture"),
                 .external(name: "ScalingHeaderScrollView"),
             ]
-        )
+        ),
+        .appExtension(implementation: .NaptimeWidget,
+                      deploymentTarget: .iOS(targetVersion: "16.2", devices: .iphone),
+                      infoPlist: .extendingDefault(with: [
+                        "NSExtension": [
+                            "NSExtensionPointIdentifier": "com.apple.widgetkit-extension"
+                        ]
+                      ]),
+                      dependencies: [
+                        .common,
+                        .feature(implementation: .DesignSystem),
+                      ])
     ]
 )

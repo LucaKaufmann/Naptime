@@ -27,6 +27,6 @@ struct ToggleContentView_Previews: PreviewProvider {
         Group {
             ToggleContentView(isOn: Binding.constant(true))
             ToggleContentView(isOn: Binding.constant(false))
-        }.background(NaptimeColors.ocean)
+        }.background(NaptimeDesignColors.ocean)
     }
 }

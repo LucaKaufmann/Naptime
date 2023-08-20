@@ -26,10 +26,10 @@ struct ActivityTileView: View {
             Text(tile.subtitle)
                 .font(.subheadline)
         }
-        .foregroundColor(NaptimeColors.slateDark)
+        .foregroundColor(NaptimeDesignColors.slateDark)
         .padding()
         .background(
-            RoundedRectangle(cornerRadius: 12).foregroundColor(NaptimeColors.sandLight)
+            RoundedRectangle(cornerRadius: 12).foregroundColor(NaptimeDesignColors.sandLight)
         )
     }
 }
