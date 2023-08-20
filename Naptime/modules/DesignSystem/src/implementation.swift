@@ -1,2 +1,0 @@
-// Module DesignSystem
-import Foundation
