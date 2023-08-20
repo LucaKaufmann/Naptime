@@ -16,7 +16,6 @@ struct NaptimeWidgetLiveContentView: View {
             VStack(spacing: 0) {
                 Rectangle()
                     .fill(contentState.activityState == .asleep ? NaptimeDesignColors.oceanLight : NaptimeDesignColors.sandLight)
-//                        Color(contentState.activityState == .asleep ? "oceanLight" : "sandLight")
                     .frame(width: 4, alignment: .center)
                 Image(systemName: contentState.iconName)
                     .resizable()

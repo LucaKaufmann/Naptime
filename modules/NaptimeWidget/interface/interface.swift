@@ -1,2 +1,0 @@
-// Module NaptimeWidget
-import Foundation
