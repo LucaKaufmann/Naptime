@@ -8,15 +8,9 @@
 import ProjectDescription
 
 public let infoPlistExtension: [_: InfoPlist.Value] = [
-    "CFBundleShortVersionString": "1.0",
-    "CFBundleVersion": "1",
+    "CFBundleShortVersionString": "1.3.2",
+    "CFBundleVersion": "2",
     "UIMainStoryboardFile": "",
-    "UILaunchStoryboardName": "",
-    "NSHealthShareUsageDescription":
-            .string("Your health and workout records will be used localy for visualizing and analyzing your data"),
-    "NSHealthUpdateUsageDescription":
-            .string("Your health and workout records will be used localy for visualizing and analyzing your data"),
-    "NSHealthRecordsUsageDescription":
-            .string("Your health and workout records will be used localy for visualizing and analyzing your data"),
+    "UILaunchStoryboardName": "LaunchScreen",
     "NSSupportsLiveActivities": true
 ]

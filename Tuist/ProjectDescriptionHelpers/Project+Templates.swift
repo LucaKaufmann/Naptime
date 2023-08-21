@@ -1,9 +1,9 @@
 import ProjectDescription
 
-private let rootPackagesName = "com.hotky.naptime"
+private let rootPackagesName = "com.hotky.Naptime"
 
 private func makeBundleID(with addition: String) -> String {
-    (rootPackagesName + addition).lowercased()
+    (rootPackagesName + addition)
 }
 
 public extension Target {
@@ -40,7 +40,7 @@ public extension Target {
             name: name,
             platform: .iOS,
             product: .appExtension,
-            bundleId: makeBundleID(with: "." + name + ".extension"),
+            bundleId: makeBundleID(with: "." + name),
             deploymentTarget: deploymentTarget,
             infoPlist: infoPlist,
             sources: sources,
