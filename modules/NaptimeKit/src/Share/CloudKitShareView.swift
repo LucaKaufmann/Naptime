@@ -7,12 +7,16 @@
 
 import CloudKit
 import SwiftUI
-import NaptimeKit
 
-struct CloudKitShareView: UIViewControllerRepresentable {
+public struct CloudKitShareView: UIViewControllerRepresentable {
+    
+    public init(share: CKShare) {
+        self.share = share
+    }
+    
     let share: CKShare
 
-    func makeUIViewController(context: Context) -> UICloudSharingController {
+    public func makeUIViewController(context: Context) -> UICloudSharingController {
         let sharingController = UICloudSharingController(
             share: share,
             container: CloudKitService.container
@@ -23,7 +27,7 @@ struct CloudKitShareView: UIViewControllerRepresentable {
         return sharingController
     }
 
-    func updateUIViewController(
+    public func updateUIViewController(
         _ uiViewController: UIViewControllerType,
         context: Context
     ) { }

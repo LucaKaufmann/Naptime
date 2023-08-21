@@ -9,6 +9,7 @@
 import CloudKit
 import UIKit
 import CoreData
+import DesignSystem
 
 enum PersistenceError: Error {
     case noRecordsFound
@@ -55,7 +56,8 @@ extension PersistenceController {
         let shareRecord = CKShare(recordZoneID: recordZoneID)
 
         shareRecord[CKShare.SystemFieldKey.title] = "Share naps"
-        let image = UIImage(named: "sleeping_teddy")!.pngData()
+//        let image = UIImage(named: "sleeping_teddy")!.pngData()
+        let image = DesignSystemAsset.sleepingTeddy.image.pngData()
         shareRecord[CKShare.SystemFieldKey.thumbnailImageData] = image
         shareRecord.publicPermission = .readWrite
 //        // Include a custom UTI that describes the share's content.

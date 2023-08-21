@@ -12,9 +12,20 @@ import NaptimeKit
 
 public struct SettingsFeature: Reducer {
     
+    public init() {}
+    
     @Dependency(\.liveActivityService) var liveActivityService
     
     public struct State: Equatable {
+        public init(showAsleepLiveAction: Bool, showAwakeLiveAction: Bool, shareSheet: ShareSheetFeature.State? = nil, share: CKShare? = nil, lastActivity: ActivityModel? = nil) {
+            self.showAsleepLiveAction = showAsleepLiveAction
+            self.showAwakeLiveAction = showAwakeLiveAction
+            self.shareSheet = shareSheet
+            self.share = share
+            self.lastActivity = lastActivity
+        }
+        
+        
         @BindingState var showAsleepLiveAction: Bool
         @BindingState var showAwakeLiveAction: Bool
 

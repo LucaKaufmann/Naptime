@@ -9,6 +9,7 @@ private func makeBundleID(with addition: String) -> String {
 public extension Target {
     static func makeApp(
         name: String,
+        bundleIdExtension: String = "",
         deploymentTarget: ProjectDescription.DeploymentTarget?,
         sources: ProjectDescription.SourceFilesList,
         resources: ProjectDescription.ResourceFileElements? = [],
@@ -18,7 +19,7 @@ public extension Target {
             name: name,
             platform: .iOS,
             product: .app,
-            bundleId: makeBundleID(with: ""),
+            bundleId: makeBundleID(with: ""+bundleIdExtension),
             deploymentTarget: deploymentTarget,
             infoPlist: .extendingDefault(with: infoPlistExtension),
             sources: sources,

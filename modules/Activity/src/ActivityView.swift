@@ -11,6 +11,7 @@ import ScalingHeaderScrollView
 import CloudKit
 import DesignSystem
 import NaptimeKit
+import NaptimeSettings
 
 public struct ActivityView: View {
     

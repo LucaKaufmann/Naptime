@@ -13,6 +13,7 @@ public enum Feature: String {
     case Activity = "Activity"
     case DesignSystem = "DesignSystem"
     case NaptimeWidget = "NaptimeWidget"
+    case NaptimeSettings = "NaptimeSettings"
 }
 
 public enum External: String {

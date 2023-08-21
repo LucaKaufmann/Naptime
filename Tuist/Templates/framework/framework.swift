@@ -7,20 +7,20 @@
 
 import ProjectDescription
 
-let nameAttribute: Template.Attribute = .required("name")
+let frameworkName: Template.Attribute = .required("name")
 
 
-let template = Template(
+let frameworkTemplate = Template(
     description: "Framework template",
     attributes: [
-        nameAttribute
+        frameworkName
     ], items: [
         .file(
-            path: "modules/\(nameAttribute)/Project.swift",
+            path: "modules/\(frameworkName)/Project.swift",
             templatePath: "project.stencil"
         ),
-        .string(path: "modules/\(nameAttribute)/src/implementation.swift", contents: "// Module \(nameAttribute)\nimport Foundation"),
-        .string(path: "modules/\(nameAttribute)/interface/interface.swift", contents: "// Module \(nameAttribute)\nimport Foundation"),
-        .string(path: "modules/\(nameAttribute)/resources/Resources.md",
+        .string(path: "modules/\(frameworkName)/src/implementation.swift", contents: "// Module \(frameworkName)\nimport Foundation"),
+        .string(path: "modules/\(frameworkName)/interface/interface.swift", contents: "// Module \(frameworkName)\nimport Foundation"),
+        .string(path: "modules/\(frameworkName)/resources/Resources.md",
                         contents: "# Add resources here")    ]
 )

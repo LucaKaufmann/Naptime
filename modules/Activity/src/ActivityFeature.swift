@@ -9,6 +9,7 @@ import Foundation
 import ComposableArchitecture
 import ActivityKit
 import NaptimeKit
+import NaptimeSettings
 
 public enum ActivityTimeRange: Int, Equatable {
     case week = 0

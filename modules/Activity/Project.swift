@@ -15,6 +15,7 @@ let project = Project(
             dependencies: [
                 .common,
                 .feature(implementation: .DesignSystem),
+                .feature(implementation: .NaptimeSettings),
                 .external(name: "ComposableArchitecture"),
             ],
             resources: [

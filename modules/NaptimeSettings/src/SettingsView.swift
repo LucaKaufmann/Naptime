@@ -9,12 +9,17 @@ import SwiftUI
 import ComposableArchitecture
 import CloudKit
 import DesignSystem
+import NaptimeKit
 
-struct SettingsView: View {
+public struct SettingsView: View {
+    
+    public init(store: StoreOf<SettingsFeature>) {
+        self.store = store
+    }
     
     let store: StoreOf<SettingsFeature>
     
-    var body: some View {
+    public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             Form {
                 Section {

@@ -1,0 +1,33 @@
+import ProjectDescription
+import ProjectDescriptionHelpers
+
+let project = Project(
+    name: Feature.{{name}}.rawValue,
+    targets: [
+        .makeApp(
+            name: "{{name}}App",
+            bundleIdExtension: ".{{name}}",
+            deploymentTarget: .iOS(targetVersion: "16.0", devices: [
+                .iphone,
+                .ipad
+            ]),
+            sources: [
+                "app/**"
+            ],
+            dependencies: [
+                .common,
+                .feature(implementation: .{{name}}),
+                .feature(implementation: .DesignSystem),
+            ]
+        ),
+        .feature(
+            implementation: .{{name}},
+            dependencies: [
+                .common,
+            ],
+            resources: [
+                "resources/**"
+            ]
+        )
+    ]
+)
