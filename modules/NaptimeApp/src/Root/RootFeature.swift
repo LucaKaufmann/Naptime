@@ -23,7 +23,7 @@ struct Root: Reducer {
         var listeningToStoreChanges: Bool
 //        var showLiveActivityPromo: Bool
         
-        @PresentationState var promo: ActivityPromoFeature.State?
+//        @PresentationState var promo: ActivityPromoFeature.State?
     }
     
     enum Action {
@@ -31,7 +31,7 @@ struct Root: Reducer {
         case onAppear
         case refreshActivities
         case loadedActivities([ActivityModel])
-        case promoAction(PresentationAction<ActivityPromoFeature.Action>)
+//        case promoAction(PresentationAction<ActivityPromoFeature.Action>)
     }
     
     var body: some ReducerOf<Self> {
@@ -66,12 +66,6 @@ struct Root: Reducer {
 
                 case .refreshActivities:
                     let timeSpan = state.activityState.selectedTimeRange
-//                    return Future(asyncFunc: {
-//                        let date: Date? = timeSpan == .week ? Calendar.current.date(byAdding: .day, value: -7, to: Date())?.startOf(.day) : nil
-//                        return await activityService.fetchActivitiesAfter(date)
-//                    }).receive(on: DispatchQueue.main)
-//                        .catchToEffect()
-//                        .map(Action.loadedActivities)
                     
                     return .run { send in
                         let date: Date? = timeSpan == .week ? Calendar.current.date(byAdding: .day, value: -7, to: Date())?.startOf(.day) : nil
@@ -92,9 +86,9 @@ struct Root: Reducer {
             }
             
         }
-        .ifLet(\.$promo, action: /Action.promoAction) {
-            ActivityPromoFeature()
-        }
+//        .ifLet(\.$promo, action: /Action.promoAction) {
+//            ActivityPromoFeature()
+//        }
         Scope(state: \.activityState, action: /Action.activityAction) {
             ActivityFeature()
         }

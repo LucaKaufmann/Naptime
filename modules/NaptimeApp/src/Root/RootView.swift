@@ -27,9 +27,9 @@ struct RootView: View {
                         viewStore.send(.onAppear)
                     }
                 }
-                .popover(store: store.scope(state: \.$promo, action: Root.Action.promoAction)) { store in
-                    ActivityPromoFeatureView(store: store)
-                }
+//                .popover(store: store.scope(state: \.$promo, action: Root.Action.promoAction)) { store in
+//                    ActivityPromoFeatureView(store: store)
+//                }
             }
         }
         .navigationViewStyle(.stack)
