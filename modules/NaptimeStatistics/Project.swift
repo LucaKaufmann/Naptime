@@ -2,11 +2,11 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project(
-    name: Feature.{{name}}.rawValue,
+    name: Feature.NaptimeStatistics.rawValue,
     targets: [
         .makeApp(
-            name: "{{name}}App",
-            bundleIdExtension: ".{{name}}",
+            name: "NaptimeStatisticsApp",
+            bundleIdExtension: ".NaptimeStatistics",
             deploymentTarget: .iOS(targetVersion: "16.0", devices: [
                 .iphone,
                 .ipad
@@ -16,12 +16,12 @@ let project = Project(
             ],
             dependencies: [
                 .common,
-                .feature(implementation: .{{name}}),
+                .feature(implementation: .NaptimeStatistics),
                 .feature(implementation: .DesignSystem),
             ]
         ),
         .feature(
-            implementation: .{{name}},
+            implementation: .NaptimeStatistics,
             dependencies: [
                 .common,
                 .external(name: "ComposableArchitecture"),

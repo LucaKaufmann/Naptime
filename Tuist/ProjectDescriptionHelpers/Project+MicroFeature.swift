@@ -14,6 +14,7 @@ public enum Feature: String {
     case DesignSystem = "DesignSystem"
     case NaptimeWidget = "NaptimeWidget"
     case NaptimeSettings = "NaptimeSettings"
+    case NaptimeStatistics = "NaptimeStatistics"
 }
 
 public enum External: String {

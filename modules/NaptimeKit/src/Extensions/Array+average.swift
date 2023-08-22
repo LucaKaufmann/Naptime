@@ -7,10 +7,10 @@
 
 import Foundation
 
-extension Array where Element: BinaryInteger {
+public extension Array where Element: BinaryInteger {
 
     /// The average value of all the items in the array
-    public var average: Double {
+    var average: Double {
         if self.isEmpty {
             return 0.0
         } else {
@@ -21,10 +21,10 @@ extension Array where Element: BinaryInteger {
 
 }
 
-extension Array where Element: BinaryFloatingPoint {
+public extension Array where Element: BinaryFloatingPoint {
 
     /// The average value of all the items in the array
-    public var average: Double {
+    var average: Double {
         if self.isEmpty {
             return 0.0
         } else {
@@ -34,8 +34,8 @@ extension Array where Element: BinaryFloatingPoint {
     }
 }
 
-extension Array where Element == Int {
-    public func median() -> Double? {
+public extension Array where Element == Int {
+    func median() -> Double? {
         guard count > 0  else { return nil }
 
         let sortedArray = self.sorted()
