@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 import Charts
 import NaptimeKit
+import DesignSystem
 
 public struct SleepTodayStatisticsFeatureView: View {
     
@@ -17,6 +18,8 @@ public struct SleepTodayStatisticsFeatureView: View {
     }
     
     let store: StoreOf<SleepTodayStatisticsFeature>
+    
+    let chartAxisColor = NaptimeDesignColors.slateLight
     
     @State var formatter: DateComponentsFormatter = {
           let formatter = DateComponentsFormatter()
@@ -32,12 +35,18 @@ public struct SleepTodayStatisticsFeatureView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text("AVG TIME ASLEEP")
-                            .font(.caption2)
+                            .font(.caption)
                         Text(formatter.string(from: viewStore.state) ?? "")
+                            .fontWeight(.semibold)
                     }
                     Spacer()
-                }.padding()
+                }
+                .foregroundColor(NaptimeDesignColors.slateLight)
+                .padding()
                 chart
+            }
+            .background {
+                NaptimeDesignColors.ocean.ignoresSafeArea()
             }
             .onAppear {
                 viewStore.send(.onAppear)
@@ -49,18 +58,34 @@ public struct SleepTodayStatisticsFeatureView: View {
         WithViewStore(self.store, observe: { $0.datapoints }) { viewStore in
             Chart(viewStore.state, id: \.date) {
                 BarMark(
-                    x: .value("Date", $0.date, unit: .day),
-                    y: .value("Sleep", $0.interval),
-                    width: .automatic
+                    x: .value("date", $0.date, unit: .weekday),
+                    y: .value("duration", $0.interval)
                 )
                 .accessibilityLabel($0.date.formatted(date: .complete, time: .omitted))
                 .accessibilityValue("\($0.interval) sleep")
-//                .foregroundStyle(chartColor.gradient)
+                .foregroundStyle(NaptimeDesignColors.oceanInverted.gradient)
             }
             .chartXScale(domain: Calendar.current.date(byAdding: .day, value: -7, to: Date.now)!...Date.now)
-//            .accessibilityChartDescriptor(self)
-            .chartXAxis(.automatic)
-            .chartYAxis(.automatic)
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .day, count: 1)) { value in
+                    AxisValueLabel(format: .dateTime.weekday())
+                        .foregroundStyle(chartAxisColor)
+//                    AxisGridLine()
+//                        .foregroundStyle(NaptimeDesignColors.slateLight)
+                    AxisTick()
+                        .foregroundStyle(chartAxisColor)
+                }
+            }
+            .chartYAxis {
+                AxisMarks(values: .automatic) { _ in
+                    AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2]))
+                        .foregroundStyle(chartAxisColor)
+                        AxisTick(centered: true, stroke: StrokeStyle(lineWidth: 2))
+                          .foregroundStyle(chartAxisColor)
+                        AxisValueLabel()
+                        .foregroundStyle(chartAxisColor)
+                }
+            }
 //            .frame(height: isOverview ? Constants.previewChartHeight : Constants.detailChartHeight)
         }
     }

@@ -12,10 +12,10 @@ import CloudKit
 import DesignSystem
 import NaptimeKit
 import NaptimeSettings
+import NaptimeStatistics
 
 public struct ActivityView: View {
     
-    @State private var showShareSheet = false
     @State var activeShare: CKShare?
     
     let store: StoreOf<ActivityFeature>
@@ -35,7 +35,6 @@ public struct ActivityView: View {
     }
     
     public var body: some View {
-        //        GeometryReader { geometry in
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             ZStack {
                 ScalingHeaderScrollView {
@@ -44,16 +43,10 @@ public struct ActivityView: View {
                             Spacer()
                             ActivityTilesView(store: store.scope(state: \.activityTilesState, action: ActivityFeature.Action.activityTiles))
                                 .frame(height: max(maxHeight, 0))
-                            //                                    .padding(.top, 25)
                             Spacer()
                         }
                         VStack(alignment: .center) {
                             Spacer()
-                            
-                            //                                BackgroundShape()
-                            //                                    .foregroundColor(Color("slate"))
-                            //                                    .edgesIgnoringSafeArea(.all)
-                            //                                    .frame(width: geometry.size.width, height: 60)
                         }
                         VStack {
                             Spacer()
@@ -84,8 +77,6 @@ public struct ActivityView: View {
                             Circle()
                                 .stroke(NaptimeDesignColors.slate, lineWidth: 265)
                                 .offset(y: maxHeight+65)
-                            //                                    .fill(Color("slate"))
-                            //                                    .offset(y: ((geometry.size.height / 3) / 2)+200)
                         }
                             .edgesIgnoringSafeArea(.all)
                             .allowsHitTesting(false)
@@ -110,7 +101,10 @@ public struct ActivityView: View {
             ) { store in
                 SettingsView(store: store)
             }
-            //                .sheet(isPresented: viewStore.binding(\.$showShareSheet), content: { shareView(share: viewStore.share) })
+//            .sheet(store: self.store.scope(state: \.$sleepTodaySheet, action: ActivityFeature.Action.sleepTodaySheet)
+//            ) { store in
+//                SleepTodayStatisticsFeatureView(store: store)
+//            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -137,7 +131,6 @@ public struct ActivityView: View {
                     }
                 }
             }
-            //            }
         }.edgesIgnoringSafeArea(.vertical)
     }
     

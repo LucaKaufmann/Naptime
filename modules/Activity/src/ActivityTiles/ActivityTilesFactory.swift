@@ -44,7 +44,7 @@ struct ActivityTilesFactory {
             $0 + $1.duration
         }
         
-        let todaySleepingTile = ActivityTile(id: UUID(), title: "Sleep today", subtitle: "\(formatter.string(from: todaySleepingInterval) ?? "")")
+        let todaySleepingTile = ActivityTile(id: UUID(), title: "Sleep today", subtitle: "\(formatter.string(from: todaySleepingInterval) ?? "")", type: .sleepToday)
         
         /// Nap tile
         let napsToday = todayActivities.filter {
@@ -55,7 +55,7 @@ struct ActivityTilesFactory {
             $0 + $1.duration
         }
         
-        let napsTodayTile = ActivityTile(id: UUID(), title: "Naps today", subtitle: "\(formatter.string(from: napDurationToday) ?? "")")
+        let napsTodayTile = ActivityTile(id: UUID(), title: "Naps today", subtitle: "\(formatter.string(from: napDurationToday) ?? "")", type: .napsToday)
         
         
         
@@ -80,7 +80,7 @@ struct ActivityTilesFactory {
         let startOfDay = Calendar.current.startOfDay(for: Date())
         let averageTime = startOfDay.addingTimeInterval(bedtimeIntervals.median() ?? 0)
         let averageTimeString = bedtimeIntervals.count > 0 ? formatter.string(from: averageTime) : "-"
-        let averageBedtimeTile = ActivityTile(id: UUID(), title: "Usual bedtime", subtitle: averageTimeString)
+        let averageBedtimeTile = ActivityTile(id: UUID(), title: "Usual bedtime", subtitle: averageTimeString, type: .usualBedtime)
         
         return IdentifiedArrayOf(uniqueElements: [todaySleepingTile, napsTodayTile, averageBedtimeTile])
     }

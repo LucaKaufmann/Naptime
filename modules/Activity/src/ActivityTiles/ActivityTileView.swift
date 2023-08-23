@@ -39,11 +39,11 @@ struct ActivityTileView_Previews: PreviewProvider {
     static var previews: some View {
         LazyHStack(alignment: .center) {
             Group {
-                ActivityTileView(tile: ActivityTile(id: UUID(), title: "Sleep today", subtitle: "12h 13min"))
+                ActivityTileView(tile: ActivityTile(id: UUID(), title: "Sleep today", subtitle: "12h 13min", type: .sleepToday))
             }
             .frame(width: 140, height: 100)
             Group {
-                ActivityTileView(tile: ActivityTile(id: UUID(), title: "Naps today", subtitle: "12h 13min"))
+                ActivityTileView(tile: ActivityTile(id: UUID(), title: "Naps today", subtitle: "12h 13min", type: .napsToday))
             }
             .frame(width: 140, height: 100)
         }

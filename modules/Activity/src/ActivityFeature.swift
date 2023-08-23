@@ -10,6 +10,7 @@ import ComposableArchitecture
 import ActivityKit
 import NaptimeKit
 import NaptimeSettings
+import NaptimeStatistics
 
 public enum ActivityTimeRange: Int, Equatable {
     case week = 0
@@ -30,7 +31,7 @@ public struct ActivityFeature: Reducer {
     }
     
     public struct State: Equatable {
-        public init(activities: [ActivityModel], groupedActivities: [Date : IdentifiedArrayOf<ActivityDetail.State>], activityHeaderDates: [Date], selectedActivityId: ActivityDetail.State.ID? = nil, selectedActivity: ActivityDetail.State? = nil, activityTilesState: ActivityTiles.State, lastActivityDate: Date? = nil, lastActivityTimerState: TimerFeature.State? = nil, isSleeping: Bool = false, selectedTimeRange: ActivityTimeRange = .week, showShareSheet: Bool = false, settings: SettingsFeature.State? = nil) {
+        public init(activities: [ActivityModel], groupedActivities: [Date : IdentifiedArrayOf<ActivityDetail.State>], activityHeaderDates: [Date], selectedActivityId: ActivityDetail.State.ID? = nil, selectedActivity: ActivityDetail.State? = nil, activityTilesState: ActivityTiles.State, lastActivityDate: Date? = nil, lastActivityTimerState: TimerFeature.State? = nil, isSleeping: Bool = false, selectedTimeRange: ActivityTimeRange = .week, settings: SettingsFeature.State? = nil) {
             self.activities = activities
             self.groupedActivities = groupedActivities
             self.activityHeaderDates = activityHeaderDates
@@ -41,7 +42,6 @@ public struct ActivityFeature: Reducer {
             self.lastActivityTimerState = lastActivityTimerState
             self.isSleeping = isSleeping
             self.selectedTimeRange = selectedTimeRange
-            self.showShareSheet = showShareSheet
             self.settings = settings
         }
         
@@ -56,9 +56,9 @@ public struct ActivityFeature: Reducer {
         
         @BindingState var isSleeping: Bool = false
         @BindingState public var selectedTimeRange: ActivityTimeRange = .week
-        @BindingState var showShareSheet: Bool = false
         
         @PresentationState var settings: SettingsFeature.State?
+//        @PresentationState var sleepTodaySheet: SleepTodayStatisticsFeature.State?
         
         var activitiesActive: Bool {
             return activities.filter({ $0.isActive }).count > 0
@@ -86,6 +86,7 @@ public struct ActivityFeature: Reducer {
         case refreshActivities
         
         case settings(PresentationAction<SettingsFeature.Action>)
+        case sleepTodaySheet(PresentationAction<SleepTodayStatisticsFeature.Action>)
     }
     
     public var body: some ReducerOf<Self> {
@@ -230,7 +231,18 @@ public struct ActivityFeature: Reducer {
                         default:
                             break
                     }
-                case .activityTiles(_):
+                case .activityTiles(let action):
+//                    switch action {
+//                        case .tileTapped(let tile):
+//                            switch tile.type {
+//                                case .sleepToday:
+//                                    state.sleepTodaySheet = .init(activities: state.activities, timeframe: .week, datapoints: [])
+//                                default:
+//                                    break
+//                            }
+//                        default:
+//                            break
+//                    }
                     break
                 case .activityTimerAction(_):
                     break
@@ -239,6 +251,8 @@ public struct ActivityFeature: Reducer {
                 case .binding(_) :
                     break
                 case .settings(_):
+                    break
+                case .sleepTodaySheet(_):
                     break
             }
             

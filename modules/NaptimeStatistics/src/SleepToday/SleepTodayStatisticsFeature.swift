@@ -41,7 +41,9 @@ public struct SleepTodayStatisticsFeature: Reducer {
             switch action {
                 case .onAppear:
                     return .run {[activities = state.activities, timeframe = state.timeframe] send in
-                        let activities = await activityService.fetchActivitiesAfter(nil)
+                        if activities.isEmpty {
+                            let activities = await activityService.fetchActivitiesAfter(nil)
+                        }
                         async let datapoints = statisticsService.createSleepStatisticDatapoints(activities, timeFrame: timeframe)
                         async let averageSleep = statisticsService.averageSleepAmountPerDay(activities, timeFrame: timeframe)
                         await send(.datapointsUpdated(datapoints))

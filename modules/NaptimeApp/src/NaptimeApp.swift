@@ -23,7 +23,7 @@ struct NaptimeApp: App {
                 initialState: Root.State(activityState: .init(activities: [],
                                                               groupedActivities: [Date: IdentifiedArrayOf<ActivityDetail.State>](),
                                                               activityHeaderDates: [], activityTilesState: ActivityTiles.State()), listeningToStoreChanges: false)) {
-                                                                  Root()
+                                                                  Root()._printChanges()
                                                               })
             .onAppear {
                 if UserDefaults.standard.object(forKey: Constants.showAsleepLiveActivitiesKey) == nil {
