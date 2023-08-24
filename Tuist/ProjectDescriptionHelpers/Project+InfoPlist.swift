@@ -9,7 +9,7 @@ import ProjectDescription
 
 public let infoPlistExtension: [_: InfoPlist.Value] = [
     "CFBundleShortVersionString": "1.3.2",
-    "CFBundleVersion": "3",
+    "CFBundleVersion": "4",
     "UIMainStoryboardFile": "",
     "UILaunchStoryboardName": "LaunchScreen",
     "NSSupportsLiveActivities": true

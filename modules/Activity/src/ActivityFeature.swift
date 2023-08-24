@@ -58,7 +58,7 @@ public struct ActivityFeature: Reducer {
         @BindingState public var selectedTimeRange: ActivityTimeRange = .week
         
         @PresentationState var settings: SettingsFeature.State?
-//        @PresentationState var sleepTodaySheet: SleepTodayStatisticsFeature.State?
+        @PresentationState var sleepTodaySheet: SleepTodayStatisticsFeature.State?
         
         var activitiesActive: Bool {
             return activities.filter({ $0.isActive }).count > 0
@@ -232,17 +232,17 @@ public struct ActivityFeature: Reducer {
                             break
                     }
                 case .activityTiles(let action):
-//                    switch action {
-//                        case .tileTapped(let tile):
-//                            switch tile.type {
-//                                case .sleepToday:
-//                                    state.sleepTodaySheet = .init(activities: state.activities, timeframe: .week, datapoints: [])
-//                                default:
-//                                    break
-//                            }
-//                        default:
-//                            break
-//                    }
+                    switch action {
+                        case .tileTapped(let tile):
+                            switch tile.type {
+                                case .sleepToday:
+                                    state.sleepTodaySheet = .init(activities: state.activities, timeframe: .week, datapoints: [])
+                                default:
+                                    break
+                            }
+                        default:
+                            break
+                    }
                     break
                 case .activityTimerAction(_):
                     break
@@ -267,7 +267,10 @@ public struct ActivityFeature: Reducer {
         }
         .ifLet(\.$settings, action: /Action.settings) {
             SettingsFeature()
-          }
+        }
+        .ifLet(\.$sleepTodaySheet, action: /Action.sleepTodaySheet) {
+            SleepTodayStatisticsFeature()
+        }
         Scope(state: \.activityTilesState, action: /Action.activityTiles) {
             ActivityTiles()
         }

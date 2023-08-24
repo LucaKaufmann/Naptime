@@ -17,5 +17,7 @@ public let buildType: BuildType = {
 }()
 
 public var defaultPackageType: ProjectDescription.Product = {
-    buildType == .release ? .staticFramework : .framework
+    // This crashes TCA
+    //    buildType == .release ? .staticFramework : .framework
+    .staticFramework
 }()

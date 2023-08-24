@@ -4,10 +4,20 @@ import ProjectDescriptionHelpers
 let project = Project(
     name: Feature.Activity.rawValue,
     targets: [
-        .feature(
-            interface: .Activity,
+        .makeApp(
+            name: "NaptimeActivityApp",
+            bundleIdExtension: ".NaptimeActivity",
+            deploymentTarget: .iOS(targetVersion: "16.0", devices: [
+                .iphone,
+                .ipad
+            ]),
+            sources: [
+                "app/**"
+            ],
             dependencies: [
-                .common
+                .common,
+                .feature(implementation: .Activity),
+                .feature(implementation: .DesignSystem),
             ]
         ),
         .feature(
@@ -16,6 +26,7 @@ let project = Project(
                 .common,
                 .feature(implementation: .DesignSystem),
                 .feature(implementation: .NaptimeSettings),
+                .feature(implementation: .NaptimeStatistics),
                 .external(name: "ComposableArchitecture"),
             ],
             resources: [
