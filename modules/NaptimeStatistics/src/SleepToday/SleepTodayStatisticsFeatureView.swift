@@ -30,13 +30,13 @@ public struct SleepTodayStatisticsFeatureView: View {
       }()
     
     public var body: some View {
-        WithViewStore(self.store, observe: {$0.averageSleep}) { viewStore in
+        WithViewStore(self.store, observe: {$0}) { viewStore in
             VStack {
                 HStack {
                     VStack(alignment: .leading) {
                         Text("AVG TIME ASLEEP")
                             .font(.caption)
-                        Text(formatter.string(from: viewStore.state) ?? "")
+                        Text(formatter.string(from: viewStore.averageSleep) ?? "")
                             .fontWeight(.semibold)
                     }
                     Spacer()
@@ -44,6 +44,13 @@ public struct SleepTodayStatisticsFeatureView: View {
                 .foregroundColor(NaptimeDesignColors.slateLight)
                 .padding()
                 chart
+                Picker("Chart timeframe", selection: viewStore.$timeframe) {
+                    ForEach(StatisticsTimeFrame.allCases, id: \.self) { timeframe in
+                        Text(timeframe.rawValue)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding()
             }
             .background {
                 NaptimeDesignColors.ocean.ignoresSafeArea()
@@ -55,20 +62,20 @@ public struct SleepTodayStatisticsFeatureView: View {
     }
     
     private var chart: some View {
-        WithViewStore(self.store, observe: { $0.datapoints }) { viewStore in
-            Chart(viewStore.state, id: \.date) {
+        WithViewStore(self.store, observe: { $0 }) { viewStore in
+            Chart(viewStore.datapoints, id: \.date) {
                 BarMark(
-                    x: .value("date", $0.date, unit: .weekday),
+                    x: .value("date", $0.date, unit: componentForTimeframe(viewStore.timeframe)),
                     y: .value("duration", $0.interval)
                 )
                 .accessibilityLabel($0.date.formatted(date: .complete, time: .omitted))
                 .accessibilityValue("\($0.interval) sleep")
                 .foregroundStyle(NaptimeDesignColors.oceanInverted.gradient)
             }
-            .chartXScale(domain: Calendar.current.date(byAdding: .day, value: -7, to: Date.now)!...Date.now)
+            .chartXScale(domain: startDateForTimeFrame(viewStore.timeframe)...Date.now)
             .chartXAxis {
-                AxisMarks(values: .stride(by: .day, count: 1)) { value in
-                    AxisValueLabel(format: .dateTime.weekday())
+                AxisMarks(values: axisMarkValuesForTimeframe(viewStore.timeframe)) { value in
+                    AxisValueLabel(format: formatStyleForTimeframe(viewStore.timeframe))
                         .foregroundStyle(chartAxisColor)
 //                    AxisGridLine()
 //                        .foregroundStyle(NaptimeDesignColors.slateLight)
@@ -88,6 +95,63 @@ public struct SleepTodayStatisticsFeatureView: View {
             }
 //            .frame(height: isOverview ? Constants.previewChartHeight : Constants.detailChartHeight)
         }
+    }
+    
+    private func startDateForTimeFrame(_ timeframe: StatisticsTimeFrame) -> Date {
+        let calendar = Calendar.current
+        let date: Date
+        switch timeframe {
+            case .week:
+                date = calendar.date(byAdding: .day, value: -6, to: Date.now)!
+            case .month:
+                date = calendar.date(byAdding: .month, value: -1, to: Date.now)!
+            case .year:
+                date = calendar.date(byAdding: .year, value: -1, to: Date.now)!
+        }
+        
+        return date
+    }
+    
+    private func componentForTimeframe(_ timeframe: StatisticsTimeFrame) -> Calendar.Component {
+        let component: Calendar.Component
+        switch timeframe {
+            case .week:
+                component = .weekday
+            case .month:
+                component = .day
+            case .year:
+                component = .month
+        }
+        
+        return component
+    }
+    
+    private func formatStyleForTimeframe(_ timeframe: StatisticsTimeFrame) -> Date.FormatStyle {
+        let style: Date.FormatStyle
+        switch timeframe {
+            case .week:
+                style = .dateTime.weekday()
+            case .month:
+                style = .dateTime.day()
+            case .year:
+                style = .dateTime.month()
+        }
+        
+        return style
+    }
+    
+    private func axisMarkValuesForTimeframe(_ timeframe: StatisticsTimeFrame) -> AxisMarkValues {
+        let values: AxisMarkValues
+        switch timeframe {
+            case .week:
+                values = .stride(by: .day, count: 1)
+            case .month:
+                values = .automatic
+            case .year:
+                values = .stride(by: .month, count: 1)
+        }
+        
+        return values
     }
     
 }

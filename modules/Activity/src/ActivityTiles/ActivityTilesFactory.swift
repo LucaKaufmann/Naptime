@@ -63,7 +63,6 @@ struct ActivityTilesFactory {
         /// Average bedtime tile
         let formatter = DateFormatter()
         formatter.timeStyle = .short
-        //        let string = formatter.string(from: date)
         
         let bedtimeIntervals = activities
             .filter { $0.duration >= 4*3600 }

@@ -9,28 +9,9 @@ import Foundation
 import NaptimeKit
 
 struct StatisticsService {
-    func createSleepStatisticDatapoints(_ activities: [ActivityModel], timeFrame: StatisticsTimeFrame) async -> [SleepStatisticDatapoint] {
-        var cutoffDate: Date?
+    func createSleepStatisticDatapoints(_ activities: [ActivityModel], timeframe: StatisticsTimeFrame) async -> [SleepStatisticDatapoint] {
         
-        switch timeFrame {
-            case .week:
-                cutoffDate = Calendar.current.date(byAdding: .day, value: -7, to: Date())?.startOf(.day)
-            case .month:
-                cutoffDate = Calendar.current.date(byAdding: .month, value: -1, to: Date())?.startOf(.day)
-            case .year:
-                cutoffDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())?.startOf(.day)
-        }
-        var activitiesToCompute: [ActivityModel]
-        
-        if let cutoffDate {
-            activitiesToCompute = activities.filter {
-                $0.startDate > cutoffDate
-            }
-        } else {
-            activitiesToCompute = activities
-        }
-        
-        let groupedActivities = await groupActivities(activitiesToCompute)
+        let groupedActivities = await groupActivities(activities, timeframe: timeframe)
         
         var statistics = [SleepStatisticDatapoint]()
         for dateGroup in groupedActivities {
@@ -47,28 +28,8 @@ struct StatisticsService {
         return statistics
     }
     
-    func averageSleepAmountPerDay(_ activities: [ActivityModel], timeFrame: StatisticsTimeFrame) async -> TimeInterval {
-        var cutoffDate: Date?
-        
-        switch timeFrame {
-            case .week:
-                cutoffDate = Calendar.current.date(byAdding: .day, value: -7, to: Date())?.startOf(.day)
-            case .month:
-                cutoffDate = Calendar.current.date(byAdding: .month, value: -1, to: Date())?.startOf(.day)
-            case .year:
-                cutoffDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())?.startOf(.day)
-        }
-        var activitiesToCompute: [ActivityModel]
-        
-        if let cutoffDate {
-            activitiesToCompute = activities.filter {
-                $0.startDate > cutoffDate
-            }
-        } else {
-            activitiesToCompute = activities
-        }
-        
-        let groupedActivities = await groupActivities(activitiesToCompute)
+    func averageSleepAmountPerDay(_ activities: [ActivityModel], timeframe: StatisticsTimeFrame) async -> TimeInterval {
+        let groupedActivities = await groupActivities(activities, timeframe: timeframe)
         
         let intervals = groupedActivities
             .values
@@ -81,11 +42,11 @@ struct StatisticsService {
         return intervals.average.rounded()
     }
     
-    private func groupActivities(_ activities: [ActivityModel]) async ->  [Date: [ActivityModel]]{
+    private func groupActivities(_ activities: [ActivityModel], timeframe: StatisticsTimeFrame) async ->  [Date: [ActivityModel]]{
         let calendar = Calendar.current
         var grouped = [Date: [ActivityModel]]()
         for activity in activities {
-            let normalizedDate = calendar.startOfDay(for: activity.startDate)
+            let normalizedDate = normalizedDate(activity.startDate, for: timeframe)
             if grouped[normalizedDate] != nil {
                 grouped[normalizedDate]!.append(activity)
             } else {
@@ -94,5 +55,16 @@ struct StatisticsService {
         }
         
         return grouped
+    }
+    
+    private func normalizedDate(_ date: Date, for timeframe: StatisticsTimeFrame) -> Date {
+        switch timeframe {
+            case .week:
+                return Calendar.current.startOfDay(for: date)
+            case .month:
+                return Calendar.current.startOfDay(for: date)
+            case .year:
+                return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: date))!
+        }
     }
 }

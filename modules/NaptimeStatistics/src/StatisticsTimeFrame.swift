@@ -7,6 +7,8 @@
 
 import Foundation
 
-public enum StatisticsTimeFrame {
-    case week, month, year
+public enum StatisticsTimeFrame: String, CaseIterable {
+    case week = "Week"
+    case month = "Month"
+    case year = "Year"
 }
