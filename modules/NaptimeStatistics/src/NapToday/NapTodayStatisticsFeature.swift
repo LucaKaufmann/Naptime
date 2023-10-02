@@ -1,19 +1,16 @@
 //
-//  SleepTodayStatisticsFeature.swift
-//  NaptimeStatisticsApp
+//  NapTodayStatisticsFeature.swift
+//  NaptimeStatistics
 //
-//  Created by Luca Kaufmann on 22.8.2023.
+//  Created by Luca on 2.10.2023.
 //
 
 import Foundation
 import ComposableArchitecture
 import NaptimeKit
 
-
-
-public struct SleepTodayStatisticsFeature: Reducer {
+public struct NapTodayStatisticsFeature: Reducer {
     
-    public init() {}
     
     @Dependency(\.activityService) var activityService
     
@@ -29,7 +26,7 @@ public struct SleepTodayStatisticsFeature: Reducer {
         var activities: [ActivityModel] = []
         
         var datapoints: [SleepStatisticDatapoint] = []
-        var averageSleep: TimeInterval = 0
+        var averageNaps: TimeInterval = 0
         
         @BindingState var timeframe: StatisticsTimeFrame = .week
     }
@@ -43,6 +40,8 @@ public struct SleepTodayStatisticsFeature: Reducer {
         // framework actions
         case binding(BindingAction<State>)
     }
+    
+    public init() {}
     
     public var body: some ReducerOf<Self> {
         BindingReducer()
@@ -66,13 +65,13 @@ public struct SleepTodayStatisticsFeature: Reducer {
 
                         let activitiesToCompute = await activityService.fetchActivitiesAfter(cutoffDate)
 
-                        async let datapoints = statisticsService.createSleepStatisticDatapoints(activitiesToCompute, timeframe: timeframe)
-                        async let averageSleep = statisticsService.averageSleepAmountPerDay(activitiesToCompute, timeframe: timeframe)
+                        async let datapoints = statisticsService.createNapStatisticDatapoints(activitiesToCompute, timeframe: timeframe)
+                        async let averageSleep = statisticsService.averageNapAmountPerDay(activitiesToCompute, timeframe: timeframe)
                         await send(.statisticsUpdated(.init(sleepDatapoints: datapoints, sleepPerDay: averageSleep)))
-                    } 
+                    }
                 case .statisticsUpdated(let result):
                     state.datapoints = result.sleepDatapoints
-                    state.averageSleep = result.sleepPerDay
+                    state.averageNaps = result.sleepPerDay
                     return .none
                 case .binding(\.$timeframe):
                     return .send(.reloadStatistics)
@@ -82,4 +81,3 @@ public struct SleepTodayStatisticsFeature: Reducer {
         }
     }
 }
- 

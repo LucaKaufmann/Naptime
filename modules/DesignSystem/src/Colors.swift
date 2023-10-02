@@ -23,4 +23,5 @@ public enum NaptimeDesignColors {
     /// Tomato
     public static let tomato = Color("tomato", bundle: Bundle.module)
     public static let tomatoLight = Color("tomatoLight", bundle: Bundle.module)
+    public static let tomatoInverted = Color("tomatoInverted", bundle: Bundle.module)
 }
