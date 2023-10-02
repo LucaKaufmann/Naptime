@@ -24,7 +24,7 @@ public extension Target {
             infoPlist: .extendingDefault(with: infoPlistExtension),
             sources: sources,
             resources: resources,
-            entitlements: .relativeToRoot("Naptime.entitlements"),
+            entitlements: .file(path: .relativeToRoot("Naptime.entitlements")),
             dependencies: dependencies
         )
     }
@@ -46,7 +46,7 @@ public extension Target {
             infoPlist: infoPlist,
             sources: sources,
             resources: resources,
-            entitlements: .relativeToRoot("Naptime.entitlements"),
+            entitlements: .file(path: .relativeToRoot("Naptime.entitlements")),
             dependencies: dependencies
         )
     }
@@ -67,7 +67,7 @@ public extension Target {
             deploymentTarget: deploymentTarget,
             sources: sources,
             resources: resources,
-            entitlements: .relativeToRoot("Naptime.entitlements"),
+            entitlements: .file(path: .relativeToRoot("Naptime.entitlements")),
             dependencies: dependencies,
             coreDataModels: coreDataModels
         )
