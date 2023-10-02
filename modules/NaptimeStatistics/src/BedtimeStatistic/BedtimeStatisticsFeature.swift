@@ -66,7 +66,7 @@ public struct BedtimeStatisticsFeature: Reducer {
                         let activitiesToCompute = await activityService.fetchActivitiesAfter(cutoffDate)
 
                         async let datapoints = statisticsService.createBedtimeStatisticDatapoints(activitiesToCompute, timeframe: timeframe)
-                        async let averageSleep = statisticsService.averageNapAmountPerDay(activitiesToCompute, timeframe: timeframe)
+                        async let averageSleep = statisticsService.usualBedtime(activitiesToCompute, timeframe: timeframe)
                         await send(.statisticsUpdated(.init(sleepDatapoints: datapoints, sleepPerDay: averageSleep)))
                     }
                 case .statisticsUpdated(let result):

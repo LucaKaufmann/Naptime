@@ -105,6 +105,14 @@ public struct ActivityView: View {
             ) { store in
                 SleepTodayStatisticsFeatureView(store: store)
             }
+            .sheet(store: self.store.scope(state: \.$napsTodaySheet, action: ActivityFeature.Action.napsTodaySheet)
+            ) { store in
+                NapTodayStatisticsFeatureView(store: store)
+            }
+            .sheet(store: self.store.scope(state: \.$bedtimeSheet, action: ActivityFeature.Action.bedtimeSheet)
+            ) { store in
+                BedtimeStatisticsFeatureView(store: store)
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {

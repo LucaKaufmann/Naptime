@@ -34,7 +34,7 @@ public struct BedtimeStatisticsFeatureView: View {
             VStack {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("AVG NAPS PER DAY")
+                        Text("USUAL BEDTIME")
                             .font(.caption)
                         Text(formatter.string(from: viewStore.averageNaps) ?? "")
                             .fontWeight(.semibold)

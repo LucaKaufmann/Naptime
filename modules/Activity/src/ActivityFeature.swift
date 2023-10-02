@@ -59,6 +59,8 @@ public struct ActivityFeature: Reducer {
         
         @PresentationState var settings: SettingsFeature.State?
         @PresentationState var sleepTodaySheet: SleepTodayStatisticsFeature.State?
+        @PresentationState var napsTodaySheet: NapTodayStatisticsFeature.State?
+        @PresentationState var bedtimeSheet: BedtimeStatisticsFeature.State?
         
         var activitiesActive: Bool {
             return activities.filter({ $0.isActive }).count > 0
@@ -87,6 +89,8 @@ public struct ActivityFeature: Reducer {
         
         case settings(PresentationAction<SettingsFeature.Action>)
         case sleepTodaySheet(PresentationAction<SleepTodayStatisticsFeature.Action>)
+        case napsTodaySheet(PresentationAction<NapTodayStatisticsFeature.Action>)
+        case bedtimeSheet(PresentationAction<BedtimeStatisticsFeature.Action>)
     }
     
     public var body: some ReducerOf<Self> {
@@ -237,6 +241,10 @@ public struct ActivityFeature: Reducer {
                             switch tile.type {
                                 case .sleepToday:
                                     state.sleepTodaySheet = .init(activities: state.activities, timeframe: .week, datapoints: [])
+                                case .napsToday:
+                                    state.napsTodaySheet = .init(activities: state.activities, timeframe: .week, datapoints: [])
+                                case .usualBedtime:
+                                    state.bedtimeSheet = .init(activities: state.activities, timeframe: .week, datapoints: [])
                                 default:
                                     break
                             }
@@ -254,6 +262,10 @@ public struct ActivityFeature: Reducer {
                     break
                 case .sleepTodaySheet(_):
                     break
+                case .napsTodaySheet(_):
+                    break
+                case .bedtimeSheet(_):
+                    break
             }
             
             return .none
@@ -270,6 +282,12 @@ public struct ActivityFeature: Reducer {
         }
         .ifLet(\.$sleepTodaySheet, action: /Action.sleepTodaySheet) {
             SleepTodayStatisticsFeature()
+        }
+        .ifLet(\.$napsTodaySheet, action: /Action.napsTodaySheet) {
+            NapTodayStatisticsFeature()
+        }
+        .ifLet(\.$bedtimeSheet, action: /Action.bedtimeSheet) {
+            BedtimeStatisticsFeature()
         }
         Scope(state: \.activityTilesState, action: /Action.activityTiles) {
             ActivityTiles()

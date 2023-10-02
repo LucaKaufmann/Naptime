@@ -103,6 +103,22 @@ struct StatisticsService {
         return intervals.average.rounded()
     }
     
+    func usualBedtime(_ activities: [ActivityModel], timeframe: StatisticsTimeFrame) async -> TimeInterval {
+        let bedtimeIntervals = activities
+            .filter { $0.duration >= 4*3600 }
+            .map {
+                let interval = Int($0.startDate.timeIntervalSince(Calendar.current.startOfDay(for: $0.startDate)))
+                if interval < 12*3600 {
+                    return interval + 24*3600
+                } else {
+                    return interval
+                }
+            }
+        
+        
+        return bedtimeIntervals.median() ?? 0
+    }
+    
     // MARK: - Private
     
     private func groupActivities(_ activities: [ActivityModel], timeframe: StatisticsTimeFrame) async ->  [Date: [ActivityModel]]{
