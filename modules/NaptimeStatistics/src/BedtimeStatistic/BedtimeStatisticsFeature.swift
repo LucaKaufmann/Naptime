@@ -53,15 +53,15 @@ public struct BedtimeStatisticsFeature: Reducer {
                     return .run {[timeframe = state.timeframe] send in
 
                         let cutoffDate: Date?
-                        
-                        switch timeframe {
-                            case .week:
-                                cutoffDate = Calendar.current.date(byAdding: .day, value: -6, to: Date())?.startOf(.day)
-                            case .month:
-                                cutoffDate = Calendar.current.date(byAdding: .month, value: -1, to: Date())?.startOf(.day)
-                            case .year:
-                                cutoffDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())?.startOf(.day)
-                        }
+                        cutoffDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())?.startOf(.day)
+//                        switch timeframe {
+//                            case .week:
+//                                cutoffDate = Calendar.current.date(byAdding: .day, value: -6, to: Date())?.startOf(.day)
+//                            case .month:
+//                                cutoffDate = Calendar.current.date(byAdding: .month, value: -1, to: Date())?.startOf(.day)
+//                            case .year:
+//                                cutoffDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())?.startOf(.day)
+//                        }
 
                         let activitiesToCompute = await activityService.fetchActivitiesAfter(cutoffDate)
 
