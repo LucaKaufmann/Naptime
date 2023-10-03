@@ -75,7 +75,7 @@ public extension Target {
 
     private static func feature(
         implementation featureName: String,
-        deploymentTarget: ProjectDescription.DeploymentTarget? = .iOS(targetVersion: "16.0", devices: .iphone),
+        deploymentTarget: ProjectDescription.DeploymentTarget? = .iOS(targetVersion: "17.0", devices: .iphone),
         dependencies: [ProjectDescription.TargetDependency] = [],
         resources: ProjectDescription.ResourceFileElements? = [],
         coreDataModels: [CoreDataModel]
@@ -92,7 +92,7 @@ public extension Target {
 
     private static func feature(
         interface featureName: String,
-        deploymentTarget: ProjectDescription.DeploymentTarget? = .iOS(targetVersion: "16.0", devices: .iphone),
+        deploymentTarget: ProjectDescription.DeploymentTarget? = .iOS(targetVersion: "17.0", devices: .iphone),
         dependencies: [ProjectDescription.TargetDependency] = [],
         resources: ProjectDescription.ResourceFileElements? = []
     ) -> Target {
@@ -133,7 +133,7 @@ public extension Target {
     }
     
     static func appExtension(implementation featureName: Feature,
-                             deploymentTarget: ProjectDescription.DeploymentTarget? = .iOS(targetVersion: "16.0", devices: .iphone),
+                             deploymentTarget: ProjectDescription.DeploymentTarget? = .iOS(targetVersion: "17.0", devices: .iphone),
                              infoPlist: InfoPlist? = nil,
                              dependencies: [ProjectDescription.TargetDependency] = []) -> Target {
         .makeExtension(name: featureName.rawValue,
