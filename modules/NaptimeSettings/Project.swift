@@ -7,7 +7,7 @@ let project = Project(
         .makeApp(
             name: "NaptimeSettingsApp",
             bundleIdExtension: ".NaptimeSettings",
-            deploymentTarget: .iOS(targetVersion: "16.0", devices: [
+            deploymentTarget: .iOS(targetVersion: "17.0", devices: [
                 .iphone,
                 .ipad
             ]),
