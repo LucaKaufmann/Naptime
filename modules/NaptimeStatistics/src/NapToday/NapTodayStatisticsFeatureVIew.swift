@@ -77,8 +77,8 @@ public struct NapTodayStatisticsFeatureView: View {
                 AxisMarks(values: axisMarkValuesForTimeframe(viewStore.timeframe)) { value in
                     AxisValueLabel(format: formatStyleForTimeframe(viewStore.timeframe))
                         .foregroundStyle(chartAxisColor)
-//                    AxisGridLine()
-//                        .foregroundStyle(NaptimeDesignColors.slateLight)
+                    AxisGridLine()
+                        .foregroundStyle(NaptimeDesignColors.slateLight)
                     AxisTick()
                         .foregroundStyle(chartAxisColor)
                 }
@@ -104,7 +104,8 @@ public struct NapTodayStatisticsFeatureView: View {
             case .week:
                 date = calendar.date(byAdding: .day, value: -6, to: Date.now)!
             case .month:
-                date = calendar.date(byAdding: .month, value: -1, to: Date.now)!
+                let oneMonth = calendar.date(byAdding: .month, value: -1, to: Date.now)!
+                date = calendar.date(byAdding: .day, value: -1, to: oneMonth)!
             case .year:
                 date = calendar.date(byAdding: .year, value: -1, to: Date.now)!
         }

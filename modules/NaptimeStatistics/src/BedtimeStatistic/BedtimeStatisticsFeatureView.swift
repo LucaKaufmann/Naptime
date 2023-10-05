@@ -72,6 +72,7 @@ public struct BedtimeStatisticsFeatureView: View {
                 .accessibilityValue("\($0.interval) sleep")
                 .foregroundStyle(NaptimeDesignColors.sand.gradient)
             }
+//            .chartScrollableAxes(.horizontal)
             .chartXScale(domain: startDateForTimeFrame(viewStore.timeframe)...Date.now)
             .chartXAxis {
                 AxisMarks(values: axisMarkValuesForTimeframe(viewStore.timeframe)) { value in
@@ -89,7 +90,6 @@ public struct BedtimeStatisticsFeatureView: View {
                     }
                 }
             }
-            .chartScrollableAxes(.horizontal)
         }
     }
     
@@ -97,15 +97,15 @@ public struct BedtimeStatisticsFeatureView: View {
         let calendar = Calendar.current
         let date: Date
         
-        date = calendar.date(byAdding: .year, value: -1, to: Date.now)!
-//        switch timeframe {
-//            case .week:
-//                date = calendar.date(byAdding: .day, value: -6, to: Date.now)!
-//            case .month:
-//                date = calendar.date(byAdding: .month, value: -1, to: Date.now)!
-//            case .year:
-//                date = calendar.date(byAdding: .year, value: -1, to: Date.now)!
-//        }
+//        date = calendar.date(byAdding: .year, value: -1, to: Date.now)!
+        switch timeframe {
+            case .week:
+                date = calendar.date(byAdding: .day, value: -7, to: Date.now)!
+            case .month:
+                date = calendar.date(byAdding: .month, value: -1, to: Date.now)!
+            case .year:
+                date = calendar.date(byAdding: .year, value: -1, to: Date.now)!
+        }
         
         return date
     }

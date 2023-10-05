@@ -63,11 +63,11 @@ struct StatisticsService {
         for dateGroup in groupedActivities {
             let date: Date = dateGroup.key
             
-            if let lastSleep = dateGroup.value.last {
-                let intervalFromStartOfDay = lastSleep.startDate.timeIntervalSince(date.startOf(.day))
-                                
-                statistics.append(.init(date: date, interval: intervalFromStartOfDay))
+            let intervals = dateGroup.value.map {
+                min($0.startDate.timeIntervalSince($0.startDate.startOf(.day)), 86400)
             }
+            statistics.append(.init(date: date, interval: intervals.average.rounded()))
+
         }
         return statistics
     }
