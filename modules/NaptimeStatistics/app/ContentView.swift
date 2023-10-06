@@ -6,15 +6,23 @@ public struct ContentView: View {
     public init() {}
 
     public var body: some View {
-//        SleepTodayStatisticsFeatureView(store: Store(initialState: SleepTodayStatisticsFeature.State()) {
-//            SleepTodayStatisticsFeature()
-//        })
-//        NapTodayStatisticsFeatureView(store: Store(initialState: NapTodayStatisticsFeature.State()) {
-//            NapTodayStatisticsFeature()
-//        })
-        BedtimeStatisticsFeatureView(store: Store(initialState: BedtimeStatisticsFeature.State()) {
-            BedtimeStatisticsFeature()
-        })
+        TabView {
+            SleepTodayStatisticsFeatureView(store: Store(initialState: SleepTodayStatisticsFeature.State()) {
+                SleepTodayStatisticsFeature()
+            }).tabItem {
+                Text("Sleep today")
+            }
+            NapTodayStatisticsFeatureView(store: Store(initialState: NapTodayStatisticsFeature.State()) {
+                NapTodayStatisticsFeature()
+            }).tabItem {
+                Text("Nap today")
+            }
+            BedtimeStatisticsFeatureView(store: Store(initialState: BedtimeStatisticsFeature.State()) {
+                BedtimeStatisticsFeature()
+            }).tabItem {
+                Text("Bedtime")
+            }
+        }
     }
 }
 
