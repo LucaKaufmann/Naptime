@@ -72,7 +72,6 @@ public struct BedtimeStatisticsFeatureView: View {
                 .accessibilityValue("\($0.interval) sleep")
                 .foregroundStyle(NaptimeDesignColors.sand.gradient)
             }
-//            .chartScrollableAxes(.horizontal)
             .chartXScale(domain: startDateForTimeFrame(viewStore.timeframe)...Date.now)
             .chartXAxis {
                 AxisMarks(values: axisMarkValuesForTimeframe(viewStore.timeframe)) { value in
