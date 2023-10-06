@@ -37,7 +37,7 @@ public struct SettingsView: View {
                 }
             .scrollContentBackground(.hidden)
             .background {
-                NaptimeDesignColors.slate
+                NaptimeDesignColors.slate.ignoresSafeArea()
             }
             
         }
