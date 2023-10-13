@@ -34,7 +34,7 @@ public struct NapTodayStatisticsFeatureView: View {
             VStack {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("AVG NAPS PER DAY")
+                        Text("AVG NAPS PER \(viewStore.timeframe == .year ? "MONTH" : "DAY")")
                             .font(.caption)
                         Text(formatter.string(from: viewStore.averageNaps) ?? "")
                             .fontWeight(.semibold)
