@@ -41,6 +41,7 @@ let project = Project(
                 .external(name: "ScalingHeaderScrollView"),
             ]
         ),
+        .makeWatchApp(),
         .appExtension(implementation: .NaptimeWidget,
                       deploymentTarget: .iOS(targetVersion: "17.0", devices: .iphone),
                       infoPlist: .extendingDefault(with: [
@@ -52,6 +53,32 @@ let project = Project(
                       dependencies: [
                         .common,
                         .feature(implementation: .DesignSystem),
-                      ])
+                      ]),
+//        .appExtension(implementation: .NaptimeWatchApp,
+//                      deploymentTarget: .watchOS(targetVersion: "10.0"),
+//                      infoPlist: .extendingDefault(with: [
+//                        "CFBundleDisplayName": "Naptime"
+//                      ]),
+//                      dependencies: [
+//                        .common,
+//                        .feature(implementation: .DesignSystem),
+//                      ])
+//            .makeApp(
+//                name: "NaptimeWatch",
+//                platform: .watchOS,
+//                deploymentTarget: .watchOS(targetVersion: "10.0"),
+//                sources: [
+//                    "src/**"
+//                ],
+//                resources: [
+//                    "resources/**"
+//                ],
+//                dependencies: [
+////                    .common,
+////                    .feature(implementation: .Activity),
+////                    .feature(implementation: .DesignSystem),
+////                    .external(name: "ComposableArchitecture"),
+//                ]
+//            ),
     ]
 )

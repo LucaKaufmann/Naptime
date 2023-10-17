@@ -9,6 +9,7 @@ private func makeBundleID(with addition: String) -> String {
 public extension Target {
     static func makeApp(
         name: String,
+        platform: Platform = .iOS,
         bundleIdExtension: String = "",
         deploymentTarget: ProjectDescription.DeploymentTarget?,
         sources: ProjectDescription.SourceFilesList,
@@ -17,7 +18,7 @@ public extension Target {
     ) -> Target {
         Target(
             name: name,
-            platform: .iOS,
+            platform: platform,
             product: .app,
             bundleId: makeBundleID(with: ""+bundleIdExtension),
             deploymentTarget: deploymentTarget,
@@ -29,8 +30,27 @@ public extension Target {
         )
     }
     
+    static func makeWatchApp() -> Target {
+        Target(name: "WatchApp",
+               platform: .watchOS,
+               product: .app,
+               bundleId: "com.hotky.Naptime.WatchApp",
+               infoPlist: .extendingDefault(with: infoPlistExtension.merging([
+                "WKApplication": true,
+                "WKCompanionAppBundleIdentifier": "com.hotky.Naptime"
+            ]) {
+                    (current, _) in current
+               }),
+               sources: "NaptimeWatchApp/src/**",
+               resources: "NaptimeWatchApp/resources/**",
+               dependencies: [
+               ])
+    }
+    
+    
     static func makeExtension(
         name: String,
+        platform: Platform = .iOS,
         deploymentTarget: ProjectDescription.DeploymentTarget?,
         infoPlist: InfoPlist? = nil,
         sources: ProjectDescription.SourceFilesList,
@@ -39,7 +59,7 @@ public extension Target {
     ) -> Target {
         Target(
             name: name,
-            platform: .iOS,
+            platform: platform,
             product: .appExtension,
             bundleId: makeBundleID(with: "." + name),
             deploymentTarget: deploymentTarget,

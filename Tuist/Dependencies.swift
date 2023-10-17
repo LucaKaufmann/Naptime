@@ -13,5 +13,5 @@ let dependencies = Dependencies(
         .remote(url: "https://github.com/LucaKaufmann/ScalingHeaderScrollView", requirement: .branch("master")),
         .remote(url: "https://github.com/apple/swift-async-algorithms", requirement: .upToNextMajor(from: "0.1.0")),
     ],
-    platforms: [.iOS]
+    platforms: [.iOS, .watchOS]
 )

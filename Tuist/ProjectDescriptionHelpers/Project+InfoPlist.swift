@@ -7,7 +7,7 @@
 
 import ProjectDescription
 
-public let infoPlistExtension: [_: InfoPlist.Value] = [
+public let infoPlistExtension: [_: Plist.Value] = [
     "CFBundleShortVersionString": "2.0.0",
     "CFBundleVersion": "4",
     "UIMainStoryboardFile": "",
