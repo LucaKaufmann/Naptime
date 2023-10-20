@@ -13,6 +13,16 @@ let project = Project(
             coreDataModels: [
                 .init("src/NapTimeData/Naptime.xcdatamodeld")
             ]
+        ),
+        .featureWatch(
+            implementation: .NaptimeKitWatchOS,
+            dependencies: [
+                .external(name: "ComposableArchitecture"),
+                .external(name: "AsyncAlgorithms"),
+            ],
+            coreDataModels: [
+                .init("src/NapTimeData/Naptime.xcdatamodeld")
+            ]
         )
     ]
 )

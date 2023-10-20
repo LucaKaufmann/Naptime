@@ -5,6 +5,7 @@
 ////  Created by Luca Kaufmann on 6.6.2023.
 ////
 
+#if os(iOS)
 import Foundation
 import ComposableArchitecture
 import ActivityKit
@@ -61,3 +62,4 @@ public struct LiveActivityService {
         }
     }
 }
+#endif

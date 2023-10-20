@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if os(iOS)
 public struct VisualEffectView: UIViewRepresentable {
     
     public init(effect: UIVisualEffect? = nil) {
@@ -18,3 +19,4 @@ public struct VisualEffectView: UIViewRepresentable {
     public func makeUIView(context: UIViewRepresentableContext<Self>) -> UIVisualEffectView { UIVisualEffectView() }
     public func updateUIView(_ uiView: UIVisualEffectView, context: UIViewRepresentableContext<Self>) { uiView.effect = effect }
 }
+#endif

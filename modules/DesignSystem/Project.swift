@@ -9,9 +9,14 @@ let project = Project(
         ),
         .feature(
             implementation: .DesignSystem,
-            dependencies: [
-                .feature(interface: .DesignSystem),
-            ],
+            dependencies: [],
+            resources: [
+                "resources/**"
+            ]
+        ),
+        .featureWatch(
+            implementation: .DesignSystemWatchOS,
+            dependencies: [],
             resources: [
                 "resources/**"
             ]

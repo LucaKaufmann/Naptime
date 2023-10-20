@@ -146,6 +146,7 @@ public struct ActivityView: View {
         WithViewStore(self.store, observe: {$0}) { viewStore in
             VStack {
                 Spacer()
+                #if os(iOS)
                 ZStack {
                     VisualEffectView(effect: UIBlurEffect(style: .regular))
                         .frame(height: 180)
@@ -154,6 +155,7 @@ public struct ActivityView: View {
                         ActivityButtonsView(store: store)
                     }
                 }
+                #endif
             }
             .ignoresSafeArea()
             .padding(.bottom, 40)

@@ -29,6 +29,16 @@ let project = Project(
             resources: [
                 "resources/**"
             ]
+        ),
+        .featureWatch(
+            implementation: .NaptimeSettingsWatchOS,
+            dependencies: [
+                .feature(implementation: .NaptimeKitWatchOS),
+                .external(name: "ComposableArchitecture"),
+            ],
+            resources: [
+                "resources/**"
+            ]
         )
     ]
 )

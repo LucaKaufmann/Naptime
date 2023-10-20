@@ -9,7 +9,11 @@
 import CloudKit
 import UIKit
 import CoreData
+#if os(watchOS)
+import DesignSystemWatchOS
+#else
 import DesignSystem
+#endif
 
 enum PersistenceError: Error {
     case noRecordsFound

@@ -44,6 +44,8 @@ public extension Target {
                sources: "NaptimeWatchApp/src/**",
                resources: "NaptimeWatchApp/resources/**",
                dependencies: [
+                .feature(implementation: .NaptimeKitWatchOS),
+                .feature(implementation: .ActivityWatchOS)
                ])
     }
     
@@ -74,6 +76,7 @@ public extension Target {
     static func makeFramework(
         name: String,
         deploymentTarget: ProjectDescription.DeploymentTarget?,
+        platform: Platform = .iOS,
         sources: ProjectDescription.SourceFilesList,
         dependencies: [ProjectDescription.TargetDependency] = [],
         resources: ProjectDescription.ResourceFileElements? = [],
@@ -81,7 +84,7 @@ public extension Target {
     ) -> Target {
         Target(
             name: name,
-            platform: .iOS,
+            platform: platform,
             product: defaultPackageType,
             bundleId: makeBundleID(with: name + ".framework"),
             deploymentTarget: deploymentTarget,
@@ -96,6 +99,7 @@ public extension Target {
     private static func feature(
         implementation featureName: String,
         deploymentTarget: ProjectDescription.DeploymentTarget? = .iOS(targetVersion: "17.0", devices: .iphone),
+        platform: Platform = .iOS,
         dependencies: [ProjectDescription.TargetDependency] = [],
         resources: ProjectDescription.ResourceFileElements? = [],
         coreDataModels: [CoreDataModel]
@@ -103,6 +107,7 @@ public extension Target {
         .makeFramework(
             name: featureName,
             deploymentTarget: deploymentTarget,
+            platform: platform,
             sources: [ "src/**" ],
             dependencies: dependencies,
             resources: resources,
@@ -113,12 +118,14 @@ public extension Target {
     private static func feature(
         interface featureName: String,
         deploymentTarget: ProjectDescription.DeploymentTarget? = .iOS(targetVersion: "17.0", devices: .iphone),
+        platform: Platform = .iOS,
         dependencies: [ProjectDescription.TargetDependency] = [],
         resources: ProjectDescription.ResourceFileElements? = []
     ) -> Target {
         .makeFramework(
             name: featureName + "Interface",
             deploymentTarget: deploymentTarget,
+            platform: platform,
             sources: [ "interface/**" ],
             dependencies: dependencies,
             resources: resources,
@@ -134,6 +141,24 @@ public extension Target {
     ) -> Target {
         .feature(
             implementation: featureName.rawValue,
+            deploymentTarget: featureName.rawValue.contains("WatchOS") ? .watchOS(targetVersion: "10") : .iOS(targetVersion: "17.0", devices: .iphone),
+            platform: featureName.rawValue.contains("WatchOS") ? .watchOS : .iOS,
+            dependencies: dependencies,
+            resources: resources,
+            coreDataModels: coreDataModels
+        )
+    }
+    
+    static func featureWatch(
+        implementation featureName: Feature,
+        dependencies: [ProjectDescription.TargetDependency] = [],
+        resources: ProjectDescription.ResourceFileElements? = [],
+        coreDataModels: [CoreDataModel] = []
+    ) -> Target {
+        .feature(
+            implementation: featureName.rawValue,
+            deploymentTarget: .watchOS(targetVersion: "10.0"),
+            platform: featureName.rawValue.contains("WatchOS") ? .watchOS : .iOS,
             dependencies: dependencies,
             resources: resources,
             coreDataModels: coreDataModels
