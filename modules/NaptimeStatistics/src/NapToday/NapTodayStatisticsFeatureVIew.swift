@@ -50,14 +50,21 @@ public struct NapTodayStatisticsFeatureView: View {
                 .foregroundColor(NaptimeDesignColors.slateLight)
                 .padding()
                 chart
+
+                #if os(watchOS)
                 Picker("Chart timeframe", selection: viewStore.$timeframe) {
                     ForEach(StatisticsTimeFrame.allCases, id: \.self) { timeframe in
                         Text(timeframe.rawValue)
                     }
                 }
                 .padding()
-                #if os(watchOS)
                 #else
+                Picker("Chart timeframe", selection: viewStore.$timeframe) {
+                    ForEach(StatisticsTimeFrame.allCases, id: \.self) { timeframe in
+                        Text(timeframe.rawValue)
+                    }
+                }
+                .padding()
                 .pickerStyle(.segmented)
                 #endif
             }

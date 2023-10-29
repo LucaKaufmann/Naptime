@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct ToggleView<Content: View, ButtonContent: View>: View {
-   @Binding var isOn: Bool
-   var backGround: Content
-   var toggleButton: ButtonContent?
-   init(isOn: Binding<Bool>, @ViewBuilder backGround: @escaping () -> Content, @ViewBuilder button: @escaping () -> ButtonContent? = {nil}) {
-       self._isOn = isOn
-       self.backGround = backGround()
-       self.toggleButton = button()
-   }
-   var body: some View {
-       GeometryReader { reader in
+public struct ToggleView<Content: View, ButtonContent: View>: View {
+    @Binding public var isOn: Bool
+    public var backGround: Content
+    public var toggleButton: ButtonContent?
+    public init(isOn: Binding<Bool>, @ViewBuilder backGround: @escaping () -> Content, @ViewBuilder button: @escaping () -> ButtonContent? = {nil}) {
+        self._isOn = isOn
+        self.backGround = backGround()
+        self.toggleButton = button()
+    }
+    public var body: some View {
+        GeometryReader { reader in
            HStack {
                HStack {
                    if isOn {

@@ -57,7 +57,19 @@ public struct BedtimeStatisticsFeatureView: View {
                 }
                 .padding()
                 #if os(watchOS)
+                Picker("Chart timeframe", selection: viewStore.$timeframe) {
+                    ForEach(StatisticsTimeFrame.allCases, id: \.self) { timeframe in
+                        Text(timeframe.rawValue)
+                    }
+                }
+                .padding()
                 #else
+                Picker("Chart timeframe", selection: viewStore.$timeframe) {
+                    ForEach(StatisticsTimeFrame.allCases, id: \.self) { timeframe in
+                        Text(timeframe.rawValue)
+                    }
+                }
+                .padding()
                 .pickerStyle(.segmented)
                 #endif
 

@@ -43,7 +43,6 @@ public struct WatchActivityFeature: Reducer {
             self.activityHeaderDates = activityHeaderDates
             self.selectedActivityId = selectedActivityId
             self.selectedActivity = selectedActivity
-//            self.lastActivityDate = lastActivityDate
             self.lastActivityTimerState = lastActivityTimerState
             self.isSleeping = isSleeping
             self.selectedTimeRange = selectedTimeRange
@@ -82,11 +81,7 @@ public struct WatchActivityFeature: Reducer {
         case setSelectedActivityId(ActivityModel.ID?)
         case activityTimerAction(TimerFeature.Action)
         case refreshActivities
-        
-//        case settings(PresentationAction<SettingsFeature.Action>)
-//        case sleepTodaySheet(PresentationAction<SleepTodayStatisticsFeature.Action>)
-//        case napsTodaySheet(PresentationAction<NapTodayStatisticsFeature.Action>)
-//        case bedtimeSheet(PresentationAction<BedtimeStatisticsFeature.Action>)
+
     }
     
     public var body: some ReducerOf<Self> {

@@ -15,11 +15,11 @@ import NaptimeStatisticsWatchOS
 import ActivityWatchOS
 
 
-public struct ActivityView: View {
+public struct WatchActivityView: View {
     
     @State var activeShare: CKShare?
     
-    let store: StoreOf<ActivityFeature>
+    let store: StoreOf<WatchActivityFeature>
     
     private let minHeight = 0.0
     private let maxHeight = 320.0
@@ -31,6 +31,7 @@ public struct ActivityView: View {
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             ZStack {
+                WatchActivityListView(store: store)
                 sleepToggle
             }
             .scrollContentBackground(.hidden)
@@ -54,10 +55,12 @@ public struct ActivityView: View {
                         ActivityButtonsView(store: store)
                     }
                 }
+                #else
+                WatchActivityButtonsView(store: store)
                 #endif
             }
             .ignoresSafeArea()
-            .padding(.bottom, 40)
+//            .padding(.bottom, 40)
         }
     }
 }

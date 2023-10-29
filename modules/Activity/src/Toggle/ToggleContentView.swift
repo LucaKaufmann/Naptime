@@ -12,11 +12,15 @@ import DesignSystem
 import DesignSystemWatchOS
 #endif
 
-struct ToggleContentView: View {
+public struct ToggleContentView: View {
     
-    @Binding var isOn: Bool
+    @Binding public var isOn: Bool
     
-    var body: some View {
+    public init(isOn: Binding<Bool>) {
+        _isOn = isOn
+    }
+    
+    public var body: some View {
         HStack {
             Image(systemName: isOn ? "sleep" : "powersleep")
                 .resizable()

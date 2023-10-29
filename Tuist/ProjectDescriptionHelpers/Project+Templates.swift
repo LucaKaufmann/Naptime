@@ -43,6 +43,7 @@ public extension Target {
                }),
                sources: "NaptimeWatchApp/src/**",
                resources: "NaptimeWatchApp/resources/**",
+               entitlements: .file(path: .relativeToRoot("Naptime.entitlements")),
                dependencies: [
                 .feature(implementation: .NaptimeKitWatchOS),
                 .feature(implementation: .DesignSystemWatchOS),

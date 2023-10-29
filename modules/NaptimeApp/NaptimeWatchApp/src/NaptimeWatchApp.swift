@@ -8,17 +8,17 @@ struct NaptimeWatchApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ActivityView(store: Store(initialState: ActivityFeature.State(activities: [],
-                                                     groupedActivities: [Date: IdentifiedArrayOf<ActivityDetail.State>](),
-                                                                          activityHeaderDates: [], activityTilesState: ActivityTiles.State())) {
-                ActivityFeature()
-            })
-//            RootView(store: Store(
-//                initialState: Root.State(activityState: .init(activities: [],
-//                                                              groupedActivities: [Date: IdentifiedArrayOf<ActivityDetail.State>](),
-//                                                              activityHeaderDates: [], activityTilesState: ActivityTiles.State()), listeningToStoreChanges: false)) {
-//                                                                  Root()
-//                                                              })
+//            WatchActivityView(store: Store(initialState: WatchActivityFeature.State(activities: [],
+//                                                     groupedActivities: [Date: IdentifiedArrayOf<ActivityDetail.State>](),
+//                                                                          activityHeaderDates: [])) {
+//                WatchActivityFeature()
+//            })
+            WatchRootFeatureView(store: Store(
+                initialState: WatchRootFeature.State(activityState: .init(activities: [],
+                                                              groupedActivities: [Date: IdentifiedArrayOf<ActivityDetail.State>](),
+                                                              activityHeaderDates: []), listeningToStoreChanges: false)) {
+                                                                  WatchRootFeature()._printChanges()
+                                                              })
         }
 
 //        #if os(watchOS)
