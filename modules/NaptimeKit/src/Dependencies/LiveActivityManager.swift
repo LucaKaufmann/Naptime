@@ -5,7 +5,7 @@
 ////  Created by Luca Kaufmann on 6.6.2023.
 ////
 
-#if os(iOS)
+#if canImport(ActivityKit)
 import Foundation
 import ComposableArchitecture
 import ActivityKit

@@ -6,7 +6,11 @@
 //
 
 import Foundation
+#if os(macOS) || os(iOS) || os(tvOS)
 import NaptimeKit
+#elseif os(watchOS)
+import NaptimeKitWatchOS
+#endif
 
 public struct SleepStatisticsResult: Equatable {
     let sleepDatapoints: [SleepStatisticDatapoint]

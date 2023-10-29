@@ -8,7 +8,13 @@
 
 import Foundation
 import ComposableArchitecture
+#if os(macOS)
 import NaptimeKit
+#elseif os(iOS)
+import NaptimeKit
+#elseif os(tvOS) || os(watchOS)
+import NaptimeKitWatchOS
+#endif
 
 public struct BedtimeStatisticsFeature: Reducer {
     

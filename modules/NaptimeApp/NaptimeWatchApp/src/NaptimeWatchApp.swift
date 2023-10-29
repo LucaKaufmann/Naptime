@@ -1,6 +1,7 @@
 import SwiftUI
-import ActivityWatchOS
 import ComposableArchitecture
+import ActivityWatchOS
+import Foundation
 
 @main
 struct NaptimeWatchApp: App {

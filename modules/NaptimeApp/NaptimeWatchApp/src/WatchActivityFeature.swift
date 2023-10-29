@@ -1,37 +1,25 @@
 //
-//  Nap.swift
-//  Naptime
+//  WatchActivityFeature.swift
+//  WatchApp
 //
-//  Created by Luca Kaufmann on 4.12.2022.
+//  Created by Luca on 27.10.2023.
 //
 
 import Foundation
 import ComposableArchitecture
-#if canImport(ActivityKit)
-import ActivityKit
-#endif
-
-#if os(macOS) || os(iOS) || os(tvOS)
-import NaptimeKit
-import NaptimeSettings
-import NaptimeStatistics
-#elseif os(watchOS)
 import NaptimeKitWatchOS
-import NaptimeSettingsWatchOS
-import NaptimeStatisticsWatchOS
-#endif
+//import NaptimeSettingsWatchOS
+//import NaptimeStatisticsWatchOS
 
 public enum ActivityTimeRange: Int, Equatable {
     case week = 0
     case all = 1
 }
 
-public struct ActivityFeature: Reducer {
+public struct WatchActivityFeature: Reducer {
     
     @Dependency(\.activityService) private var activityService
-    #if canImport(ActivityKit)
-    @Dependency(\.liveActivityService) private var liveActivityService
-    #endif
+    
     public init() {}
     
     public struct ActivityViewState: Equatable {
@@ -41,18 +29,24 @@ public struct ActivityFeature: Reducer {
     }
     
     public struct State: Equatable {
-        public init(activities: [ActivityModel], groupedActivities: [Date : IdentifiedArrayOf<ActivityDetail.State>], activityHeaderDates: [Date], selectedActivityId: ActivityDetail.State.ID? = nil, selectedActivity: ActivityDetail.State? = nil, activityTilesState: ActivityTiles.State, lastActivityDate: Date? = nil, lastActivityTimerState: TimerFeature.State? = nil, isSleeping: Bool = false, selectedTimeRange: ActivityTimeRange = .week, settings: SettingsFeature.State? = nil) {
+        public init(activities: [ActivityModel], 
+                    groupedActivities: [Date : IdentifiedArrayOf<ActivityDetail.State>],
+                    activityHeaderDates: [Date],
+                    selectedActivityId: ActivityDetail.State.ID? = nil,
+                    selectedActivity: ActivityDetail.State? = nil,
+                    astActivityDate: Date? = nil,
+                    lastActivityTimerState: TimerFeature.State? = nil,
+                    isSleeping: Bool = false,
+                    selectedTimeRange: ActivityTimeRange = .week) {
             self.activities = activities
             self.groupedActivities = groupedActivities
             self.activityHeaderDates = activityHeaderDates
             self.selectedActivityId = selectedActivityId
             self.selectedActivity = selectedActivity
-            self.activityTilesState = activityTilesState
-            self.lastActivityDate = lastActivityDate
+//            self.lastActivityDate = lastActivityDate
             self.lastActivityTimerState = lastActivityTimerState
             self.isSleeping = isSleeping
             self.selectedTimeRange = selectedTimeRange
-            self.settings = settings
         }
         
         public var activities: [ActivityModel]
@@ -60,17 +54,11 @@ public struct ActivityFeature: Reducer {
         var activityHeaderDates: [Date]
         var selectedActivityId: ActivityDetail.State.ID?
         var selectedActivity: ActivityDetail.State?
-        var activityTilesState: ActivityTiles.State
         public var lastActivityDate: Date?
         var lastActivityTimerState: TimerFeature.State?
         
         @BindingState var isSleeping: Bool = false
         @BindingState public var selectedTimeRange: ActivityTimeRange = .week
-        
-        @PresentationState var settings: SettingsFeature.State?
-        @PresentationState var sleepTodaySheet: SleepTodayStatisticsFeature.State?
-        @PresentationState var napsTodaySheet: NapTodayStatisticsFeature.State?
-        @PresentationState var bedtimeSheet: BedtimeStatisticsFeature.State?
         
         var activitiesActive: Bool {
             return activities.filter({ $0.isActive }).count > 0
@@ -93,14 +81,12 @@ public struct ActivityFeature: Reducer {
         case activityDetailAction(ActivityDetail.Action)
         case setSelectedActivityId(ActivityModel.ID?)
         case activityTimerAction(TimerFeature.Action)
-        case activityTiles(ActivityTiles.Action)
-        case settingsButtonTapped
         case refreshActivities
         
-        case settings(PresentationAction<SettingsFeature.Action>)
-        case sleepTodaySheet(PresentationAction<SleepTodayStatisticsFeature.Action>)
-        case napsTodaySheet(PresentationAction<NapTodayStatisticsFeature.Action>)
-        case bedtimeSheet(PresentationAction<BedtimeStatisticsFeature.Action>)
+//        case settings(PresentationAction<SettingsFeature.Action>)
+//        case sleepTodaySheet(PresentationAction<SleepTodayStatisticsFeature.Action>)
+//        case napsTodaySheet(PresentationAction<NapTodayStatisticsFeature.Action>)
+//        case bedtimeSheet(PresentationAction<BedtimeStatisticsFeature.Action>)
     }
     
     public var body: some ReducerOf<Self> {
@@ -141,7 +127,6 @@ public struct ActivityFeature: Reducer {
                         let activityHeaders = await activityHeaders(groupedActivities)
                         let updatedViewState = ActivityViewState(groupedActivities: groupedActivities, activityHeaderDates: activityHeaders)
                         await send(.activityViewStateUpdated(updatedViewState))
-                        await send(.activityTiles(.updateTiles(activities)))
                         
                         if #available(iOS 16.2, *) {
                             #if canImport(ActivityKit)
@@ -218,11 +203,6 @@ public struct ActivityFeature: Reducer {
                 case .setSelectedActivityId(nil):
                     state.selectedActivityId = nil
                     return .none
-                case .settingsButtonTapped:
-                    state.settings = .init(showAsleepLiveAction: UserDefaults.standard.bool(forKey: Constants.showAsleepLiveActivitiesKey),
-                                           showAwakeLiveAction: UserDefaults.standard.bool(forKey: Constants.showAwakeLiveActivitiesKey),
-                                           lastActivity: state.activities.first)
-                    return .none
                 case .activityDetailAction(let action):
                     switch action {
                         case .updateActivity(let activity):
@@ -247,37 +227,37 @@ public struct ActivityFeature: Reducer {
                         default:
                             break
                     }
-                case .activityTiles(let action):
-                    switch action {
-                        case .tileTapped(let tile):
-                            switch tile.type {
-                                case .sleepToday:
-                                    state.sleepTodaySheet = .init(activities: state.activities, timeframe: .week, datapoints: [])
-                                case .napsToday:
-                                    state.napsTodaySheet = .init(activities: state.activities, timeframe: .week, datapoints: [])
-                                case .usualBedtime:
-                                    state.bedtimeSheet = .init(activities: state.activities, timeframe: .week, datapoints: [])
-                                default:
-                                    break
-                            }
-                        default:
-                            break
-                    }
-                    break
+//                case .activityTiles(let action):
+//                    switch action {
+//                        case .tileTapped(let tile):
+//                            switch tile.type {
+//                                case .sleepToday:
+//                                    state.sleepTodaySheet = .init(activities: state.activities, timeframe: .week, datapoints: [])
+//                                case .napsToday:
+//                                    state.napsTodaySheet = .init(activities: state.activities, timeframe: .week, datapoints: [])
+//                                case .usualBedtime:
+//                                    state.bedtimeSheet = .init(activities: state.activities, timeframe: .week, datapoints: [])
+//                                default:
+//                                    break
+//                            }
+//                        default:
+//                            break
+//                    }
+//                    break
                 case .activityTimerAction(_):
                     break
                 case .binding(\.$selectedTimeRange):
                     return .send(.refreshActivities)
                 case .binding(_) :
                     break
-                case .settings(_):
-                    break
-                case .sleepTodaySheet(_):
-                    break
-                case .napsTodaySheet(_):
-                    break
-                case .bedtimeSheet(_):
-                    break
+//                case .settings(_):
+//                    break
+//                case .sleepTodaySheet(_):
+//                    break
+//                case .napsTodaySheet(_):
+//                    break
+//                case .bedtimeSheet(_):
+//                    break
             }
             
             return .none
@@ -288,21 +268,6 @@ public struct ActivityFeature: Reducer {
         }
         .ifLet(\.lastActivityTimerState, action: /Action.activityTimerAction) {
             TimerFeature()
-        }
-        .ifLet(\.$settings, action: /Action.settings) {
-            SettingsFeature()
-        }
-        .ifLet(\.$sleepTodaySheet, action: /Action.sleepTodaySheet) {
-            SleepTodayStatisticsFeature()
-        }
-        .ifLet(\.$napsTodaySheet, action: /Action.napsTodaySheet) {
-            NapTodayStatisticsFeature()
-        }
-        .ifLet(\.$bedtimeSheet, action: /Action.bedtimeSheet) {
-            BedtimeStatisticsFeature()
-        }
-        Scope(state: \.activityTilesState, action: /Action.activityTiles) {
-            ActivityTiles()
         }
     }
     

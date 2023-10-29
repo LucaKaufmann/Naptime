@@ -8,8 +8,14 @@
 import SwiftUI
 import ComposableArchitecture
 import CloudKit
-import DesignSystem
+
+#if os(macOS) || os(iOS) || os(tvOS)
 import NaptimeKit
+import DesignSystem
+#elseif os(watchOS)
+import NaptimeKitWatchOS
+import DesignSystemWatchOS
+#endif
 
 public struct SettingsView: View {
     
@@ -30,11 +36,13 @@ public struct SettingsView: View {
                     SettingsButtonRowView(store: store, label: "Share with others", systemIcon: "square.and.arrow.up")
                 }
             }
+            #if !os(watchOS)
             .sheet(
                 store: self.store.scope(state: \.$shareSheet, action: SettingsFeature.Action.shareSheet)
                 ) { store in
                     shareView(share: viewStore.share)
                 }
+            #endif
             .scrollContentBackground(.hidden)
             .background {
                 NaptimeDesignColors.slate.ignoresSafeArea()
@@ -46,6 +54,7 @@ public struct SettingsView: View {
 //        .toolbarBackground(Color("ocean"))
     }
     
+    #if !os(watchOS)
     /// Builds a `CloudSharingView` with state after processing a share.
     private func shareView(share: CKShare?) -> CloudKitShareView? {
         guard let share else {
@@ -54,6 +63,7 @@ public struct SettingsView: View {
         
         return CloudKitShareView(share: share)
     }
+    #endif
 }
 
 struct SettingsButtonRowView: View {

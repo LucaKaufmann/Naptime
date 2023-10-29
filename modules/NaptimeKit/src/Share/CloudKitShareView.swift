@@ -8,6 +8,7 @@
 import CloudKit
 import SwiftUI
 
+#if os(iOS)
 public struct CloudKitShareView: UIViewControllerRepresentable {
     
     public init(share: CKShare) {
@@ -32,3 +33,4 @@ public struct CloudKitShareView: UIViewControllerRepresentable {
         context: Context
     ) { }
 }
+#endif

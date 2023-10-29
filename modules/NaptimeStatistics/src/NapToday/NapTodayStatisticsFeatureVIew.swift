@@ -8,8 +8,14 @@
 import SwiftUI
 import ComposableArchitecture
 import Charts
+
+#if os(macOS) || os(iOS) || os(tvOS)
 import NaptimeKit
 import DesignSystem
+#elseif os(watchOS)
+import NaptimeKitWatchOS
+import DesignSystemWatchOS
+#endif
 
 public struct NapTodayStatisticsFeatureView: View {
     
@@ -49,8 +55,11 @@ public struct NapTodayStatisticsFeatureView: View {
                         Text(timeframe.rawValue)
                     }
                 }
-                .pickerStyle(.segmented)
                 .padding()
+                #if os(watchOS)
+                #else
+                .pickerStyle(.segmented)
+                #endif
             }
             .background {
                 NaptimeDesignColors.tomato.ignoresSafeArea()

@@ -37,8 +37,10 @@ struct ToggleView<Content: View, ButtonContent: View>: View {
                        withAnimation {
                            isOn.toggle()
                        }
+                       #if os(iOS)
                        let impactMed = UIImpactFeedbackGenerator(style: .medium)
                        impactMed.impactOccurred()
+                       #endif
                    }.modifier(Swipe { direction in
                        if direction == .swipeLeft {
                            withAnimation() {

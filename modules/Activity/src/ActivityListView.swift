@@ -7,8 +7,14 @@
 
 import SwiftUI
 import ComposableArchitecture
+
+#if os(macOS) || os(iOS) || os(tvOS)
 import NaptimeKit
 import DesignSystem
+#elseif os(watchOS)
+import NaptimeKitWatchOS
+import DesignSystemWatchOS
+#endif
 
 struct ActivityListView: View {
     
@@ -32,14 +38,19 @@ struct ActivityListView: View {
                     HStack {
                         Spacer()
                         ZStack {
+                            #if os(macOS) || os(iOS) || os(tvOS)
                             Color(.black)
+                            
                                 .mask(
+                                    
                                     DesignSystemAsset.sleepingTeddy.swiftUIImage
                                         .resizable()
                                         .colorInvert()
                                         .luminanceToAlpha()
                                 )
                                 .clipShape(Circle())
+                            #endif
+
                             Circle()
                                 .stroke(.black, lineWidth: 2)
 //                            if viewStore.loading {

@@ -7,12 +7,20 @@
 
 import SwiftUI
 import ComposableArchitecture
-import ScalingHeaderScrollView
 import CloudKit
+
+#if os(macOS) || os(iOS) || os(tvOS)
 import DesignSystem
 import NaptimeKit
 import NaptimeSettings
 import NaptimeStatistics
+import ScalingHeaderScrollView
+#elseif os(watchOS)
+import DesignSystemWatchOS
+import NaptimeKitWatchOS
+import NaptimeSettingsWatchOS
+import NaptimeStatisticsWatchOS
+#endif
 
 public struct ActivityView: View {
     
@@ -25,6 +33,7 @@ public struct ActivityView: View {
     
     public init(store: StoreOf<ActivityFeature>) {
         self.store = store
+        #if os(macOS) || os(iOS) || os(tvOS)
         UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(named: "sandLight")
         UISegmentedControl.appearance().backgroundColor =
         UIColor(NaptimeDesignColors.slate.opacity(0.3))
@@ -32,11 +41,13 @@ public struct ActivityView: View {
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.secondary)], for: .normal)
         
         UIScrollView.appearance().backgroundColor = .clear
+        #endif
     }
     
     public var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             ZStack {
+#if os(macOS) || os(iOS) || os(tvOS)
                 ScalingHeaderScrollView {
                     ZStack(alignment: .center) {
                         VStack {
@@ -89,6 +100,7 @@ public struct ActivityView: View {
                 .refreshable {
                     viewStore.send(.refreshActivities)
                 }
+                #endif
                 sleepToggle
             }
             .scrollContentBackground(.hidden)
@@ -114,6 +126,7 @@ public struct ActivityView: View {
                 BedtimeStatisticsFeatureView(store: store)
             }
             .toolbar {
+            #if os(macOS) || os(iOS) || os(tvOS)
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
                         viewStore.send(.refreshActivities)
@@ -138,6 +151,7 @@ public struct ActivityView: View {
                             .foregroundColor(NaptimeDesignColors.sandLight)
                     }
                 }
+                #endif
             }
         }.edgesIgnoringSafeArea(.vertical)
     }
@@ -160,15 +174,6 @@ public struct ActivityView: View {
             .ignoresSafeArea()
             .padding(.bottom, 40)
         }
-    }
-    
-    /// Builds a `CloudSharingView` with state after processing a share.
-    private func shareView(share: CKShare?) -> CloudKitShareView? {
-        guard let share else {
-            return nil
-        }
-        
-        return CloudKitShareView(share: share)
     }
 }
 

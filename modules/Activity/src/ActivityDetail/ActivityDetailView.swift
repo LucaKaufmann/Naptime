@@ -7,8 +7,14 @@
 
 import SwiftUI
 import ComposableArchitecture
+
+#if os(macOS) || os(iOS) || os(tvOS)
 import NaptimeKit
 import DesignSystem
+#elseif os(watchOS)
+import NaptimeKitWatchOS
+import DesignSystemWatchOS
+#endif
 
 struct ActivityDetailView: View {
     

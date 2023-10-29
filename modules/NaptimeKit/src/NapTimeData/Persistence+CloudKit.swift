@@ -61,7 +61,11 @@ extension PersistenceController {
 
         shareRecord[CKShare.SystemFieldKey.title] = "Share naps"
 //        let image = UIImage(named: "sleeping_teddy")!.pngData()
-        let image = DesignSystemAsset.sleepingTeddy.image.pngData()
+        #if os(iOS)
+        let image = NaptimeKitAsset.sleepingTeddy.image.pngData()
+        #else
+        let image = UIImage(named: "sleeping_teddy")?.pngData()
+        #endif
         shareRecord[CKShare.SystemFieldKey.thumbnailImageData] = image
         shareRecord.publicPermission = .readWrite
 //        // Include a custom UTI that describes the share's content.

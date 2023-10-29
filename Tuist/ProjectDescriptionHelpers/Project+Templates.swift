@@ -45,6 +45,7 @@ public extension Target {
                resources: "NaptimeWatchApp/resources/**",
                dependencies: [
                 .feature(implementation: .NaptimeKitWatchOS),
+                .feature(implementation: .DesignSystemWatchOS),
                 .feature(implementation: .ActivityWatchOS)
                ])
     }

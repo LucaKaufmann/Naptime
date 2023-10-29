@@ -6,7 +6,11 @@
 //
 
 import SwiftUI
+#if os(macOS) || os(iOS) || os(tvOS)
 import DesignSystem
+#elseif os(watchOS)
+import DesignSystemWatchOS
+#endif
 
 struct ToggleContentView: View {
     

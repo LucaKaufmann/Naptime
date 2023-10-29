@@ -27,18 +27,23 @@ struct FormTextField: View {
                             .padding(.trailing, 8)
                     }
                 }
-            TextEditor(text: $text)
-                .multilineTextAlignment(.trailing)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-                .font(.body)
+                #if os(macOS) || os(iOS) || os(tvOS)
+                TextEditor(text: $text)
+                    .multilineTextAlignment(.trailing)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .font(.body)
+                
+                #endif
             }
         } else {
             TextField(placeholder, text: $text, onCommit: {
                 print("end editing")
 //                UIApplication.shared.endEditing()
             })
+            #if !os(watchOS)
             .autocapitalization(.none)
+            #endif
             .disableAutocorrection(true)
             .multilineTextAlignment(.trailing)
             .font(.body)

@@ -6,7 +6,11 @@
 //
 
 import ComposableArchitecture
+#if os(macOS) || os(iOS) || os(tvOS)
 import NaptimeKit
+#elseif os(watchOS)
+import NaptimeKitWatchOS
+#endif
 
 private enum ActivityServiceKey: DependencyKey {
     static let liveValue = ActivityService(persistence: PersistenceController.shared)
@@ -23,6 +27,8 @@ public extension DependencyValues {
     }
 }
 
+
+#if canImport(ActivityKit)
 private enum LiveActivityServiceKey: DependencyKey {
     static let liveValue = LiveActivityService()
 }
@@ -33,4 +39,4 @@ extension DependencyValues {
         set { self[LiveActivityServiceKey.self] = newValue }
     }
 }
-
+#endif

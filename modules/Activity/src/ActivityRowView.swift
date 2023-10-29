@@ -6,8 +6,14 @@
 //
 
 import SwiftUI
-import NaptimeKit
+
+#if os(macOS) || os(iOS) || os(tvOS)
 import DesignSystem
+import NaptimeKit
+#elseif os(watchOS)
+import DesignSystemWatchOS
+import NaptimeKitWatchOS
+#endif
 
 struct ActivityRowView: View {
     

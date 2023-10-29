@@ -1,5 +1,4 @@
 import SwiftUI
-import NaptimeSettings
 
 @main
 struct NaptimeActivityApp: App {

@@ -7,15 +7,24 @@
 
 import ComposableArchitecture
 import CloudKit
+#if canImport(ActivityKit)
 import ActivityKit
+#endif
+#if os(macOS)
 import NaptimeKit
+#elseif os(iOS)
+import NaptimeKit
+#elseif os(tvOS) || os(watchOS)
+import NaptimeKitWatchOS
+#endif
 
 public struct SettingsFeature: Reducer {
     
     public init() {}
     
+    #if os(iOS)
     @Dependency(\.liveActivityService) var liveActivityService
-    
+    #endif
     public struct State: Equatable {
         public init(showAsleepLiveAction: Bool, showAwakeLiveAction: Bool, shareSheet: ShareSheetFeature.State? = nil, share: CKShare? = nil, lastActivity: ActivityModel? = nil) {
             self.showAsleepLiveAction = showAsleepLiveAction
@@ -98,6 +107,7 @@ public struct SettingsFeature: Reducer {
                     if #available(iOS 16.2, *) {
                         return .run { _ in
                             if #available(iOS 16.2, *) {
+                            #if canImport(ActivityKit)
                                 if let lastActivity {
                                     if UserDefaults.standard.bool(forKey: Constants.showAsleepLiveActivitiesKey), lastActivity.isActive {
                                         await liveActivityService.startNewLiveActivity(activity: lastActivity)
@@ -109,6 +119,7 @@ public struct SettingsFeature: Reducer {
                                 } else {
                                     await liveActivityService.stopLiveActivities()
                                 }
+                                #endif
                             }
                         }
                     } else {

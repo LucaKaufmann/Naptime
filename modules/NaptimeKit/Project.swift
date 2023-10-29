@@ -10,6 +10,9 @@ let project = Project(
                 .external(name: "ComposableArchitecture"),
                 .external(name: "AsyncAlgorithms"),
             ],
+            resources: [
+                "resources/**"
+            ],
             coreDataModels: [
                 .init("src/NapTimeData/Naptime.xcdatamodeld")
             ]
@@ -19,6 +22,9 @@ let project = Project(
             dependencies: [
                 .external(name: "ComposableArchitecture"),
                 .external(name: "AsyncAlgorithms"),
+            ],
+            resources: [
+                "resources/**"
             ],
             coreDataModels: [
                 .init("src/NapTimeData/Naptime.xcdatamodeld")

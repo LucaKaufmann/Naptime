@@ -1,6 +1,12 @@
 import SwiftUI
 import ComposableArchitecture
+#if os(macOS)
 import Activity
+#elseif os(iOS)
+import Activity
+#elseif os(tvOS) || os(watchOS)
+import ActivityWatchOS
+#endif
 
 public struct ContentView: View {
     public init() {}
