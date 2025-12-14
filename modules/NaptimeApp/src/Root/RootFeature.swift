@@ -14,8 +14,8 @@ import Activity
 import NaptimeKit
 
 struct Root: Reducer {
-    
-    @Dependency(\.activityService) private var activityService
+
+    @Dependency(\.activityRepository) private var activityRepository
     @Dependency(\.uuid) private var uuid
     
     struct State: Equatable {
@@ -66,11 +66,16 @@ struct Root: Reducer {
 
                 case .refreshActivities:
                     let timeSpan = state.activityState.selectedTimeRange
-                    
+                    let fetchActivities = activityRepository.fetch
+
                     return .run { send in
-                        let date: Date? = timeSpan == .week ? Calendar.current.date(byAdding: .day, value: -7, to: Date())?.startOf(.day) : nil
-                         let activities = await activityService.fetchActivitiesAfter(date)
-                        
+                        let query = ActivityQuery(
+                            afterDate: timeSpan == .week
+                                ? Calendar.current.date(byAdding: .day, value: -7, to: Date())?.startOf(.day)
+                                : nil
+                        )
+                        let activities = try await fetchActivities(query)
+
                         await send(.loadedActivities(activities))
                     }
                 case .loadedActivities(let activities):
