@@ -28,9 +28,15 @@ struct ActivityTileView: View {
         }
         .foregroundColor(NaptimeDesignColors.slateDark)
         .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 12).foregroundColor(NaptimeDesignColors.sandLight)
-        )
+        .background {
+            if #available(iOS 26.0, *) {
+                ConcentricRectangle(corners: .concentric(minimum: 16), isUniform: true)
+                    .fill(NaptimeDesignColors.sandLight)
+            } else {
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(NaptimeDesignColors.sandLight)
+            }
+        }
     }
 }
 

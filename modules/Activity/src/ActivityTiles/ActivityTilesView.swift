@@ -32,6 +32,18 @@ struct ActivityTilesView: View {
                 }
                 .padding(.horizontal)
             }
+            .modifier(TilesContainerShapeModifier())
+        }
+    }
+}
+
+/// Applies containerShape on iOS 26+ for concentric corner radius support
+struct TilesContainerShapeModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            content.containerShape(.rect(cornerRadius: 32))
+        } else {
+            content
         }
     }
 }
