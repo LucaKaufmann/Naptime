@@ -11,6 +11,7 @@ import NaptimeKit
 public struct SleepStatisticsResult: Equatable {
     let sleepDatapoints: [SleepStatisticDatapoint]
     let sleepPerDay: TimeInterval
+    let earliestDate: Date
 }
 
 struct StatisticsService {

@@ -31,27 +31,50 @@ public struct SleepTodayStatisticsFeatureView: View {
     
     public var body: some View {
         WithViewStore(self.store, observe: {$0}) { viewStore in
-            VStack {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("AVG TIME ASLEEP")
-                            .font(.caption)
-                        Text(formatter.string(from: viewStore.averageSleep) ?? "")
-                            .fontWeight(.semibold)
+            ZStack(alignment: .bottomTrailing) {
+                VStack {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("AVG TIME ASLEEP")
+                                .font(.caption)
+                            Text(formatter.string(from: viewStore.averageSleep) ?? "")
+                                .fontWeight(.semibold)
+                        }
+                        Spacer()
                     }
-                    Spacer()
-                }
-                .foregroundColor(NaptimeDesignColors.slateLight)
-                .padding()
-                chart
-                Picker("Chart timeframe", selection: viewStore.$timeframe) {
-                    ForEach(StatisticsTimeFrame.allCases, id: \.self) { timeframe in
-                        Text(timeframe.rawValue)
+                    .foregroundColor(NaptimeDesignColors.slateLight)
+                    .padding()
+                    chart
+                    Picker("Chart timeframe", selection: viewStore.$timeframe) {
+                        ForEach(StatisticsTimeFrame.allCases, id: \.self) { timeframe in
+                            Text(timeframe.rawValue)
+                        }
                     }
+                    .pickerStyle(.segmented)
+                    .padding()
                 }
-                .pickerStyle(.segmented)
-                .padding()
+
+                // Jump to Today button
+                if !viewStore.isScrolledToToday {
+                    Button {
+                        viewStore.send(.jumpToToday)
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "arrow.right.to.line")
+                            Text("Today")
+                        }
+                        .font(.subheadline.weight(.medium))
+                        .foregroundStyle(NaptimeDesignColors.slateLight)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(.ultraThinMaterial)
+                        .clipShape(Capsule())
+                    }
+                    .padding()
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
+                }
             }
+            .animation(.easeInOut(duration: 0.2), value: viewStore.isScrolledToToday)
             .background {
                 NaptimeDesignColors.ocean.ignoresSafeArea()
             }
@@ -72,13 +95,15 @@ public struct SleepTodayStatisticsFeatureView: View {
                 .accessibilityValue("\($0.interval) sleep")
                 .foregroundStyle(NaptimeDesignColors.oceanInverted.gradient)
             }
-            .chartXScale(domain: startDateForTimeFrame(viewStore.timeframe)...Date.now)
+            .chartScrollableAxes(.horizontal)
+            .chartXVisibleDomain(length: visibleDomainLength(for: viewStore.timeframe))
+            .chartScrollPosition(x: viewStore.$scrollPosition)
+            .chartScrollTargetBehavior(.valueAligned(matching: dateComponentsForSnapping(viewStore.timeframe)))
+            .chartXScale(domain: viewStore.earliestDataDate...Date.now)
             .chartXAxis {
                 AxisMarks(values: axisMarkValuesForTimeframe(viewStore.timeframe)) { value in
                     AxisValueLabel(format: formatStyleForTimeframe(viewStore.timeframe))
                         .foregroundStyle(chartAxisColor)
-//                    AxisGridLine()
-//                        .foregroundStyle(NaptimeDesignColors.slateLight)
                     AxisTick()
                         .foregroundStyle(chartAxisColor)
                 }
@@ -87,13 +112,15 @@ public struct SleepTodayStatisticsFeatureView: View {
                 AxisMarks(values: .automatic) { _ in
                     AxisGridLine(centered: true, stroke: StrokeStyle(dash: [1, 2]))
                         .foregroundStyle(chartAxisColor)
-                        AxisTick(centered: true, stroke: StrokeStyle(lineWidth: 2))
-                          .foregroundStyle(chartAxisColor)
-                        AxisValueLabel()
+                    AxisTick(centered: true, stroke: StrokeStyle(lineWidth: 2))
+                        .foregroundStyle(chartAxisColor)
+                    AxisValueLabel()
                         .foregroundStyle(chartAxisColor)
                 }
             }
-//            .frame(height: isOverview ? Constants.previewChartHeight : Constants.detailChartHeight)
+            .onChange(of: viewStore.scrollPosition) { _, newValue in
+                viewStore.send(.scrollPositionChanged(newValue))
+            }
         }
     }
     
@@ -150,10 +177,30 @@ public struct SleepTodayStatisticsFeatureView: View {
             case .year:
                 values = .stride(by: .month, count: 1)
         }
-        
+
         return values
     }
-    
+
+    private func visibleDomainLength(for timeframe: StatisticsTimeFrame) -> Int {
+        switch timeframe {
+        case .week:
+            return 3600 * 24 * 7      // 7 days
+        case .month:
+            return 3600 * 24 * 30     // 30 days
+        case .year:
+            return 3600 * 24 * 365    // 365 days
+        }
+    }
+
+    private func dateComponentsForSnapping(_ timeframe: StatisticsTimeFrame) -> DateComponents {
+        switch timeframe {
+        case .week, .month:
+            return DateComponents(hour: 0)
+        case .year:
+            return DateComponents(day: 1)
+        }
+    }
+
 }
 
 #Preview {

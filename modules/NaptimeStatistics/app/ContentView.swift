@@ -22,7 +22,7 @@ public struct ContentView: View {
             }).tabItem {
                 Text("Bedtime")
             }
-        }
+        }.accentColor(.white)
     }
 }
 
