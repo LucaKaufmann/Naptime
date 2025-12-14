@@ -22,10 +22,7 @@ let project = Project(
     targets: [
         .makeApp(
             name: "Naptime",
-            deploymentTarget: .iOS(targetVersion: "17.0", devices: [
-                .iphone,
-                .ipad
-            ]),
+            deploymentTargets: .iOS("17.0"),
             sources: [
                 "src/**"
             ],
@@ -42,7 +39,7 @@ let project = Project(
             ]
         ),
         .appExtension(implementation: .NaptimeWidget,
-                      deploymentTarget: .iOS(targetVersion: "17.0", devices: .iphone),
+                      deploymentTargets: .iOS("17.0"),
                       infoPlist: .extendingDefault(with: [
                         "CFBundleDisplayName": "Naptime Widget",
                         "NSExtension": [

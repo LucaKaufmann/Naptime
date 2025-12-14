@@ -10,17 +10,18 @@ public extension Target {
     static func makeApp(
         name: String,
         bundleIdExtension: String = "",
-        deploymentTarget: ProjectDescription.DeploymentTarget?,
+        destinations: Destinations = .iOS,
+        deploymentTargets: DeploymentTargets = .iOS("17.0"),
         sources: ProjectDescription.SourceFilesList,
         resources: ProjectDescription.ResourceFileElements? = [],
         dependencies: [ProjectDescription.TargetDependency]
     ) -> Target {
-        Target(
+        Target.target(
             name: name,
-            platform: .iOS,
+            destinations: destinations,
             product: .app,
             bundleId: makeBundleID(with: ""+bundleIdExtension),
-            deploymentTarget: deploymentTarget,
+            deploymentTargets: deploymentTargets,
             infoPlist: .extendingDefault(with: infoPlistExtension),
             sources: sources,
             resources: resources,
@@ -28,21 +29,22 @@ public extension Target {
             dependencies: dependencies
         )
     }
-    
+
     static func makeExtension(
         name: String,
-        deploymentTarget: ProjectDescription.DeploymentTarget?,
+        destinations: Destinations = .iOS,
+        deploymentTargets: DeploymentTargets = .iOS("17.0"),
         infoPlist: InfoPlist? = nil,
         sources: ProjectDescription.SourceFilesList,
         resources: ProjectDescription.ResourceFileElements? = [],
         dependencies: [ProjectDescription.TargetDependency] = []
     ) -> Target {
-        Target(
+        Target.target(
             name: name,
-            platform: .iOS,
+            destinations: destinations,
             product: .appExtension,
             bundleId: makeBundleID(with: "." + name),
-            deploymentTarget: deploymentTarget,
+            deploymentTargets: deploymentTargets,
             infoPlist: infoPlist,
             sources: sources,
             resources: resources,
@@ -53,18 +55,19 @@ public extension Target {
 
     static func makeFramework(
         name: String,
-        deploymentTarget: ProjectDescription.DeploymentTarget?,
+        destinations: Destinations = .iOS,
+        deploymentTargets: DeploymentTargets = .iOS("17.0"),
         sources: ProjectDescription.SourceFilesList,
         dependencies: [ProjectDescription.TargetDependency] = [],
         resources: ProjectDescription.ResourceFileElements? = [],
         coreDataModels: [CoreDataModel]
     ) -> Target {
-        Target(
+        Target.target(
             name: name,
-            platform: .iOS,
+            destinations: destinations,
             product: defaultPackageType,
             bundleId: makeBundleID(with: name + ".framework"),
-            deploymentTarget: deploymentTarget,
+            deploymentTargets: deploymentTargets,
             sources: sources,
             resources: resources,
             entitlements: .file(path: .relativeToRoot("Naptime.entitlements")),
@@ -75,14 +78,16 @@ public extension Target {
 
     private static func feature(
         implementation featureName: String,
-        deploymentTarget: ProjectDescription.DeploymentTarget? = .iOS(targetVersion: "17.0", devices: .iphone),
+        destinations: Destinations = .iOS,
+        deploymentTargets: DeploymentTargets = .iOS("17.0"),
         dependencies: [ProjectDescription.TargetDependency] = [],
         resources: ProjectDescription.ResourceFileElements? = [],
         coreDataModels: [CoreDataModel]
     ) -> Target {
         .makeFramework(
             name: featureName,
-            deploymentTarget: deploymentTarget,
+            destinations: destinations,
+            deploymentTargets: deploymentTargets,
             sources: [ "src/**" ],
             dependencies: dependencies,
             resources: resources,
@@ -92,13 +97,15 @@ public extension Target {
 
     private static func feature(
         interface featureName: String,
-        deploymentTarget: ProjectDescription.DeploymentTarget? = .iOS(targetVersion: "17.0", devices: .iphone),
+        destinations: Destinations = .iOS,
+        deploymentTargets: DeploymentTargets = .iOS("17.0"),
         dependencies: [ProjectDescription.TargetDependency] = [],
         resources: ProjectDescription.ResourceFileElements? = []
     ) -> Target {
         .makeFramework(
             name: featureName + "Interface",
-            deploymentTarget: deploymentTarget,
+            destinations: destinations,
+            deploymentTargets: deploymentTargets,
             sources: [ "interface/**" ],
             dependencies: dependencies,
             resources: resources,
@@ -131,13 +138,15 @@ public extension Target {
             resources: resources
         )
     }
-    
+
     static func appExtension(implementation featureName: Feature,
-                             deploymentTarget: ProjectDescription.DeploymentTarget? = .iOS(targetVersion: "17.0", devices: .iphone),
+                             destinations: Destinations = .iOS,
+                             deploymentTargets: DeploymentTargets = .iOS("17.0"),
                              infoPlist: InfoPlist? = nil,
                              dependencies: [ProjectDescription.TargetDependency] = []) -> Target {
         .makeExtension(name: featureName.rawValue,
-                       deploymentTarget: deploymentTarget,
+                       destinations: destinations,
+                       deploymentTargets: deploymentTargets,
                        infoPlist: infoPlist,
                        sources: [
                            "\(featureName.rawValue)/src/**"

@@ -11,7 +11,7 @@ let project = Project(
                 .external(name: "AsyncAlgorithms"),
             ],
             coreDataModels: [
-                .init("src/NapTimeData/Naptime.xcdatamodeld")
+                CoreDataModel.coreDataModel("src/NapTimeData/Naptime.xcdatamodeld")
             ]
         )
     ]
