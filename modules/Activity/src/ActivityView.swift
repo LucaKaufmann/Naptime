@@ -41,6 +41,7 @@ public struct ActivityView: View {
                     ZStack(alignment: .center) {
                         VStack {
                             Spacer()
+                                .frame(height: 24)
                             ActivityTilesView(store: store.scope(state: \.activityTilesState, action: ActivityFeature.Action.activityTiles))
                                 .frame(height: max(maxHeight, 0))
                             Spacer()
@@ -151,7 +152,12 @@ public struct ActivityView: View {
                         .frame(height: 180)
                         .padding(.bottom, -100)
                     HStack {
-                        ActivityButtonsView(store: store)
+                        if #available(iOS 26.0, *) {
+                            ActivityButtonsView(store: store)
+                                .glassEffect(.regular.interactive())
+                        } else {
+                            ActivityButtonsView(store: store)
+                        }
                     }
                 }
             }

@@ -54,11 +54,11 @@ struct ToggleView<Content: View, ButtonContent: View>: View {
                        Spacer()
                    }
                }
-               .clipShape(RoundedRectangle(cornerRadius: 10))
+               .clipShape(Capsule())
            }
            .padding(5)
            .background(backGround)
-           .clipShape(RoundedRectangle(cornerRadius: 12))
+           .clipShape(Capsule())
        }
    }
 }

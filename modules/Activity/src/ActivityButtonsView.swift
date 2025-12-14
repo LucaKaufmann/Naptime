@@ -18,8 +18,7 @@ struct ActivityButtonsView: View {
             ToggleView(isOn: viewStore.$isSleeping) {
                 Color.clear
                     .overlay(
-                        RoundedRectangle(cornerRadius: 12).strokeBorder(NaptimeDesignColors.slate, lineWidth: 5)
-                        
+                        Capsule().strokeBorder(NaptimeDesignColors.slate, lineWidth: 5)
                     )
             } button: {
                 Group {
@@ -30,9 +29,9 @@ struct ActivityButtonsView: View {
                     }
                 }
                 .overlay(ToggleContentView(isOn: viewStore.$isSleeping))
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .clipShape(Capsule())
             }
-            .frame(width: 250, height: 60)
+            .frame(width: 250, height: 56)
             .shadow(color: NaptimeDesignColors.slateDark.opacity(0.2), radius: 2)
         }
     }
