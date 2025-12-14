@@ -10,9 +10,7 @@ import ComposableArchitecture
 import NaptimeKit
 
 public struct ActivityTiles: Reducer {
-    
-    @Dependency(\.activityService) private var activityService
-    
+
     let activityTilesFactory = ActivityTilesFactory()
     
     public struct State: Equatable {
