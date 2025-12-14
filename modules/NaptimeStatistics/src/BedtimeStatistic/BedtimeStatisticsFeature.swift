@@ -11,9 +11,9 @@ import ComposableArchitecture
 import NaptimeKit
 
 public struct BedtimeStatisticsFeature: Reducer {
-    
-    @Dependency(\.activityService) var activityService
-    
+
+    @Dependency(\.activityRepository) var activityRepository
+
     let statisticsService = StatisticsService()
     
     public struct State: Equatable {
@@ -50,6 +50,7 @@ public struct BedtimeStatisticsFeature: Reducer {
                 case .onAppear:
                     return .send(.reloadStatistics)
                 case .reloadStatistics:
+                    let fetchActivities = activityRepository.fetch
                     return .run {[timeframe = state.timeframe] send in
 
                         let cutoffDate: Date?
@@ -62,7 +63,8 @@ public struct BedtimeStatisticsFeature: Reducer {
                                 cutoffDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())?.startOf(.day)
                         }
 
-                        let activitiesToCompute = await activityService.fetchActivitiesAfter(cutoffDate)
+                        let query = ActivityQuery(afterDate: cutoffDate)
+                        let activitiesToCompute = try await fetchActivities(query)
 
                         async let datapoints = statisticsService.createBedtimeStatisticDatapoints(activitiesToCompute, timeframe: timeframe)
                         async let averageSleep = statisticsService.usualBedtime(activitiesToCompute, timeframe: timeframe)
