@@ -12,11 +12,11 @@ import NaptimeKit
 
 
 public struct SleepTodayStatisticsFeature: Reducer {
-    
+
     public init() {}
-    
-    @Dependency(\.activityService) var activityService
-    
+
+    @Dependency(\.activityRepository) var activityRepository
+
     let statisticsService = StatisticsService()
     
     public struct State: Equatable {
@@ -51,10 +51,11 @@ public struct SleepTodayStatisticsFeature: Reducer {
                 case .onAppear:
                     return .send(.reloadStatistics)
                 case .reloadStatistics:
+                    let fetchActivities = activityRepository.fetch
                     return .run {[timeframe = state.timeframe] send in
 
                         let cutoffDate: Date?
-                        
+
                         switch timeframe {
                             case .week:
                                 cutoffDate = Calendar.current.date(byAdding: .day, value: -6, to: Date())?.startOf(.day)
@@ -64,7 +65,8 @@ public struct SleepTodayStatisticsFeature: Reducer {
                                 cutoffDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())?.startOf(.day)
                         }
 
-                        let activitiesToCompute = await activityService.fetchActivitiesAfter(cutoffDate)
+                        let query = ActivityQuery(afterDate: cutoffDate)
+                        let activitiesToCompute = try await fetchActivities(query)
 
                         async let datapoints = statisticsService.createSleepStatisticDatapoints(activitiesToCompute, timeframe: timeframe)
                         async let averageSleep = statisticsService.averageSleepAmountPerDay(activitiesToCompute, timeframe: timeframe)

@@ -13,6 +13,12 @@ let project = Project(
             coreDataModels: [
                 CoreDataModel.coreDataModel("src/NapTimeData/Naptime.xcdatamodeld")
             ]
+        ),
+        .featureTests(
+            for: .NaptimeKit,
+            dependencies: [
+                .external(name: "ComposableArchitecture"),
+            ]
         )
     ]
 )

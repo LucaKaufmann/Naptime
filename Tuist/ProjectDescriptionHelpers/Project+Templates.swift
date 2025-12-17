@@ -159,4 +159,33 @@ public extension Target {
                            .feature(implementation: .DesignSystem),
                        ])
     }
+
+    static func makeUnitTests(
+        name: String,
+        destinations: Destinations = .iOS,
+        deploymentTargets: DeploymentTargets = .iOS("17.0"),
+        sources: ProjectDescription.SourceFilesList,
+        dependencies: [ProjectDescription.TargetDependency] = []
+    ) -> Target {
+        Target.target(
+            name: name,
+            destinations: destinations,
+            product: .unitTests,
+            bundleId: makeBundleID(with: ".\(name)"),
+            deploymentTargets: deploymentTargets,
+            sources: sources,
+            dependencies: dependencies
+        )
+    }
+
+    static func featureTests(
+        for featureName: Feature,
+        dependencies: [ProjectDescription.TargetDependency] = []
+    ) -> Target {
+        .makeUnitTests(
+            name: "\(featureName.rawValue)Tests",
+            sources: ["tests/**"],
+            dependencies: [.target(name: featureName.rawValue)] + dependencies
+        )
+    }
 }

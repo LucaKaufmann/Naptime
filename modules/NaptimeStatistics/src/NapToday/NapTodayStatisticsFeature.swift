@@ -10,10 +10,9 @@ import ComposableArchitecture
 import NaptimeKit
 
 public struct NapTodayStatisticsFeature: Reducer {
-    
-    
-    @Dependency(\.activityService) var activityService
-    
+
+    @Dependency(\.activityRepository) var activityRepository
+
     let statisticsService = StatisticsService()
     
     public struct State: Equatable {
@@ -50,10 +49,11 @@ public struct NapTodayStatisticsFeature: Reducer {
                 case .onAppear:
                     return .send(.reloadStatistics)
                 case .reloadStatistics:
+                    let fetchActivities = activityRepository.fetch
                     return .run {[timeframe = state.timeframe] send in
 
                         let cutoffDate: Date?
-                        
+
                         switch timeframe {
                             case .week:
                                 cutoffDate = Calendar.current.date(byAdding: .day, value: -6, to: Date())?.startOf(.day)
@@ -63,7 +63,8 @@ public struct NapTodayStatisticsFeature: Reducer {
                                 cutoffDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())?.startOf(.day)
                         }
 
-                        let activitiesToCompute = await activityService.fetchActivitiesAfter(cutoffDate)
+                        let query = ActivityQuery(afterDate: cutoffDate)
+                        let activitiesToCompute = try await fetchActivities(query)
 
                         async let datapoints = statisticsService.createNapStatisticDatapoints(activitiesToCompute, timeframe: timeframe)
                         async let averageSleep = statisticsService.averageNapAmountPerDay(activitiesToCompute, timeframe: timeframe)

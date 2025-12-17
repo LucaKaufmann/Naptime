@@ -9,11 +9,11 @@ import Foundation
 import ComposableArchitecture
 import ActivityKit
 
-enum LiveActivityServiceKey: DependencyKey {
+private enum LiveActivityServiceKey: DependencyKey {
     static let liveValue = LiveActivityService()
 }
 
-extension DependencyValues {
+public extension DependencyValues {
     var liveActivityService: LiveActivityService {
         get { self[LiveActivityServiceKey.self] }
         set { self[LiveActivityServiceKey.self] = newValue }

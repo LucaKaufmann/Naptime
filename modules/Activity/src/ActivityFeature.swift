@@ -18,8 +18,8 @@ public enum ActivityTimeRange: Int, Equatable {
 }
 
 public struct ActivityFeature: Reducer {
-    
-    @Dependency(\.activityService) private var activityService
+
+    @Dependency(\.activityRepository) private var activityRepository
     @Dependency(\.liveActivityService) private var liveActivityService
     
     public init() {}
@@ -99,19 +99,19 @@ public struct ActivityFeature: Reducer {
             switch action {
                 case .startActivity(let type):
                     let newActivity = ActivityModel(id: UUID(), startDate: Date(), endDate: nil, type: type)
-                    
-                    state.activities.insert(newActivity, at: 0)
-                    return .run { send in
-                        await activityService.addActivity(newActivity)
 
+                    state.activities.insert(newActivity, at: 0)
+                    let addActivity = activityRepository.add
+                    return .run { send in
+                        try await addActivity(newActivity)
                         await send(.activitiesUpdated)
                     }
                 case .deleteActivity(let index):
                     let activity = state.activities[index]
                     state.activities.remove(at: index)
+                    let deleteActivity = activityRepository.delete
                     return .run { send in
-                        await activityService.deleteActivity(activity)
-                        
+                        try await deleteActivity(activity.id)
                         await send(.activitiesUpdated)
                     }
                 case .refreshActivities:
@@ -155,35 +155,40 @@ public struct ActivityFeature: Reducer {
                     guard activity.endDate == nil else {
                         return .none
                     }
-                    
+
                     if let index = state.activities.lastIndex(of: activity) {
                         var updatedActivity = activity
                         updatedActivity.endDate = Date()
-                        
+
                         state.activities[index] = updatedActivity
-                        
+
+                        let updateActivity = activityRepository.update
                         return .run { send in
-                            await activityService.endActivity(activity.id)
-                            
+                            try await updateActivity(updatedActivity)
                             await send(.activitiesUpdated)
                         }
                     }
-                    
+
                     return .none
                 case .endAllActiveActivities:
-                    let activities = state.activities.filter({ $0.isActive })
-                    for activity in activities {
+                    let activeActivities = state.activities.filter({ $0.isActive })
+                    var updatedActivities: [ActivityModel] = []
+                    for activity in activeActivities {
                         guard let index = state.activities.firstIndex(of: activity) else {
                             continue
                         }
                         var updatedActivity = activity
                         updatedActivity.endDate = Date()
-                        
+
                         state.activities[index] = updatedActivity
+                        updatedActivities.append(updatedActivity)
                     }
-                    
+
+                    let updateActivity = activityRepository.update
                     return .run { send in
-                        await activityService.endActivities(activities)
+                        for activity in updatedActivities {
+                            try await updateActivity(activity)
+                        }
                         await send(.activitiesUpdated)
                     }
                 case .binding(\.$isSleeping):
